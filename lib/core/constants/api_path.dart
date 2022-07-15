@@ -1,3 +1,3 @@
 class ApiPath {
-  static const String login = '/auth/login';
+  static const String login = '/api/login';
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/configs/themes/palette.dart';
-import 'package:kspm_scheduler_mobile/core/l10n/localizations.dart';
 
 class LoadingWithText extends StatelessWidget {
   const LoadingWithText({
@@ -13,7 +12,6 @@ class LoadingWithText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = context.localizations;
 
     return Container(
       color: Colors.black.withOpacity(0.6),
@@ -43,7 +41,7 @@ class LoadingWithText extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   Text(
-                    loadingText ?? labels.state.loading,
+                    loadingText ?? 'Loading',
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(width: 10),

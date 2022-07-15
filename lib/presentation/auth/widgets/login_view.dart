@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:kspm_scheduler_mobile/core/l10n/localizations.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/snackbar.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
@@ -33,13 +32,12 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final labels = context.localizations;
     final size = MediaQuery.of(context).size;
 
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthFailure) {
-          AppSnackbar.snackbarFailure(labels.state.failure, state.message);
+          AppSnackbar.snackbarFailure('Login Gagal', state.message);
         }
 
         if (state is AuthSuccess) {
@@ -86,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
       _formLoginKey.currentState!.save();
 
       final body = LoginBody(
-        username: usernameController.text,
+        email: usernameController.text,
         password: passwordController.text,
       );
 

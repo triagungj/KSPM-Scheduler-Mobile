@@ -21,7 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, LoginEntity>> requestLogin(LoginBody body) async {
     try {
       final remoteLogin = await remoteDataSource.requestLogin(body);
-      await localDataSource.saveToken(remoteLogin.data.token);
+      await localDataSource.saveToken(remoteLogin.token);
       return Right(remoteLogin);
     } on DioError catch (e) {
       // The request was made and the server responded with a status code

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/configs/themes/palette.dart';
-import 'package:kspm_scheduler_mobile/core/l10n/localizations.dart';
 
 class TitleSeeAll extends StatelessWidget {
   const TitleSeeAll({
@@ -14,7 +13,6 @@ class TitleSeeAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = context.localizations;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -30,7 +28,7 @@ class TitleSeeAll extends StatelessWidget {
           InkWell(
             onTap: onSeeAll,
             child: Text(
-              labels.seeAll,
+              'Lihat Semua',
               style: Theme.of(context)
                   .textTheme
                   .bodyText2!

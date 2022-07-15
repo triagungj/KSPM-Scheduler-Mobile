@@ -32,7 +32,7 @@ void main() {
       FlutterError.onError = (details) {
         log(details.exceptionAsString(), stackTrace: details.stack);
       };
-      FlavorSettings.development(); 
+      FlavorSettings.development();
       await di.init();
 
       if (GetPlatform.isMobile || GetPlatform.isWeb) {

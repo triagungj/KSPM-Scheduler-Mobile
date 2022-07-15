@@ -1,7 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/configs/themes/palette.dart';
-import 'package:kspm_scheduler_mobile/core/l10n/localizations.dart';
 
 class Empty extends StatelessWidget {
   const Empty({Key? key, this.notFoundText}) : super(key: key);
@@ -10,8 +9,6 @@ class Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = context.localizations;
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -25,7 +22,7 @@ class Empty extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             Text(
-              notFoundText ?? labels.noDataFound,
+              notFoundText ?? ' ',
               style: Theme.of(context).textTheme.headline6!.copyWith(
                     color: Palette.primaryColor,
                     fontWeight: FontWeight.bold,

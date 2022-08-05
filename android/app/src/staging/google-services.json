@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "629689370890",
+    "project_id": "kspm-scheduler-mobile",
+    "storage_bucket": "kspm-scheduler-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629689370890:android:32798af9adc9f9d2fb92f3",
+        "android_client_info": {
+          "package_name": "com.scheduler.kspm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629689370890-9r8im0u14rumoahkuag4feofj4n5l9ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scheduler.kspm",
+            "certificate_hash": "8921f9b4bbc7281ab0258214b28d18c6b93bcbcb"
+          }
+        },
+        {
+          "client_id": "629689370890-kmopf1mavmi6vaddlechr3n3vnsj43uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9fCu8KL6cYzUcaqmYOJmlRLGpLxy-ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629689370890-kmopf1mavmi6vaddlechr3n3vnsj43uk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629689370890:android:ff4f9ae4eb0149fffb92f3",
+        "android_client_info": {
+          "package_name": "com.scheduler.kspm.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629689370890-kmopf1mavmi6vaddlechr3n3vnsj43uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9fCu8KL6cYzUcaqmYOJmlRLGpLxy-ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629689370890-kmopf1mavmi6vaddlechr3n3vnsj43uk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629689370890:android:4505232558d7f5f3fb92f3",
+        "android_client_info": {
+          "package_name": "com.scheduler.kspm.stg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629689370890-kmopf1mavmi6vaddlechr3n3vnsj43uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9fCu8KL6cYzUcaqmYOJmlRLGpLxy-ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629689370890-kmopf1mavmi6vaddlechr3n3vnsj43uk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

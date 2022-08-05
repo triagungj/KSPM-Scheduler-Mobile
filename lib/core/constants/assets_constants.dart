@@ -1,4 +1,5 @@
 class AssetsConstants {
   //* Image
-  static const String logo = 'assets/images/logo.png';
+  static const String logoLarge = 'assets/images/logo-150.png';
+  
 }

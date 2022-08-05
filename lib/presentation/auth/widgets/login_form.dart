@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+
 class FormLogin extends StatelessWidget {
   const FormLogin({
     Key? key,
@@ -17,7 +18,6 @@ class FormLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       key: formLoginKey,
       child: Column(
@@ -25,7 +25,7 @@ class FormLogin extends StatelessWidget {
         children: [
           Text(
             'Login',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 20),
           _UsernameField(
@@ -41,7 +41,29 @@ class FormLogin extends StatelessWidget {
           ElevatedButton(
             key: const Key('loginBtn'),
             onPressed: onLogin,
-            child: const Text('Login'),
+            child: const Text('LOGIN'),
+          ),
+          const SizedBox(height: 50),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'Belum punya akun? ',
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: [
+                TextSpan(
+                  text: 'Hubungi Admin ',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                TextSpan(
+                  text: 'Klik disini',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:kspm_scheduler_mobile/core/constants/assets_constants.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/snackbar.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/widgets/login_form.dart';
-import 'package:kspm_scheduler_mobile/presentation/dashboard/pages/dashboard_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key, required this.authBloc}) : super(key: key);
@@ -41,34 +42,36 @@ class _LoginViewState extends State<LoginView> {
         }
 
         if (state is AuthSuccess) {
-          Get.offAllNamed<void>(DashboardPage.route);
+          Get.offAllNamed<void>(NavigationPage.route);
         }
       },
       builder: (context, state) {
         return Stack(
           children: [
             SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 28),
-                    SizedBox(
-                      height: size.height / 4,
-                      child: const Center(
-                        child: Text('Yuhu'),
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        height: size.height / 4,
+                        child: Center(
+                          child: Image.asset(
+                            AssetsConstants.logoLarge,
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 28),
-                    FormLogin(
-                      formLoginKey: _formLoginKey,
-                      usernameController: usernameController,
-                      passwordController: passwordController,
-                      onLogin: onLogin,
-                    ),
-                  ],
+                      const SizedBox(height: 80),
+                      FormLogin(
+                        formLoginKey: _formLoginKey,
+                        usernameController: usernameController,
+                        passwordController: passwordController,
+                        onLogin: onLogin,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

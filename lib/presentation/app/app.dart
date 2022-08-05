@@ -6,7 +6,7 @@ import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/dashboard/pages/dashboard_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
 
     String initialRoute() {
       if (isLogin) {
-        return DashboardPage.route;
+        return NavigationPage.route;
       } else {
         return LoginPage.route;
       }

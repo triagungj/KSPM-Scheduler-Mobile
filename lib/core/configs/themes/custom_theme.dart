@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kspm_scheduler_mobile/core/configs/themes/color_scheme.dart';
 import 'package:kspm_scheduler_mobile/core/configs/themes/palette.dart';
 import 'package:kspm_scheduler_mobile/core/configs/themes/typography.dart';
 
@@ -50,9 +51,9 @@ class CustomTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       primary: Palette.primaryColor,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
   );
@@ -112,19 +113,7 @@ class CustomTheme {
     primaryColorDark: Palette.primaryColorDark,
     primaryColorLight: Palette.primaryColorLight,
     secondaryHeaderColor: Palette.secondaryColorDark,
-    colorScheme: const ColorScheme(
-      primary: Palette.primaryColor,
-      secondary: Palette.secondaryColor,
-      surface: Palette.surface,
-      background: Palette.background,
-      error: Palette.error,
-      onPrimary: Palette.onPrimary,
-      onSecondary: Palette.onSecondary,
-      onSurface: Palette.onSurface,
-      onBackground: Palette.onBackground,
-      onError: Palette.onError,
-      brightness: Brightness.light,
-    ),
+    colorScheme: CustomColorScheme.lightColorScheme,
     textTheme: textTheme,
     disabledColor: Colors.grey,
     dividerColor: Palette.dividerColor.withOpacity(0.5),
@@ -159,19 +148,7 @@ class CustomTheme {
     primaryColorDark: Palette.primaryColorDark,
     primaryColorLight: Palette.primaryColorLight,
     secondaryHeaderColor: Palette.secondaryColorDark,
-    colorScheme: const ColorScheme(
-      primary: Palette.primaryColorLight,
-      secondary: Palette.secondaryColor,
-      surface: Palette.surfaceDark,
-      background: Palette.backgroundDark,
-      error: Palette.error,
-      onPrimary: Palette.onPrimary,
-      onSecondary: Palette.onSecondary,
-      onSurface: Palette.onSurfaceDark,
-      onBackground: Palette.onBackgroundDark,
-      onError: Palette.onError,
-      brightness: Brightness.dark,
-    ),
+    colorScheme: CustomColorScheme.darkColorScheme,
     disabledColor: Palette.disabledColor,
     dividerColor: Palette.dividerColor.withOpacity(0.5),
     hintColor: Colors.grey,

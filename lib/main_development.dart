@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -46,9 +45,7 @@ void main() {
 
       BlocOverrides.runZoned(
         () => runApp(
-          DevicePreview(
-            builder: (context) => App(),
-          ),
+          App(),
         ),
         blocObserver: AppBlocObserver(),
       );

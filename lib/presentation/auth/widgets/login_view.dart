@@ -8,6 +8,7 @@ import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/widgets/login_form.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key, required this.authBloc}) : super(key: key);
@@ -25,6 +26,22 @@ class _LoginViewState extends State<LoginView> {
 
   // Key
   final _formLoginKey = GlobalKey<FormState>();
+
+  Future<void> _launchInBrowser(String phoneNumber) async {
+    try {
+      await launchUrl(
+        Uri(
+          scheme: 'https',
+          host: 'api.whatsapp.com',
+          path: 'send',
+          query: 'phone=$phoneNumber',
+        ),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   @override
   void initState() {
@@ -70,6 +87,7 @@ class _LoginViewState extends State<LoginView> {
                         passwordController: passwordController,
                         onLogin: onLogin,
                       ),
+                      contactDirect(),
                     ],
                   ),
                 ),
@@ -79,6 +97,35 @@ class _LoginViewState extends State<LoginView> {
           ],
         );
       },
+    );
+  }
+
+  Widget contactDirect() {
+    return InkWell(
+      onTap: () => _launchInBrowser(
+        '6282262401237',
+      ),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text: 'Belum punya akun? ',
+          style: Theme.of(context).textTheme.bodyMedium,
+          children: [
+            TextSpan(
+              text: 'Hubungi Admin ',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            TextSpan(
+              text: 'Klik disini',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

@@ -108,6 +108,7 @@ class CustomTheme {
 
   static final lightTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    scaffoldBackgroundColor: CustomColorScheme.lightColorScheme.surface,
     brightness: Brightness.light,
     primaryColor: Palette.primaryColor,
     primaryColorDark: Palette.primaryColorDark,
@@ -127,7 +128,6 @@ class CustomTheme {
       margin: const EdgeInsets.only(bottom: 10),
       elevation: 6,
       shadowColor: Colors.black.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
     elevatedButtonTheme: elevatedButtonTheme,
     outlinedButtonTheme: outlinedButtonTheme,
@@ -177,7 +177,6 @@ class CustomTheme {
       margin: const EdgeInsets.only(bottom: 10),
       elevation: 6,
       shadowColor: Colors.black.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
     elevatedButtonTheme: elevatedButtonTheme,
     outlinedButtonTheme: outlinedButtonThemeDark,

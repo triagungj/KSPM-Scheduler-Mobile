@@ -57,6 +57,9 @@ class _LoginViewState extends State<LoginView> {
         if (state is AuthFailure) {
           AppSnackbar.snackbarFailure('Login Gagal', state.message);
         }
+        if (state is AuthSuccess) {
+          AppSnackbar.snackbarSuccess('Login ', state.data.message);
+        }
 
         if (state is AuthSuccess) {
           Get.offAllNamed<void>(NavigationPage.route);
@@ -134,7 +137,7 @@ class _LoginViewState extends State<LoginView> {
       _formLoginKey.currentState!.save();
 
       final body = LoginBody(
-        email: usernameController.text,
+        username: usernameController.text,
         password: passwordController.text,
       );
 

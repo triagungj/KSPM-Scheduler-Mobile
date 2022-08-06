@@ -30,7 +30,7 @@ class AppSnackbar {
       margin: const EdgeInsets.all(10),
       maxWidth: 400,
       icon: const Icon(
-        FluentIcons.check_20_regular,
+        FluentIcons.checkmark_16_filled,
         color: Colors.white,
       ),
       duration: const Duration(seconds: 2),

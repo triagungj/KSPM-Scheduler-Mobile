@@ -5,11 +5,11 @@ part 'login_body.g.dart';
 @JsonSerializable(createFactory: false)
 class LoginBody {
   const LoginBody({
-    required this.email,
+    required this.username,
     required this.password,
   });
 
-  final String email;
+  final String username;
   final String password;
 
   Map<String, dynamic> toJson() => _$LoginBodyToJson(this);

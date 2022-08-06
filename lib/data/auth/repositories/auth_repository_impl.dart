@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
+import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/error/failures.dart';
+import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/data/auth/datasources/auth_local_data_source.dart';
 import 'package:kspm_scheduler_mobile/data/auth/datasources/auth_remote_data_source.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
@@ -21,7 +24,13 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, LoginEntity>> requestLogin(LoginBody body) async {
     try {
       final remoteLogin = await remoteDataSource.requestLogin(body);
+      final sharedPrefs = sl<SharedPrefs>();
       await localDataSource.saveToken(remoteLogin.token);
+      await sharedPrefs.putBool(
+        KeyConstants.keyIsPetugas,
+        remoteLogin.isPetugas,
+      );
+
       return Right(remoteLogin);
     } on DioError catch (e) {
       // The request was made and the server responded with a status code

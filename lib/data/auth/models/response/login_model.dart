@@ -7,10 +7,12 @@ part 'login_model.g.dart';
 class LoginModel extends LoginEntity {
   const LoginModel({
     required int status,
+    required bool isPetugas,
     required String message,
     required String token,
   }) : super(
           status: status,
+          isPetugas: isPetugas,
           message: message,
           token: token,
         );

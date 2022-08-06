@@ -1,9 +1,14 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
+import 'package:kspm_scheduler_mobile/core/di/injection.dart';
+import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/home_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/navigation/widgets/partisipant_buttom_navigation.dart';
+import 'package:kspm_scheduler_mobile/presentation/navigation/widgets/petugas_bottom_navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/profile_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/schedule_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/pages/validation_page.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({Key? key}) : super(key: key);
@@ -19,6 +24,9 @@ class _NavigationPageState extends State<NavigationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final sharedPrefs = sl<SharedPrefs>();
+    final isPetugas = sharedPrefs.getBool(KeyConstants.keyIsPetugas) ?? false;
+
     const _widgetItems = [
       HomePage(),
       SchedulePage(),
@@ -26,39 +34,11 @@ class _NavigationPageState extends State<NavigationPage> {
       ProfilePage(),
     ];
 
-    const _navbarItems = [
-      BottomNavigationBarItem(
-        label: 'Home',
-        activeIcon: Icon(
-          FluentIcons.home_16_filled,
-        ),
-        icon: Icon(
-          FluentIcons.home_16_regular,
-        ),
-      ),
-      BottomNavigationBarItem(
-        label: 'Jadwal',
-        activeIcon: Icon(
-          FluentIcons.calendar_ltr_24_filled,
-        ),
-        icon: Icon(
-          FluentIcons.calendar_ltr_24_regular,
-        ),
-      ),
-      BottomNavigationBarItem(
-        label: 'Input',
-        activeIcon: Icon(FluentIcons.calendar_add_20_filled),
-        icon: Icon(
-          FluentIcons.calendar_add_20_regular,
-        ),
-      ),
-      BottomNavigationBarItem(
-        label: 'Profil',
-        activeIcon: Icon(FluentIcons.person_20_filled),
-        icon: Icon(
-          FluentIcons.person_20_regular,
-        ),
-      ),
+    const _widgetItemsPetugas = [
+      HomePage(),
+      ValidationPage(),
+      SchedulePage(),
+      ProfilePage(),
     ];
 
     return Scaffold(
@@ -67,20 +47,29 @@ class _NavigationPageState extends State<NavigationPage> {
         builder: (context, _value, _widget) {
           return IndexedStack(
             index: _selectedIndex.value,
-            children: _widgetItems.map((e) => e).toList(),
+            children: isPetugas
+                ? _widgetItemsPetugas.map((e) => e).toList()
+                : _widgetItems.map((e) => e).toList(),
           );
         },
       ),
       bottomNavigationBar: ValueListenableBuilder<int>(
         valueListenable: _selectedIndex,
         builder: (context, _value, _widget) {
-          return BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _value,
+          if (isPetugas) {
+            return PetugasButtomNavigation(
+              selectedIndex: _value,
+              onTap: (index) {
+                _selectedIndex.value = index;
+              },
+            );
+          }
+
+          return ParitipantButtomNavigation(
+            selectedIndex: _value,
             onTap: (index) {
               _selectedIndex.value = index;
             },
-            items: _navbarItems.map((e) => e).toList(),
           );
         },
       ),

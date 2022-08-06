@@ -4,7 +4,7 @@ class FlavorSettings {
   FlavorSettings.development() {
     EnvConfig.getInstance(
       flavorName: 'development',
-      apiBaseUrl: 'https://api.dev.kspm.triagungj.site',
+      apiBaseUrl: 'http://192.168.1.18:8000',
       apiSentry: '',
     );
   }

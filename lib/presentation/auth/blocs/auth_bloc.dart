@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
+import 'package:kspm_scheduler_mobile/domain/auth/entities/entities.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/usecase.dart';
 
 part 'auth_event.dart';
@@ -17,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       failureOrLogin.fold(
         (l) => emit(AuthFailure(message: l.message)),
         (r) {
-          return emit(AuthSuccess());
+          return emit(AuthSuccess(data: r));
         },
       );
     });

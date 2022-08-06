@@ -25,6 +25,10 @@ class AuthFailure extends AuthState {
 }
 
 class AuthSuccess extends AuthState {
+  const AuthSuccess({required this.data});
+
+  final LoginEntity data;
+
   @override
   List<Object> get props => [];
 }

@@ -44,27 +44,6 @@ class FormLogin extends StatelessWidget {
             child: const Text('LOGIN'),
           ),
           const SizedBox(height: 50),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              text: 'Belum punya akun? ',
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: [
-                TextSpan(
-                  text: 'Hubungi Admin ',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                TextSpan(
-                  text: 'Klik disini',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );

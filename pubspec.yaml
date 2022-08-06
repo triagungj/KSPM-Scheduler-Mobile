@@ -30,6 +30,8 @@ dependencies:
   rxdart: ^0.27.4
   sentry_flutter: ^6.6.3
   shared_preferences: ^2.0.11
+  url_launcher: ^6.1.5
+  varx_design_system: ^0.2.8
 
 dev_dependencies:
   bloc_test: ^9.0.2

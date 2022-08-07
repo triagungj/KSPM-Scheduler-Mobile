@@ -35,7 +35,7 @@ class _NavigationPageState extends State<NavigationPage> {
     ];
 
     const _widgetItemsPetugas = [
-      HomePage(),
+      HomePage(), 
       ValidationPage(),
       SchedulePage(),
       ProfilePage(),

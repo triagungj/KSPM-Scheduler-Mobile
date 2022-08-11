@@ -25,36 +25,35 @@ class StateInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.titleMedium,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 20),
+          if (bodyContent != null)
+            bodyContent!
+          else if (type != null)
+            SvgPicture.asset(
+              type == StateInfoType.calendar
+                  ? AssetsConstants.calendarSvg
+                  : type == StateInfoType.calendarEmpty
+                      ? AssetsConstants.calendarEmptySvg
+                      : type == StateInfoType.reschedule
+                          ? AssetsConstants.rescheduleSvg
+                          : AssetsConstants.singOutSvg,
             ),
-            const SizedBox(height: 20),
-            if (bodyContent != null)
-              bodyContent!
-            else if (type != null)
-              SvgPicture.asset(
-                type == StateInfoType.calendar
-                    ? AssetsConstants.calendarSvg
-                    : type == StateInfoType.calendarEmpty
-                        ? AssetsConstants.calendarEmptySvg
-                        : type == StateInfoType.reschedule
-                            ? AssetsConstants.rescheduleSvg
-                            : AssetsConstants.singOutSvg,
-              ),
-            const SizedBox(height: 20),
-            Text(
-              subTitle ?? ' ',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
+          const SizedBox(height: 20),
+          Text(
+            subTitle ?? ' ',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ],
       ),
     );
   }

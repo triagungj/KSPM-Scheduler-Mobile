@@ -5,16 +5,19 @@ class TileLabel extends StatelessWidget {
     Key? key,
     required this.label,
     this.suffixLabel,
+    this.padding,
   }) : super(key: key);
 
   final String label;
   final String? suffixLabel;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding:
+            padding ?? const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         color: Theme.of(context).colorScheme.primary,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,7 +28,7 @@ class TileLabel extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
             ),
-            if(suffixLabel != null)
+            if (suffixLabel != null)
               Text(
                 suffixLabel!,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(

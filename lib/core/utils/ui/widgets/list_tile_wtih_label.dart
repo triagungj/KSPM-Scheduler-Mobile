@@ -25,7 +25,11 @@ class ListTileWithLabel extends StatelessWidget {
               listSubTitle.length,
               (index) => TileItem(
                 title: listSubTitle[index],
-                onTap: () => onTap,
+                onTap: () {
+                  if (onTap != null) {
+                    onTap!(index);
+                  }
+                },
               ),
             ),
           )

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/custom_dialog.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
 import 'package:varx_design_system/varx_design_system.dart';
@@ -82,10 +84,20 @@ class _ProfileContentState extends State<ProfileContent> {
                 color: Theme.of(context).colorScheme.error,
               ),
           icon: const Icon(FluentIcons.sign_out_20_regular),
-          onTap: () async {
-            await sharedPref.clearAll();
-            await Get.offAllNamed<void>(LoginPage.route);
-          },
+          onTap: () => Get.dialog<void>(
+            CustomDialog(
+              content: const StateInfo(
+                title: 'Logout dari Akun?',
+                subTitle: 'Kamu akan diarahkan menuju halaman Login',
+                type: StateInfoType.signOut,
+              ),
+              confirmText: 'Logout',
+              onConfirm: () async {
+                await sharedPref.clearAll();
+                await Get.offAllNamed<void>(LoginPage.route);
+              },
+            ),
+          ),
         ),
       ],
     );

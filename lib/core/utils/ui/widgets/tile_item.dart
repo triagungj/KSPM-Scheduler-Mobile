@@ -9,17 +9,21 @@ class TileItem extends StatelessWidget {
     this.iconData,
     this.textStyle,
     this.onTap,
+    this.color,
   }) : super(key: key);
 
   final String title;
   final Widget? icon;
   final IconData? iconData;
   final TextStyle? textStyle;
+  final Color? color;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: const RoundedRectangleBorder(),
+      color: color,
       margin: EdgeInsets.zero,
       child: InkWell(
         onTap: onTap ?? () {},

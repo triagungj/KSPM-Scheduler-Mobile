@@ -7,7 +7,7 @@ import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_
 import 'package:kspm_scheduler_mobile/presentation/navigation/widgets/partisipant_buttom_navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/widgets/petugas_bottom_navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/profile_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/schedule_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/schedule_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/pages/validation_page.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -35,7 +35,7 @@ class _NavigationPageState extends State<NavigationPage> {
     ];
 
     const _widgetItemsPetugas = [
-      HomePage(),
+      HomePage(), 
       ValidationPage(),
       SchedulePage(),
       ProfilePage(),

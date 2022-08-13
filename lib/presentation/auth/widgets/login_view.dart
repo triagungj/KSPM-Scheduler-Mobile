@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -104,30 +105,31 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget contactDirect() {
-    return InkWell(
-      onTap: () => _launchInBrowser(
-        '6282262401237',
-      ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          text: 'Belum punya akun? ',
-          style: Theme.of(context).textTheme.bodyMedium,
-          children: [
-            TextSpan(
-              text: 'Hubungi Admin ',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            TextSpan(
-              text: 'Klik disini',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-            ),
-          ],
-        ),
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: 'Belum punya akun? ',
+        style: Theme.of(context).textTheme.bodyMedium,
+        children: [
+          TextSpan(
+            text: 'Hubungi Admin ',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          TextSpan(
+            text: 'Klik disini',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                _launchInBrowser(
+                  '6282262401237',
+                );
+              },
+          ),
+        ],
       ),
     );
   }

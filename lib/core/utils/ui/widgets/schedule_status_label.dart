@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 enum StatusType { requested, accepted, declined }
 
-class ScehduleStatusLabel extends StatelessWidget {
-  const ScehduleStatusLabel({
+class ScheduleStatusLabel extends StatelessWidget {
+  const ScheduleStatusLabel({
     Key? key,
     required this.type,
   }) : super(key: key);

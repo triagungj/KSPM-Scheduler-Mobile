@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/avatar_edit.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
+// import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/list_tile_wtih_label.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/partisipant_card.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_info_card.dart';
@@ -63,7 +63,7 @@ class _TemplateState extends State<Template> {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: ScehduleStatusLabel(type: StatusType.accepted),
+              child: ScheduleStatusLabel(type: StatusType.accepted),
             ),
             const TileLabel(
               label: 'Jadwal Belum Tervalidasi',
@@ -128,9 +128,9 @@ class _TemplateState extends State<Template> {
       //   onPrev: () {},
       //   onNext: () {},
       // ),
-      bottomNavigationBar: ConfirmationButtomButton(
-        onPressedRightButton: () {},
-      ),
+      // bottomNavigationBar: ConfirmationButtomButton(
+      //   onPressedRightButton: () {},
+      // ),
     );
   }
 }

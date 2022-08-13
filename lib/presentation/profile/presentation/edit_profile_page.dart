@@ -80,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ],
         ),
       ),
-      bottomNavigationBar: ConfirmationButtomButton(
+      bottomNavigationBar: ButtomButtonConfirmation(
         labelLeft: 'Kembali',
         leftWidget: const Icon(FluentIcons.arrow_left_24_filled),
         onPressedLeftButton: () => Get.back<void>(),

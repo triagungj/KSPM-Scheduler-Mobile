@@ -7,10 +7,13 @@ class SessionExpansionTile extends StatefulWidget {
     Key? key,
     required this.title,
     required this.listSession,
+    this.isEnabled = true,
   }) : super(key: key);
 
   final String title;
   final List<Session> listSession;
+  final bool isEnabled;
+
   @override
   State<SessionExpansionTile> createState() => _SessionExpansionTileState();
 }
@@ -54,9 +57,11 @@ class _SessionExpansionTileState extends State<SessionExpansionTile> {
                       )
                     : const Icon(FluentIcons.checkbox_unchecked_20_regular),
                 onTap: () {
-                  setState(() {
-                    _value[index] = !_value[index];
-                  });
+                  if (widget.isEnabled) {
+                    setState(() {
+                      _value[index] = !_value[index];
+                    });
+                  }
                 },
               ),
             ),

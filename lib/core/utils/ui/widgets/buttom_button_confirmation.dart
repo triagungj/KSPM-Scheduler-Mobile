@@ -1,8 +1,8 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
-class ConfirmationButtomButton extends StatelessWidget {
-  const ConfirmationButtomButton({
+class ButtomButtonConfirmation extends StatelessWidget {
+  const ButtomButtonConfirmation({
     Key? key,
     this.labelLeft,
     this.labelRight,

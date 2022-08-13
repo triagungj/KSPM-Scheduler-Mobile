@@ -33,6 +33,7 @@ class StateInfo extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.titleLarge,
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
           if (bodyContent != null)
@@ -46,6 +47,8 @@ class StateInfo extends StatelessWidget {
                       : type == StateInfoType.reschedule
                           ? AssetsConstants.rescheduleSvg
                           : AssetsConstants.singOutSvg,
+              height: 200,
+              width: 200,
             ),
           const SizedBox(height: 20),
           Text(

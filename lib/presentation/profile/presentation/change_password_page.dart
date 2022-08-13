@@ -43,7 +43,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           ],
         ),
       ),
-      bottomNavigationBar: ConfirmationButtomButton(
+      bottomNavigationBar: ButtomButtonConfirmation(
         labelLeft: 'Kembali',
         leftWidget: const Icon(FluentIcons.arrow_left_24_filled),
         onPressedLeftButton: () => Get.back<void>(),

@@ -30,6 +30,10 @@ class AuthRepositoryImpl implements AuthRepository {
         KeyConstants.keyIsPetugas,
         remoteLogin.isPetugas,
       );
+      await sharedPrefs.putBool(
+        KeyConstants.keyIsSuperUser,
+        true,
+      );
 
       return Right(remoteLogin);
     } on DioError catch (e) {

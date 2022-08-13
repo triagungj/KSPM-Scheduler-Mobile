@@ -23,7 +23,7 @@ class PetugasButtomNavigation extends StatelessWidget {
           FluentIcons.home_16_regular,
         ),
       ),
-       BottomNavigationBarItem(
+      BottomNavigationBarItem(
         label: 'Validasi',
         activeIcon: Icon(
           FluentIcons.checkmark_16_filled,
@@ -33,7 +33,7 @@ class PetugasButtomNavigation extends StatelessWidget {
         ),
       ),
       BottomNavigationBarItem(
-        label: 'Validasi',
+        label: 'Jadwal',
         activeIcon: Icon(
           FluentIcons.calendar_ltr_24_filled,
         ),

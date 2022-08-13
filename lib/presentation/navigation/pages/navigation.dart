@@ -3,7 +3,7 @@ import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/home_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/input/pages/input_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/widgets/partisipant_buttom_navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/widgets/petugas_bottom_navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/profile_page.dart';
@@ -30,7 +30,7 @@ class _NavigationPageState extends State<NavigationPage> {
     const _widgetItems = [
       HomePage(),
       SchedulePage(),
-      RequestSchedulePage(),
+      InputSchedulePage(),
       ProfilePage(),
     ];
 

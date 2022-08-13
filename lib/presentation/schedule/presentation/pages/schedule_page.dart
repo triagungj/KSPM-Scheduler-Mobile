@@ -1,9 +1,9 @@
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
+import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/contents/schedule_content.dart';
+// import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/contents/meet_content.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key? key}) : super(key: key);
@@ -14,29 +14,25 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePageState extends State<SchedulePage> {
   final sharedPrefs = sl<SharedPrefs>();
-
   @override
   Widget build(BuildContext context) {
-    final isPetugas = sharedPrefs.getBool(KeyConstants.keyIsPetugas) ?? false;
+    final emptyNotifier = ValueNotifier<bool>(false);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Jadwal'),
       ),
-      // body: const MeetContent(),
       body: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          emptyNotifier.value = !emptyNotifier.value;
+        },
         child: ListView(
           children: [
-            SizedBox(height: Get.height * 1 / 4),
-            Center(
-              child: StateInfo(
-                type: StateInfoType.calendar,
-                title: 'Jadwal belum tersedia',
-                subTitle: isPetugas
-                    ? '''Kamu belum memiliki akses untuk menyusun penjadwalan. Hubungi petugas yang memiliki akses untuk menyusun penjadwalan.'''
-                    : '''Pastikan kamu sudah inputkan pengajuan jadwal, sehingga jadwal kegiatan segera diterbitkan, ya!''',
-              ),
+            ValueListenableBuilder<bool>(
+              valueListenable: emptyNotifier,
+              builder: (context, _value, _widget) {
+                return ScheduleContent(scheduleEmpty: _value);
+              },
             ),
           ],
         ),

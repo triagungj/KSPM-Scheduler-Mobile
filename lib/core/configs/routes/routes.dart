@@ -3,6 +3,8 @@ import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/info_detail_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/info_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
+import 'package:kspm_scheduler_mobile/presentation/profile/presentation/change_password_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/profile/presentation/edit_profile_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/detail_session_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/session_page.dart';
 
@@ -40,6 +42,18 @@ class Routes {
       page: () => DetailSessionPage(
         title: Get.arguments as String,
       ),
+      transition: Transition.cupertino,
+    ),
+
+    // PROFILE
+    GetPage<void>(
+      name: EditProfilePage.route,
+      page: EditProfilePage.new,
+      transition: Transition.cupertino,
+    ),
+    GetPage<void>(
+      name: ChangePasswordPage.route,
+      page: ChangePasswordPage.new,
       transition: Transition.cupertino,
     ),
   ];

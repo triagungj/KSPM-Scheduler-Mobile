@@ -8,10 +8,14 @@ class ConfirmationButtomButton extends StatelessWidget {
     this.labelRight,
     this.onPressedLeftButton,
     this.onPressedRightButton,
+    this.leftWidget,
+    this.rightWidget,
   }) : super(key: key);
 
   final String? labelLeft;
   final String? labelRight;
+  final Widget? leftWidget;
+  final Widget? rightWidget;
   final void Function()? onPressedLeftButton;
   final void Function()? onPressedRightButton;
 
@@ -32,9 +36,10 @@ class ConfirmationButtomButton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    FluentIcons.save_16_regular,
-                  ),
+                  leftWidget ??
+                      const Icon(
+                        FluentIcons.save_16_regular,
+                      ),
                   const SizedBox(width: 10),
                   Text(labelLeft ?? 'Simpan'),
                 ],
@@ -52,10 +57,11 @@ class ConfirmationButtomButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(labelRight ?? 'Ajukan Jadwal'),
-                  const SizedBox(width: 10),
-                  const Icon(
-                    FluentIcons.checkmark_16_filled,
-                  )
+                  const SizedBox(width: 20),
+                  rightWidget ??
+                      const Icon(
+                        FluentIcons.checkmark_16_filled,
+                      )
                 ],
               ),
             ),

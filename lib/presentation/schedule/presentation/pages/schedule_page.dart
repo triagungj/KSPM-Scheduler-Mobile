@@ -4,6 +4,7 @@ import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
+// import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/contents/meet_content.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key? key}) : super(key: key);
@@ -18,6 +19,8 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
     final isPetugas = sharedPrefs.getBool(KeyConstants.keyIsPetugas) ?? false;
+    final isSuperUser =
+        sharedPrefs.getBool(KeyConstants.keyIsSuperUser) ?? false;
 
     return Scaffold(
       appBar: AppBar(
@@ -33,11 +36,21 @@ class _SchedulePageState extends State<SchedulePage> {
               child: StateInfo(
                 type: StateInfoType.calendar,
                 title: 'Jadwal belum tersedia',
-                subTitle: isPetugas
+                subTitle: isPetugas && !isSuperUser
                     ? '''Kamu belum memiliki akses untuk menyusun penjadwalan. Hubungi petugas yang memiliki akses untuk menyusun penjadwalan.'''
-                    : '''Pastikan kamu sudah inputkan pengajuan jadwal, sehingga jadwal kegiatan segera diterbitkan, ya!''',
+                    : !isPetugas
+                        ? '''Pastikan kamu sudah inputkan pengajuan jadwal, sehingga jadwal kegiatan segera diterbitkan, ya!'''
+                        : '',
               ),
             ),
+            if (isSuperUser)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Atur Jadwal Otomatis'),
+                ),
+              ),
           ],
         ),
       ),

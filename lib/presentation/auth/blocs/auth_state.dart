@@ -32,3 +32,12 @@ class AuthSuccess extends AuthState {
   @override
   List<Object> get props => [];
 }
+
+class LogoutSuccess extends AuthState {
+  const LogoutSuccess(this.response);
+
+  final DefaultEntity response;
+
+  @override
+  List<Object> get props => [response];
+}

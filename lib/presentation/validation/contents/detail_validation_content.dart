@@ -74,22 +74,11 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
     ];
 
     final bottomNavBar = ButtomButtonConfirmation(
-      leftWidget: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            FluentIcons.dismiss_16_filled,
-            color: Theme.of(context).colorScheme.error,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            'Tolak',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-        ],
+      leftWidget: const Icon(
+        FluentIcons.dismiss_16_filled,
       ),
+      labelLeft: 'Tolak',
+      primaryLeft: Theme.of(context).colorScheme.error,
       labelRight: 'Konfirmasi',
       onPressedRightButton: widget.type == ScheduleStatusType.declined ||
               widget.type == ScheduleStatusType.requested

@@ -87,7 +87,7 @@ class _ScheduleContentState extends State<ScheduleContent> {
                     : '',
           ),
         ),
-        if (isSuperUser != null && isSuperUser)
+        if (isSuperUser != null && isSuperUser && isPetugas)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(

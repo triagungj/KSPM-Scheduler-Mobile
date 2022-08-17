@@ -6,14 +6,17 @@ import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/custom_dialog.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
-import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/change_password_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/edit_profile_page.dart';
 import 'package:varx_design_system/varx_design_system.dart';
 
 class ProfileContent extends StatefulWidget {
-  const ProfileContent({Key? key}) : super(key: key);
-
+  const ProfileContent({
+    Key? key,
+    required this.bloc,
+  }) : super(key: key);
+  final AuthBloc bloc;
   @override
   State<ProfileContent> createState() => _ProfileContentState();
 }
@@ -97,8 +100,10 @@ class _ProfileContentState extends State<ProfileContent> {
               ),
               confirmText: 'Logout',
               onConfirm: () async {
-                await sharedPref.clearAll();
-                await Get.offAllNamed<void>(LoginPage.route);
+                Get.back<void>();
+                widget.bloc.add(
+                  const LogoutEvent(),
+                );
               },
             ),
           ),

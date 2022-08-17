@@ -7,6 +7,7 @@ import 'package:kspm_scheduler_mobile/data/auth/datasources/auth_local_data_sour
 import 'package:kspm_scheduler_mobile/data/auth/datasources/auth_remote_data_source.dart';
 import 'package:kspm_scheduler_mobile/data/auth/repositories/repository_impl.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/repositories/repository.dart';
+import 'package:kspm_scheduler_mobile/domain/auth/usecases/logout_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 
@@ -26,10 +27,11 @@ Future<void> init() async {
 
   //! Features - Auth
   // Bloc
-  sl.registerFactory(() => AuthBloc(sl()));
+  sl.registerFactory(() => AuthBloc(sl(),sl()));
 
   // Use cases
   sl.registerLazySingleton(() => LoginUsecase(sl()));
+  sl.registerLazySingleton(() => LogoutUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

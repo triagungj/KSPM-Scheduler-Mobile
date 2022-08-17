@@ -10,12 +10,16 @@ class ButtomButtonConfirmation extends StatelessWidget {
     this.onPressedRightButton,
     this.leftWidget,
     this.rightWidget,
+    this.primaryLeft,
+    this.primaryRight,
   }) : super(key: key);
 
   final String? labelLeft;
   final String? labelRight;
   final Widget? leftWidget;
   final Widget? rightWidget;
+  final Color? primaryLeft;
+  final Color? primaryRight;
   final void Function()? onPressedLeftButton;
   final void Function()? onPressedRightButton;
 
@@ -31,26 +35,28 @@ class ButtomButtonConfirmation extends StatelessWidget {
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                 shape: const RoundedRectangleBorder(),
+                primary: primaryLeft,
               ),
               onPressed: onPressedLeftButton,
-              child: leftWidget ??
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  leftWidget ??
                       const Icon(
                         FluentIcons.save_16_regular,
                       ),
-                      const SizedBox(width: 10),
-                      Text(labelLeft ?? 'Simpan'),
-                    ],
-                  ),
+                  const SizedBox(width: 10),
+                  Text(labelLeft ?? 'Simpan'),
+                ],
+              ),
             ),
           ),
           Expanded(
             flex: 5,
             child: ElevatedButton(
-              style: OutlinedButton.styleFrom(
+              style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder(),
+                primary: primaryRight,
               ),
               onPressed: onPressedRightButton,
               child: Row(

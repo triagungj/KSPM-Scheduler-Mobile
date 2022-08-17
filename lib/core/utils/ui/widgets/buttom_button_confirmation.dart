@@ -10,12 +10,16 @@ class ButtomButtonConfirmation extends StatelessWidget {
     this.onPressedRightButton,
     this.leftWidget,
     this.rightWidget,
+    this.primaryLeft,
+    this.primaryRight,
   }) : super(key: key);
 
   final String? labelLeft;
   final String? labelRight;
   final Widget? leftWidget;
   final Widget? rightWidget;
+  final Color? primaryLeft;
+  final Color? primaryRight;
   final void Function()? onPressedLeftButton;
   final void Function()? onPressedRightButton;
 
@@ -31,6 +35,7 @@ class ButtomButtonConfirmation extends StatelessWidget {
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                 shape: const RoundedRectangleBorder(),
+                primary: primaryLeft,
               ),
               onPressed: onPressedLeftButton,
               child: Row(
@@ -49,8 +54,9 @@ class ButtomButtonConfirmation extends StatelessWidget {
           Expanded(
             flex: 5,
             child: ElevatedButton(
-              style: OutlinedButton.styleFrom(
+              style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder(),
+                primary: primaryRight,
               ),
               onPressed: onPressedRightButton,
               child: Row(

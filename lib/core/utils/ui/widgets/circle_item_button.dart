@@ -23,30 +23,30 @@ class CircleItemButton extends StatelessWidget {
     return SizedBox(
       child: Column(
         children: [
-          Card(
-            color: Theme.of(context).colorScheme.surfaceVariant,
-            margin: EdgeInsets.zero,
-            shape: const CircleBorder(),
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Icon(
-                      iconData,
-                      size: 28,
-                      color: componentColor,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      count.toString(),
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: componentColor,
-                          ),
-                    ),
-                  ],
-                ),
+          ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).colorScheme.surfaceVariant,
+              shape: const CircleBorder(),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    iconData,
+                    size: 28,
+                    color: componentColor,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    count.toString(),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: componentColor,
+                        ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -36,7 +36,7 @@ class HttpClient {
 
   Interceptor _loggingInterceptor() {
     return InterceptorsWrapper(onRequest: (options, handler) {
-      final storageToken = preferences.getString('isToken');
+      final storageToken = preferences.getString(KeyConstants.keyAccessToken);
       final headers = {'Authorization': 'Bearer $storageToken'};
 
       log("--> ${options.method} ${"${options.baseUrl}${options.path}"}");
@@ -48,7 +48,7 @@ class HttpClient {
         '--> END ${options.method}',
       );
 
-      if (options.headers.containsKey('isToken')) {
+      if (options.headers.containsKey('isToken') && storageToken != null) {
         options.headers.remove('isToken');
         options.headers.addAll(headers);
       }

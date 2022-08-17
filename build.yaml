@@ -4,8 +4,7 @@ targets:
       json_serializable:
         generate_for:
           include:
-            - lib/features/auth/data/models/**.dart
-            - lib/features/auth/domain/entities/**.dart
+            - lib/core/models/**.dart
             - lib/data/*/models/**.dart
             - lib/domain/*/entities/**.dart
         options:

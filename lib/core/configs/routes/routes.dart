@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kspm_scheduler_mobile/core/entities/classes.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/info_detail_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/info_page.dart';
@@ -8,6 +9,8 @@ import 'package:kspm_scheduler_mobile/presentation/profile/presentation/change_p
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/edit_profile_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/detail_session_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/session_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/pages/detail_validation_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/pages/list_validation_page.dart';
 
 class Routes {
   static List<GetPage> page = <GetPage>[
@@ -50,6 +53,20 @@ class Routes {
     GetPage<void>(
       name: RequestSchedulePage.route,
       page: RequestSchedulePage.new,
+      transition: Transition.cupertino,
+    ),
+
+    // Validation
+    GetPage<void>(
+      name: ListValidationPage.route,
+      page: () => ListValidationPage(
+        validationEntity: Get.arguments as ValidationEntity,
+      ),
+      transition: Transition.cupertino,
+    ),
+    GetPage<void>(
+      name: DetailValidationPage.route,
+      page: DetailValidationPage.new,
       transition: Transition.cupertino,
     ),
 

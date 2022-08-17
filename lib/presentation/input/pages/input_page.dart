@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_status_label.dart';
+import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/contents/input_content.dart';
 
 class InputSchedulePage extends StatelessWidget {
@@ -7,7 +7,7 @@ class InputSchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusNotifier = ValueNotifier<StatusType?>(null);
+    final statusNotifier = ValueNotifier<ScheduleStatusType?>(null);
 
     return Scaffold(
       appBar: AppBar(
@@ -16,18 +16,18 @@ class InputSchedulePage extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           if (statusNotifier.value == null) {
-            statusNotifier.value = StatusType.requested;
-          } else if (statusNotifier.value == StatusType.requested) {
-            statusNotifier.value = StatusType.declined;
-          } else if (statusNotifier.value == StatusType.declined) {
-            statusNotifier.value = StatusType.accepted;
+            statusNotifier.value = ScheduleStatusType.requested;
+          } else if (statusNotifier.value == ScheduleStatusType.requested) {
+            statusNotifier.value = ScheduleStatusType.declined;
+          } else if (statusNotifier.value == ScheduleStatusType.declined) {
+            statusNotifier.value = ScheduleStatusType.accepted;
           } else {
             statusNotifier.value = null;
           }
         },
         child: ListView(
           children: [
-            ValueListenableBuilder<StatusType?>(
+            ValueListenableBuilder<ScheduleStatusType?>(
               valueListenable: statusNotifier,
               builder: (context, _value, __) {
                 return InputContent(

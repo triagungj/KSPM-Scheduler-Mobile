@@ -2,6 +2,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_status_label.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
@@ -15,7 +16,7 @@ class InputContent extends StatefulWidget {
     this.type,
   }) : super(key: key);
 
-  final StatusType? type;
+  final ScheduleStatusType? type;
 
   @override
   State<InputContent> createState() => _InputContentState();
@@ -70,7 +71,7 @@ class _InputContentState extends State<InputContent> {
     return emptySection();
   }
 
-  Widget requestedSection(StatusType type, List<Session> listSession) {
+  Widget requestedSection(ScheduleStatusType type, List<Session> listSession) {
     return Column(
       children: [
         Padding(
@@ -90,7 +91,7 @@ class _InputContentState extends State<InputContent> {
           ),
         ),
         const Divider(height: 10, thickness: 10),
-        if (type == StatusType.requested)
+        if (type == ScheduleStatusType.requested)
           Padding(
             padding: const EdgeInsets.all(20),
             child: RichText(
@@ -116,7 +117,7 @@ class _InputContentState extends State<InputContent> {
               textAlign: TextAlign.justify,
             ),
           ),
-        if (type == StatusType.declined)
+        if (type == ScheduleStatusType.declined)
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -177,7 +178,7 @@ class _InputContentState extends State<InputContent> {
               ],
             ),
           ),
-        if (type == StatusType.accepted)
+        if (type == ScheduleStatusType.accepted)
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -197,7 +198,7 @@ class _InputContentState extends State<InputContent> {
             ),
           ),
         const Divider(height: 10, thickness: 10),
-        if (type == StatusType.requested)
+        if (type == ScheduleStatusType.requested)
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(

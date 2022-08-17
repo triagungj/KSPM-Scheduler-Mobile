@@ -33,17 +33,17 @@ class ButtomButtonConfirmation extends StatelessWidget {
                 shape: const RoundedRectangleBorder(),
               ),
               onPressed: onPressedLeftButton,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  leftWidget ??
+              child: leftWidget ??
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       const Icon(
                         FluentIcons.save_16_regular,
                       ),
-                  const SizedBox(width: 10),
-                  Text(labelLeft ?? 'Simpan'),
-                ],
-              ),
+                      const SizedBox(width: 10),
+                      Text(labelLeft ?? 'Simpan'),
+                    ],
+                  ),
             ),
           ),
           Expanded(

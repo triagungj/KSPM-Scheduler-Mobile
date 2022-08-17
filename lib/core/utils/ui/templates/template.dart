@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/avatar_edit.dart';
 // import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/list_tile_wtih_label.dart';
@@ -63,7 +64,7 @@ class _TemplateState extends State<Template> {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: ScheduleStatusLabel(type: StatusType.accepted),
+              child: ScheduleStatusLabel(type: ScheduleStatusType.accepted),
             ),
             const TileLabel(
               label: 'Jadwal Belum Tervalidasi',

@@ -14,7 +14,7 @@ import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/entities/entities.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/repositories/repository.dart';
 
-const errorMsg = 'Something went wrong';
+const errorMsg = 'Gagal terhubung ke server';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.remoteDataSource, this.localDataSource);
@@ -32,10 +32,13 @@ class AuthRepositoryImpl implements AuthRepository {
         KeyConstants.keyIsPetugas,
         remoteLogin.isPetugas,
       );
-      await sharedPrefs.putBool(
-        KeyConstants.keyIsSuperUser,
-        true,
-      );
+
+      if (remoteLogin.isSuperuser != null) {
+        await sharedPrefs.putBool(
+          KeyConstants.keyIsSuperUser,
+          remoteLogin.isSuperuser!,
+        );
+      }
 
       return Right(remoteLogin);
     } on DioError catch (e) {
@@ -51,6 +54,8 @@ class AuthRepositoryImpl implements AuthRepository {
         log(e.message);
         return const Left(ServerFailure(errorMsg));
       }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 
@@ -75,6 +80,8 @@ class AuthRepositoryImpl implements AuthRepository {
         log(e.message);
         return const Left(ServerFailure(errorMsg));
       }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

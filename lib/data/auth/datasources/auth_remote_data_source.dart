@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kspm_scheduler_mobile/core/constants/api_path.dart';
 import 'package:kspm_scheduler_mobile/core/entities/default_entity.dart';
+import 'package:kspm_scheduler_mobile/core/error/exceptions.dart';
 import 'package:kspm_scheduler_mobile/core/models/default_model.dart';
 import 'package:kspm_scheduler_mobile/core/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
@@ -24,8 +25,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         data: body.toJson(),
       );
       
-      
-
       return LoginModel.fromJson(_response.data!);
     } on DioError catch (e) {
       throw DioError(
@@ -50,6 +49,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         error: e.error,
         response: e.response,
       );
+    } catch (e) {
+      throw ServerException();
     }
   }
 }

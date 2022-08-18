@@ -8,11 +8,13 @@ class LoginModel extends LoginEntity {
   const LoginModel({
     required int status,
     required bool isPetugas,
+    bool? isSuperuser,
     required String message,
     required String token,
   }) : super(
           status: status,
           isPetugas: isPetugas,
+          isSuperuser: isSuperuser,
           message: message,
           token: token,
         );

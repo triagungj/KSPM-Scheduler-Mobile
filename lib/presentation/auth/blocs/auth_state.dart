@@ -41,3 +41,12 @@ class LogoutSuccess extends AuthState {
   @override
   List<Object> get props => [response];
 }
+
+class ChangePasswordSuccess extends AuthState {
+  const ChangePasswordSuccess(this.response);
+
+  final DefaultEntity response;
+
+  @override
+  List<Object> get props => [response];
+}

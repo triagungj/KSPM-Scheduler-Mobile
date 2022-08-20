@@ -84,4 +84,29 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, DefaultEntity>> changePassword(
+      ChangePasswordBody body) async {
+    try {
+      final remoteChangePassword = await remoteDataSource.changePassword(body);
+
+      return Right(remoteChangePassword);
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        log('${e.response!.data}');
+        log('${e.response!.headers}');
+        return Left(ServerFailure(e.response!.data['message'].toString()));
+      } else {
+        // Something happened in setting up or sending the request
+        //that triggered an Error
+        log(e.message);
+        return const Left(ServerFailure(errorMsg));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

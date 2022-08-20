@@ -8,4 +8,7 @@ import 'package:kspm_scheduler_mobile/domain/auth/entities/entities.dart';
 abstract class AuthRepository {
   Future<Either<Failure, LoginEntity>> requestLogin(LoginBody body);
   Future<Either<Failure, DefaultEntity>> requestLogout(NoParams noParams);
+  Future<Either<Failure, DefaultEntity>> changePassword(
+    ChangePasswordBody body,
+  );
 }

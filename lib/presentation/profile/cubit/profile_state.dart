@@ -22,3 +22,9 @@ class SuccessGetProfileState extends ProfileState {
 
   final ProfileDataEntity data;
 }
+
+class SuccessEditProfileState extends ProfileState {
+  const SuccessEditProfileState(this.data);
+
+  final DefaultEntity data;
+}

@@ -1,13 +1,7 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kspm_scheduler_mobile/core/error/failures.dart';
 
-part 'failures.g.dart';
-
-abstract class Failure extends Equatable {
-  const Failure(this.message);
-
-  final String message;
-}
+part 'server_failure.g.dart';
 
 // General failures
 @JsonSerializable(createToJson: false)

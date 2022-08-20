@@ -7,6 +7,7 @@ import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.da
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/contents/profile_content.dart';
+import 'package:kspm_scheduler_mobile/presentation/profile/cubit/profile_cubit.dart';
 import 'package:varx_design_system/varx_design_system.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -15,9 +16,17 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authBloc = sl<AuthBloc>();
+    final profileCubit = sl<ProfileCubit>();
 
-    return BlocProvider<AuthBloc>(
-      create: (context) => authBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => authBloc,
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => profileCubit,
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Profil'),
@@ -27,7 +36,7 @@ class ProfilePage extends StatelessWidget {
           listener: (context, state) {
             if (state is AuthFailure) {
               Get.snackbar(
-                'Gagal Logout',
+                'Gagal',
                 state.message,
                 backgroundColor: Theme.of(context).colorScheme.error,
                 colorText: Theme.of(context).colorScheme.onPrimary,
@@ -52,7 +61,8 @@ class ProfilePage extends StatelessWidget {
             return Stack(
               children: [
                 ProfileContent(
-                  bloc: authBloc,
+                  authBloc: authBloc,
+                  profileCubit: profileCubit,
                 ),
                 if (state is AuthLoading) const LoadingWithText(),
               ],

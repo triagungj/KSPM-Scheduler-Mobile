@@ -5,4 +5,7 @@ class KeyConstants {
   static const String keyIsSuperUser = 'keyIsSuperuser';
   static const String keyUserLoggedIn = 'keyUserLoggedIn';
   static const String keyChatTopicId = 'keyChatTopicId';
+
+  ///Variable Global
+  static const String errorMsg = 'Gagal Terhubung!';
 }

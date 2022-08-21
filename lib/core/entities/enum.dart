@@ -30,3 +30,16 @@ enum PrivilegeType {
   @JsonValue('anggota')
   anggota,
 }
+
+enum DayEnum {
+  @JsonValue('senin')
+  senin,
+  @JsonValue('selasa')
+  selasa,
+  @JsonValue('rabu')
+  rabu,
+  @JsonValue('kamis')
+  kamis,
+  @JsonValue('jumat')
+  jumat,
+}

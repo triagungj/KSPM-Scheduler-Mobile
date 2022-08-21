@@ -130,14 +130,9 @@ class _ProfileContentState extends State<ProfileContent> {
     return Column(
       children: [
         Center(
-          child: SizedBox(
-            height: 80,
-            width: 80,
-            child: VarxIconButton(
-              iconData: FluentIcons.person_16_regular,
-              iconColor: Theme.of(context).colorScheme.onPrimary,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
+          child: VarxAvatar(
+            radius: 39,
+            name: data.name,
           ),
         ),
         const SizedBox(height: 15),

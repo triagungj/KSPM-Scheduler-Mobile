@@ -1,46 +1,30 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
+import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/uploaded_file_box.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule/entities/session_entitiy.dart';
+import 'package:kspm_scheduler_mobile/presentation/input/widgets/session_expansion_widget.dart';
+import 'package:varx_design_system/components/buttons/varx_button.dart';
 
 class RequestScheduleContent extends StatefulWidget {
   const RequestScheduleContent({
     Key? key,
     required this.agreementNotifier,
+    required this.data,
   }) : super(key: key);
 
   final ValueNotifier<bool> agreementNotifier;
+  final List<SessionDataEntity> data;
 
   @override
   State<RequestScheduleContent> createState() => _RequestScheduleContentState();
 }
 
 class _RequestScheduleContentState extends State<RequestScheduleContent> {
-  final meetNofifier = ValueNotifier<List<Meet>>([]);
+  final sessionNotifier = ValueNotifier<List<SessionDataResultEntity>>([]);
 
   @override
   Widget build(BuildContext context) {
-    final listString = [
-      'Hari Senin',
-      'Hari Selasa',
-      'Hari Rabu',
-      'Hari Kamis',
-      'Hari Jumat',
-    ];
-
-    final listSession = [
-      Session(sessionName: '09:00 - 10.30', sessionStatus: true),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-    ];
-    meetNofifier.value = [
-      Meet(title: listString[0], listSession: listSession),
-      Meet(title: listString[1], listSession: listSession),
-      Meet(title: listString[2], listSession: listSession),
-      Meet(title: listString[3], listSession: listSession),
-      Meet(title: listString[4], listSession: listSession),
-    ];
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,16 +36,20 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          ValueListenableBuilder<List<Meet>>(
-            valueListenable: meetNofifier,
+          ValueListenableBuilder<List<SessionDataResultEntity>>(
+            valueListenable: sessionNotifier,
             builder: (context, meetValue, _) {
               return Column(
                 children: List.generate(
-                  meetValue.length,
-                  (index) => SessionExpansionTile(
-                    title: meetValue[index].title,
-                    listSession: listSession,
-                  ),
+                  widget.data.length,
+                  (index) {
+                    final data = widget.data[index];
+                    return SessionExpansionWidget(
+                      title: 'Hari ${data.hari.name.capitalize}',
+                      listSession: data.result,
+                      sessionNotifier: sessionNotifier,
+                    );
+                  },
                 ),
               );
             },
@@ -102,13 +90,13 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
               ),
         ),
         const SizedBox(height: 10),
-        // VarxButton(
-        //   label: 'Upload KRS (Gambar/PDF)',
-        //   prefixIconData: FluentIcons.attach_16_regular,
-        //   type: VarxButtonType.secondary,
-        //   onTap: () {},
-        // ),
-        const UploadedFileBox(nameFile: 'buktKrs.pdf'),
+        VarxButton(
+          label: 'Upload KRS (Gambar/PDF)',
+          prefixIconData: FluentIcons.attach_16_regular,
+          type: VarxButtonType.secondary,
+          onTap: () {},
+        ),
+        // const UploadedFileBox(nameFile: 'buktKrs.pdf'),
       ],
     );
   }

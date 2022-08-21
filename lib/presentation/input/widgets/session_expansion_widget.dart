@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/entities/session_entitiy.dart';
 
-class SessionExpansionTile extends StatefulWidget {
-  const SessionExpansionTile({
+class SessionExpansionWidget extends StatefulWidget {
+  const SessionExpansionWidget({
     Key? key,
     required this.title,
     required this.listSession,
@@ -16,10 +16,10 @@ class SessionExpansionTile extends StatefulWidget {
   final ValueNotifier<List<SessionDataResultEntity>> sessionNotifier;
 
   @override
-  State<SessionExpansionTile> createState() => _SessionExpansionTileState();
+  State<SessionExpansionWidget> createState() => _SessionExpansionTileState();
 }
 
-class _SessionExpansionTileState extends State<SessionExpansionTile> {
+class _SessionExpansionTileState extends State<SessionExpansionWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<SessionDataResultEntity>>(

@@ -5,4 +5,7 @@ class ApiPath {
 
   static const String profile = '/profile';
   static const String profileEdit = '/profile/edit';
+
+  // SCHEDULE
+  static const String session = '/schedule/session';
 }

@@ -8,6 +8,8 @@ import 'package:kspm_scheduler_mobile/data/auth/datasources/auth_remote_data_sou
 import 'package:kspm_scheduler_mobile/data/auth/repositories/repository_impl.dart';
 import 'package:kspm_scheduler_mobile/data/profile/data_sources/profile_remote_data_source.dart';
 import 'package:kspm_scheduler_mobile/data/profile/repositories/profile_repository_impl.dart';
+import 'package:kspm_scheduler_mobile/data/schedule/datasources/schedule_remote_datasource.dart';
+import 'package:kspm_scheduler_mobile/data/schedule/repositories/schedule_repository_impl.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/repositories/repository.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/change_password_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/logout_usecase.dart';
@@ -15,7 +17,10 @@ import 'package:kspm_scheduler_mobile/domain/auth/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/repositories/profile_repository.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/usecases/edit_profile_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/usecases/get_profile_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule/repositories/schedule_repository.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_list_session_usecase.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
+import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/cubit/profile_cubit.dart';
 
 final sl = GetIt.instance;
@@ -36,19 +41,26 @@ Future<void> init() async {
   // Bloc
   sl.registerFactory(() => AuthBloc(sl(), sl(), sl()));
   sl.registerFactory(() => ProfileCubit(sl(), sl()));
+  sl.registerFactory(() => ScheduleCubit(sl()));
 
   // Use cases
   sl.registerLazySingleton(() => LoginUsecase(sl()));
   sl.registerLazySingleton(() => LogoutUsecase(sl()));
+
   sl.registerLazySingleton(() => GetProfileUsecase(sl()));
   sl.registerLazySingleton(() => EditProfileUsecase(sl()));
   sl.registerLazySingleton(() => ChangePasswordUsecase(sl()));
+
+  sl.registerLazySingleton(() => GetListSessionUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<ScheduleRepository>(
+    () => ScheduleRepositoryImpl(sl()),
   );
 
   // Data sources
@@ -58,6 +70,8 @@ Future<void> init() async {
       () => AuthLocalDataSourceImpl(sl()));
   sl.registerLazySingleton<ProfileRemoteDataSource>(
       () => ProfileRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<ScheduleRemoteDatasource>(
+      () => ScheduleRemoteDatasourceImpl(sl()));
 
   // Network
   sl.registerLazySingleton(() => sl<HttpClient>().dio);

@@ -36,7 +36,7 @@ class SessionDataModel extends SessionDataEntity {
 class SessionDataResultModel extends SessionDataResultEntity {
   const SessionDataResultModel({
     required int id,
-    required int pertemuanId,
+    required String pertemuanId,
     required String name,
     required String waktu,
   }) : super(

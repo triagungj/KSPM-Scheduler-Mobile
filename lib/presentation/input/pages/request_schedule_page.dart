@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
@@ -29,8 +30,18 @@ class _RequestSchedulePageState extends State<RequestSchedulePage> {
 
     return BlocProvider<ScheduleCubit>(
       create: (context) => scheduleCubit,
-      child: BlocBuilder<ScheduleCubit, ScheduleState>(
+      child: BlocConsumer<ScheduleCubit, ScheduleState>(
         bloc: scheduleCubit,
+        listener: (context, state) {
+          if (state is FailureScheduleState) {
+            Get.snackbar(
+              'Gagal',
+              state.message,
+              backgroundColor: Theme.of(context).colorScheme.error,
+              colorText: Theme.of(context).colorScheme.onPrimary,
+            );
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(

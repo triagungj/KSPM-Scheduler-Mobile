@@ -36,7 +36,7 @@ class SessionDataResultEntity extends Equatable {
   });
 
   final int id;
-  final int pertemuanId;
+  final String pertemuanId;
   final String name;
   final String waktu;
 

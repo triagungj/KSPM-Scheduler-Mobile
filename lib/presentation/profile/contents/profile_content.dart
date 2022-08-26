@@ -108,15 +108,15 @@ class _ProfileContentState extends State<ProfileContent> {
                 confirmText: 'Logout',
                 onConfirm: () async {
                   Get.back<void>();
-                  // final sharedPrefs = sl<SharedPrefs>();
-                  // await sharedPrefs.clearAll();
-                  // Future<void>.delayed(
-                  //   const Duration(milliseconds: 50),
-                  //   () => Get.offAllNamed<void>(LoginPage.route),
-                  // );
-                  widget.authBloc.add(
-                    const LogoutEvent(),
+                  final sharedPrefs = sl<SharedPrefs>();
+                  await sharedPrefs.clearAll();
+                  Future<void>.delayed(
+                    const Duration(milliseconds: 50),
+                    () => Get.offAllNamed<void>(LoginPage.route),
                   );
+                  // widget.authBloc.add(
+                  //   const LogoutEvent(),
+                  // );
                 },
               ),
             ),

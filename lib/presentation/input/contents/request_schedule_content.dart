@@ -23,6 +23,27 @@ class RequestScheduleContent extends StatefulWidget {
 class _RequestScheduleContentState extends State<RequestScheduleContent> {
   final sessionNotifier = ValueNotifier<List<SessionDataResultEntity>>([]);
 
+  // Future<void> getList() async {
+  //   Future<void>.delayed(Duration(seconds: 1), () {
+  //     sessionNotifier.value.add(
+  //       widget.data[0].result[2],
+  //     );
+  //     sessionNotifier.value.add(
+  //       widget.data[2].result[3],
+  //     );
+  //     sessionNotifier.value.add(
+  //       widget.data[2].result[2],
+  //     );
+  //     setState(() {});
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    // getList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

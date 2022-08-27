@@ -9,7 +9,6 @@ import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/snackbar.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/text_form_with_label.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
-import 'package:kspm_scheduler_mobile/presentation/profile/cubit/profile_cubit.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);

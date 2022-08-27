@@ -1,17 +1,21 @@
+import 'dart:io';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/avatar_edit.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/bottom_sheet.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/get_images_bottomsheet.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/text_form_with_label.dart';
 import 'package:kspm_scheduler_mobile/data/profile/models/request/edit_profile_body.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/cubit/profile_cubit.dart';
-import 'package:varx_design_system/components/avatar/varx_avatar.dart';
 import 'package:varx_design_system/themes/varx_color.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -31,8 +35,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final phoneController = TextEditingController();
   final jabatanController = TextEditingController();
 
+  final avatarUrlNotifier = ValueNotifier<String?>(null);
+  final avatarFileNotifier = ValueNotifier<File?>(null);
+
   Future<void> getProfile() async {
     await profileCubit.getProfile();
+  }
+
+  Future<void> _getImage(bool fromCamera) async {
+    await ImagePicker()
+        .pickImage(
+      source: fromCamera ? ImageSource.camera : ImageSource.gallery,
+      preferredCameraDevice: CameraDevice.front,
+      imageQuality: 30,
+    )
+        .then((value) {
+      if (value != null) {
+        avatarFileNotifier.value = File(value.path);
+
+        Get.back<void>();
+      }
+    });
   }
 
   @override
@@ -89,17 +112,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Center(
-                          child: VarxAvatar(
-                            radius: 50,
-                            name: (state is SuccessGetProfileState)
-                                ? state.data.name
-                                : '',
-                          ),
-                        ),
-                      ),
+                      if (state is SuccessGetProfileState)
+                        ValueListenableBuilder<File?>(
+                          valueListenable: avatarFileNotifier,
+                          builder: (context, _value, _widget) {
+                            return AvatarEdit(
+                              name: state.data.name,
+                              imageFile: _value,
+                              profileImageUrl: state.data.avatarUrl,
+                              onEdit: () => bottomSheet(
+                                context,
+                                GetImageBottomSheet(
+                                  onCamera: () => _getImage(true),
+                                  onGallery: () => _getImage(false),
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      else
+                        const AvatarEdit(name: ''),
                       const SizedBox(height: 10),
                       ColoredBox(
                         color: Theme.of(context).cardColor,
@@ -153,6 +185,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         name: nameController.text,
                         phoneNumber: phoneController.text,
                         memberId: numberController.text,
+                        image: avatarFileNotifier.value != null
+                            ? avatarFileNotifier.value!.path
+                            : null,
                       ),
                     ),
                   ),

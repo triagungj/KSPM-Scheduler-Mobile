@@ -24,11 +24,13 @@ class ProfileDataModel extends ProfileDataEntity {
     required String phoneNumber,
     String? jabatan,
     String? memberId,
+    String? avatarUrl,
   }) : super(
           name: name,
           phoneNumber: phoneNumber,
           jabatan: jabatan,
           memberId: memberId,
+          avatarUrl: avatarUrl,
         );
 
   factory ProfileDataModel.fromJson(Map<String, dynamic> json) =>

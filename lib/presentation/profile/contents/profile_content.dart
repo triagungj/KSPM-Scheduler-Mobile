@@ -133,6 +133,9 @@ class _ProfileContentState extends State<ProfileContent> {
           child: VarxAvatar(
             radius: 39,
             name: data.name,
+            backgroundImage: NetworkImage(
+              data.avatarUrl!,
+            ),
           ),
         ),
         const SizedBox(height: 15),

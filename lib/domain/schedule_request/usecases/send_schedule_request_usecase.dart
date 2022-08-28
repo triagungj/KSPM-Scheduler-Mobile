@@ -13,6 +13,6 @@ class SendScheduleRequestUsecase
   @override
   Future<Either<Failure, DefaultEntity>> call(
       SaveScheduleRequestBody params) async {
-    return _repository.saveRequestSchedule(params);
+    return _repository.sendRequestSchedule(params);
   }
 }

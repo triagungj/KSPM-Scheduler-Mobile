@@ -18,9 +18,10 @@ ScheduleRequestDataModel _$ScheduleRequestDataModelFromJson(
         Map<String, dynamic> json) =>
     ScheduleRequestDataModel(
       id: json['id'] as String,
-      status: $enumDecode(_$ScheduleStatusTypeEnumMap, json['status']),
+      status: $enumDecodeNullable(_$ScheduleStatusTypeEnumMap, json['status']),
       nomorPetugas: json['nomor_petugas'] as String?,
       partisipantNotes: json['partisipant_notes'] as String?,
+      petugasNotes: json['petugas_notes'] as String?,
       sessionListId: (json['session_list_id'] as List<dynamic>)
           .map((dynamic e) => e as int)
           .toList(),
@@ -30,5 +31,5 @@ ScheduleRequestDataModel _$ScheduleRequestDataModelFromJson(
 const _$ScheduleStatusTypeEnumMap = {
   ScheduleStatusType.requested: 'requested',
   ScheduleStatusType.accepted: 'accepted',
-  ScheduleStatusType.declined: 'declined',
+  ScheduleStatusType.rejected: 'rejected',
 };

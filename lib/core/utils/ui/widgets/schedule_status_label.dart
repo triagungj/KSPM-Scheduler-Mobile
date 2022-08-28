@@ -29,7 +29,7 @@ class ScheduleStatusLabel extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
           ),
-        if (type == ScheduleStatusType.declined)
+        if (type == ScheduleStatusType.rejected)
           Text(
             'Jadwal Sedia kamu ditolak',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -48,7 +48,7 @@ class ScheduleStatusLabel extends StatelessWidget {
             size: 36,
             color: Theme.of(context).colorScheme.primary,
           ),
-        if (type == ScheduleStatusType.declined)
+        if (type == ScheduleStatusType.rejected)
           Icon(
             FluentIcons.dismiss_circle_32_filled,
             size: 36,

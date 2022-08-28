@@ -9,11 +9,13 @@ class SessionExpansionWidget extends StatefulWidget {
     required this.title,
     required this.listSession,
     required this.sessionNotifier,
+    this.enabled = true,
   }) : super(key: key);
 
   final String title;
   final List<SessionDataResultEntity> listSession;
   final ValueNotifier<List<int>> sessionNotifier;
+  final bool enabled;
 
   @override
   State<SessionExpansionWidget> createState() => _SessionExpansionTileState();
@@ -48,14 +50,16 @@ class _SessionExpansionTileState extends State<SessionExpansionWidget> {
                       )
                     : const Icon(FluentIcons.checkbox_unchecked_20_regular),
                 onTap: () {
-                  if (_value.contains(widget.listSession[index].id)) {
-                    setState(() {
-                      _value.remove(widget.listSession[index].id);
-                    });
-                  } else {
-                    setState(() {
-                      _value.add(widget.listSession[index].id);
-                    });
+                  if (widget.enabled) {
+                    if (_value.contains(widget.listSession[index].id)) {
+                      setState(() {
+                        _value.remove(widget.listSession[index].id);
+                      });
+                    } else {
+                      setState(() {
+                        _value.add(widget.listSession[index].id);
+                      });
+                    }
                   }
                 },
               ),

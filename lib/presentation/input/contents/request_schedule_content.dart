@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/snackbar.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/uploaded_file_box.dart';
 import 'package:kspm_scheduler_mobile/data/schedule_request/models/requests/save_schedule_request_body.dart';
@@ -103,56 +102,53 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
         },
         builder: (context, state) {
           return Scaffold(
-            body: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          'Inputkan Jadwal Sedia kamu',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      ValueListenableBuilder<List<int>>(
-                        valueListenable: listSessionNotifier,
-                        builder: (context, meetValue, _) {
-                          return Column(
-                            children: List.generate(
-                              widget.data.length,
-                              (index) {
-                                final data = widget.data[index];
-                                return SessionExpansionWidget(
-                                  title: 'Hari ${data.hari.name.capitalize}',
-                                  listSession: data.result,
-                                  sessionNotifier: listSessionNotifier,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      const Divider(height: 10, thickness: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            uploadSection(),
-                            const SizedBox(height: 10),
-                            notesSection(),
-                            const SizedBox(height: 15),
-                            agreeementSection(),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                    ],
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (state is LoadingScheduleState)
+                    const LinearProgressIndicator(),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      'Inputkan Jadwal Sedia kamu',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
-                ),
-                if (state is LoadingScheduleState) const LoadingWithText(),
-              ],
+                  ValueListenableBuilder<List<int>>(
+                    valueListenable: listSessionNotifier,
+                    builder: (context, meetValue, _) {
+                      return Column(
+                        children: List.generate(
+                          widget.data.length,
+                          (index) {
+                            final data = widget.data[index];
+                            return SessionExpansionWidget(
+                              title: 'Hari ${data.hari.name.capitalize}',
+                              listSession: data.result,
+                              sessionNotifier: listSessionNotifier,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  const Divider(height: 10, thickness: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        uploadSection(),
+                        const SizedBox(height: 10),
+                        notesSection(),
+                        const SizedBox(height: 15),
+                        agreeementSection(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
             bottomNavigationBar: (state is LoadingScheduleState)
                 ? null

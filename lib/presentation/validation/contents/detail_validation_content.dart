@@ -58,7 +58,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
       labelLeft: 'Tolak',
       primaryLeft: Theme.of(context).colorScheme.error,
       labelRight: 'Konfirmasi',
-      onPressedRightButton: widget.type == ScheduleStatusType.declined ||
+      onPressedRightButton: widget.type == ScheduleStatusType.rejected ||
               widget.type == ScheduleStatusType.requested
           ? () => Get.dialog<void>(
                 CustomDialog(
@@ -116,7 +116,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (widget.type == ScheduleStatusType.accepted ||
-                  widget.type == ScheduleStatusType.declined)
+                  widget.type == ScheduleStatusType.rejected)
                 Column(
                   children: [
                     Padding(
@@ -157,7 +157,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
                             ],
                           ),
                           const SizedBox(height: 5),
-                          if (widget.type == ScheduleStatusType.declined)
+                          if (widget.type == ScheduleStatusType.rejected)
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [

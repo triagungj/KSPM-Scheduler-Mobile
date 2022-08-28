@@ -43,12 +43,13 @@ class ScheduleRequestRepositoryImpl implements ScheduleRequestRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
   @override
   Future<Either<Failure, DefaultEntity>> sendRequestSchedule(
     SaveScheduleRequestBody body,
   ) async {
     try {
-      final remoteGetProfile = await remoteDataSource.saveRequestSchedule(body);
+      final remoteGetProfile = await remoteDataSource.sendRequestSchedule(body);
 
       return Right(remoteGetProfile);
     } on DioError catch (e) {

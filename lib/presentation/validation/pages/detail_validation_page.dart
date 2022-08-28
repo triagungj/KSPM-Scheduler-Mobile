@@ -20,7 +20,7 @@ class _DetailValidationPageState extends State<DetailValidationPage> {
     } else if (scheduleType.value == ScheduleStatusType.requested) {
       scheduleType.value = ScheduleStatusType.accepted;
     } else if (scheduleType.value == ScheduleStatusType.accepted) {
-      scheduleType.value = ScheduleStatusType.declined;
+      scheduleType.value = ScheduleStatusType.rejected;
     } else {
       scheduleType.value = null;
     }

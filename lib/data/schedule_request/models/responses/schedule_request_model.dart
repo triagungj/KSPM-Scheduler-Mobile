@@ -22,9 +22,10 @@ class ScheduleRequestModel extends ScheduleRequestEntitiy {
 class ScheduleRequestDataModel extends ScheduleRequestDataEntity {
   const ScheduleRequestDataModel({
     required String id,
-    required ScheduleStatusType status,
+    ScheduleStatusType? status,
     String? nomorPetugas,
     String? partisipantNotes,
+    String? petugasNotes,
     required List<int> sessionListId,
     String? bukti,
   }) : super(
@@ -33,6 +34,7 @@ class ScheduleRequestDataModel extends ScheduleRequestDataEntity {
           sessionListId: sessionListId,
           bukti: bukti,
           partisipantNotes: partisipantNotes,
+          petugasNotes: petugasNotes,
           status: status,
         );
 

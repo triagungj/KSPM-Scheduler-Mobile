@@ -21,6 +21,7 @@ class ScheduleRequestDataEntity extends Equatable {
     this.status,
     this.bukti,
     this.partisipantNotes,
+    this.petugasNotes, 
     required this.sessionListId,
   });
 
@@ -29,6 +30,7 @@ class ScheduleRequestDataEntity extends Equatable {
   final String? nomorPetugas;
   final String? bukti;
   final String? partisipantNotes;
+  final String? petugasNotes;
   final List<int> sessionListId;
 
   @override
@@ -38,6 +40,7 @@ class ScheduleRequestDataEntity extends Equatable {
         nomorPetugas,
         bukti,
         partisipantNotes,
+        petugasNotes,
         sessionListId,
       ];
 }

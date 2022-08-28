@@ -5,8 +5,8 @@ enum ScheduleStatusType {
   requested,
   @JsonValue('accepted')
   accepted,
-  @JsonValue('declined')
-  declined,
+  @JsonValue('rejected')
+  rejected,
 }
 
 enum ValidationScheduleType {

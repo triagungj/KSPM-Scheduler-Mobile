@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
-import 'package:kspm_scheduler_mobile/domain/schedule/entities/session_entitiy.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/session_entitiy.dart';
 
 class SessionExpansionTile extends StatefulWidget {
   const SessionExpansionTile({

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
-import 'package:kspm_scheduler_mobile/domain/schedule/entities/session_entitiy.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/session_entitiy.dart';
 
 part 'session_model.g.dart';
 

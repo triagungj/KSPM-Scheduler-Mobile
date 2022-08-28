@@ -16,7 +16,11 @@ class Routes {
   static List<GetPage> page = <GetPage>[
     GetPage<void>(
       name: NavigationPage.route,
-      page: () => const NavigationPage(),
+      page: () => (Get.arguments == null)
+        ? const NavigationPage()
+        : NavigationPage(
+          selectedIndex: Get.arguments as int,
+        ),
     ),
     GetPage<void>(
       name: LoginPage.route,

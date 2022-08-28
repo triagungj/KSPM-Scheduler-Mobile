@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
-import 'package:kspm_scheduler_mobile/domain/schedule/entities/session_entitiy.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/session_entitiy.dart';
 
 class SessionExpansionWidget extends StatefulWidget {
   const SessionExpansionWidget({
@@ -13,7 +13,7 @@ class SessionExpansionWidget extends StatefulWidget {
 
   final String title;
   final List<SessionDataResultEntity> listSession;
-  final ValueNotifier<List<SessionDataResultEntity>> sessionNotifier;
+  final ValueNotifier<List<int>> sessionNotifier;
 
   @override
   State<SessionExpansionWidget> createState() => _SessionExpansionTileState();
@@ -22,7 +22,7 @@ class SessionExpansionWidget extends StatefulWidget {
 class _SessionExpansionTileState extends State<SessionExpansionWidget> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<SessionDataResultEntity>>(
+    return ValueListenableBuilder<List<int>>(
         valueListenable: widget.sessionNotifier,
         builder: (context, _value, _widget) {
           return ExpansionTile(
@@ -38,23 +38,23 @@ class _SessionExpansionTileState extends State<SessionExpansionWidget> {
               widget.listSession.length,
               (index) => TileItem(
                 title: widget.listSession[index].waktu,
-                color: _value.contains(widget.listSession[index])
+                color: (_value.contains(widget.listSession[index].id))
                     ? Theme.of(context).colorScheme.primaryContainer
                     : null,
-                icon: _value.contains(widget.listSession[index])
+                icon: (_value.contains(widget.listSession[index].id))
                     ? Icon(
                         FluentIcons.checkbox_checked_20_regular,
                         color: Theme.of(context).colorScheme.primary,
                       )
                     : const Icon(FluentIcons.checkbox_unchecked_20_regular),
                 onTap: () {
-                  if (_value.contains(widget.listSession[index])) {
+                  if (_value.contains(widget.listSession[index].id)) {
                     setState(() {
-                      _value.remove(widget.listSession[index]);
+                      _value.remove(widget.listSession[index].id);
                     });
                   } else {
                     setState(() {
-                      _value.add(widget.listSession[index]);
+                      _value.add(widget.listSession[index].id);
                     });
                   }
                 },

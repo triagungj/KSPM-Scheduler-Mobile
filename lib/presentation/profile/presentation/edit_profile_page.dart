@@ -35,7 +35,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final phoneController = TextEditingController();
   final jabatanController = TextEditingController();
 
-  final avatarUrlNotifier = ValueNotifier<String?>(null);
   final avatarFileNotifier = ValueNotifier<File?>(null);
 
   Future<void> getProfile() async {

@@ -1,29 +1,42 @@
+// import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+// import 'package:flutter/gestures.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/custom_dialog.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_status_label.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/server_exception_widget.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/schedule_request_entity.dart';
+import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_request_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/input/widgets/session_expansion_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:varx_design_system/components/buttons/varx_button.dart';
 
 class InputContent extends StatefulWidget {
   const InputContent({
     Key? key,
-    this.type,
+    required this.data,
+    required this.parentCubit,
   }) : super(key: key);
 
-  final ScheduleStatusType? type;
+  final ScheduleRequestDataEntity data;
+  final ScheduleRequestCubit parentCubit;
 
   @override
   State<InputContent> createState() => _InputContentState();
 }
 
 class _InputContentState extends State<InputContent> {
-  final meetNotifier = ValueNotifier<List<Meet>>([]);
+  final scheduleRequestCubit = sl<ScheduleRequestCubit>();
+
+  final listSessionNotifier = ValueNotifier<List<int>>([]);
+  final petugasNoteController = TextEditingController();
 
   Future<void> _launchInBrowser(String phoneNumber) async {
     try {
@@ -42,201 +55,251 @@ class _InputContentState extends State<InputContent> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final listString = [
-      'Hari Senin',
-      'Hari Selasa',
-      'Hari Rabu',
-      'Hari Kamis',
-      'Hari Jumat',
-    ];
-
-    final listSession = [
-      Session(sessionName: '09:00 - 10.30', sessionStatus: true),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-    ];
-    meetNotifier.value = [
-      Meet(title: listString[0], listSession: listSession),
-      Meet(title: listString[1], listSession: listSession),
-      Meet(title: listString[2], listSession: listSession),
-      Meet(title: listString[3], listSession: listSession),
-      Meet(title: listString[4], listSession: listSession),
-    ];
-    if (widget.type != null) {
-      return requestedSection(widget.type!, listSession);
+  void initState() {
+    super.initState();
+    if (widget.data.status != null) {
+      scheduleRequestCubit.getListSession();
     }
-
-    return emptySection();
   }
 
-  Widget requestedSection(ScheduleStatusType type, List<Session> listSession) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: ScheduleStatusLabel(
-            type: type,
-          ),
-        ),
-        Column(
-          children: List.generate(
-            meetNotifier.value.length,
-            (index) => SessionExpansionTile(
-              title: meetNotifier.value[index].title,
-              listSession: listSession,
-              isEnabled: false,
-            ),
-          ),
-        ),
-        const Divider(height: 10, thickness: 10),
-        if (type == ScheduleStatusType.requested)
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: RichText(
-              text: TextSpan(
-                text:
-                    '''Jadwal bersedia kamu sedang diajukan ke petugas. Silakan menunggu petugas untuk konfirmasi, atau bisa menghubungi petugas dengan ''',
-                style: Theme.of(context).textTheme.bodyMedium,
-                children: [
-                  TextSpan(
-                    text: 'klik disini.',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        _launchInBrowser(
-                          '6282262401237',
+  @override
+  Widget build(BuildContext context) {
+    if (widget.data.status != null) {
+      listSessionNotifier.value = widget.data.sessionListId;
+      if (widget.data.petugasNotes != null) {
+        petugasNoteController.text = widget.data.petugasNotes!;
+      }
+      return requestedSection(
+        widget.data.status!,
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  Widget requestedSection(ScheduleStatusType type) {
+    return BlocConsumer<ScheduleRequestCubit, ScheduleRequestState>(
+      bloc: scheduleRequestCubit,
+      listener: (context, state) {
+        if (state is SuccessPostponeScheduleRequest) {
+          Get.back<void>();
+          widget.parentCubit.getListMySession().then(
+                (value) => Get.toNamed<void>(RequestSchedulePage.route),
+              );
+        }
+      },
+      builder: (context, state) {
+        if (state is LoadingScheduleState) {
+          return const LinearProgressIndicator();
+        }
+        if (state is FailureScheduleState) {
+          return Column(
+            children: [
+              SizedBox(height: Get.height * 0.2),
+              const ServerExceptionWidget(),
+            ],
+          );
+        }
+        if (state is SuccessGetListSessionState) {
+          return Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: ScheduleStatusLabel(
+                  type: type,
+                ),
+              ),
+              ValueListenableBuilder<List<int>>(
+                valueListenable: listSessionNotifier,
+                builder: (context, meetValue, _) {
+                  return Column(
+                    children: List.generate(
+                      state.data.length,
+                      (index) {
+                        final data = state.data[index];
+                        return SessionExpansionWidget(
+                          title: 'Hari ${data.hari.name.capitalize}',
+                          listSession: data.result,
+                          sessionNotifier: listSessionNotifier,
+                          enabled: false,
                         );
                       },
-                  ),
-                ],
+                    ),
+                  );
+                },
               ),
-              textAlign: TextAlign.justify,
-            ),
-          ),
-        if (type == ScheduleStatusType.declined)
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Jadwal yang kamu ajukan ditolak oleh Petugas Jadwal.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 15),
-                Text(
-                  'Catatan dari Petugas Jadwal',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  controller: TextEditingController(
+              const Divider(height: 10, thickness: 10),
+              if (type == ScheduleStatusType.requested)
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: RichText(
+                    text: TextSpan(
                       text:
-                          '''Hari jumat kamu tidak ada jadwal, mengapa tidak menginputkan jika sedia?'''),
-                  decoration: InputDecoration(
-                    fillColor: Theme.of(context).colorScheme.surfaceVariant,
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
-                      ),
+                          '''Jadwal bersedia kamu sedang diajukan ke petugas. Silakan menunggu petugas untuk konfirmasi, atau bisa menghubungi petugas dengan ''',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: [
+                        TextSpan(
+                          text: 'klik disini.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              _launchInBrowser(
+                                '6282262401237',
+                              );
+                            },
+                        ),
+                      ],
                     ),
+                    textAlign: TextAlign.justify,
                   ),
-                  enabled: false,
-                  maxLines: 5,
                 ),
-                const SizedBox(height: 15),
-                Row(
-                  children: [
-                    Expanded(
-                      child: VarxButton(
-                        fullWidth: false,
+              if (type == ScheduleStatusType.rejected)
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Jadwal yang kamu ajukan ditolak oleh Petugas Jadwal.',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Catatan dari Petugas Jadwal',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        controller: petugasNoteController,
+                        decoration: InputDecoration(
+                          fillColor:
+                              Theme.of(context).colorScheme.surfaceVariant,
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                            ),
+                          ),
+                        ),
+                        enabled: false,
+                        maxLines: 5,
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: VarxButton(
+                                fullWidth: false,
+                                label: 'Hubungi Petugas',
+                                primary: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
+                                onTap: () {
+                                  if (widget.data.nomorPetugas != null) {
+                                    _launchInBrowser(
+                                      widget.data.nomorPetugas!,
+                                    );
+                                  }
+                                }),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: VarxButton(
+                              label: 'Ubah Jadwal',
+                              primary: Theme.of(context).colorScheme.error,
+                              onTap: () => Get.dialog<void>(
+                                CustomDialog(
+                                  content: const StateInfo(
+                                    title: 'Ubah Jadwal Sedia?',
+                                    subTitle:
+                                        '''Jadwal yang sebelumnya kamu ajukan akan ditunda dalam pengajuan terlebih dahulu''',
+                                    type: StateInfoType.reschedule,
+                                  ),
+                                  confirmText: 'Ubah Jadwal',
+                                  onConfirm: () async {
+                                    await scheduleRequestCubit
+                                        .postponeScheduleRequest();
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              if (type == ScheduleStatusType.accepted)
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const Text(
+                        '''Jadwal yang kamu ajukan telah disetujui oleh petugas. Ajuan jadwal yang telah disetujui tidak dapat diubah lagi. Segera hubungi petugas apabila diperlukan.''',
+                        textAlign: TextAlign.justify,
+                      ),
+                      const SizedBox(height: 15),
+                      VarxButton(
                         label: 'Hubungi Petugas',
-                        primary:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
-                        onTap: () {},
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: VarxButton(
-                        fullWidth: false,
-                        label: 'Ubah Jadwal',
+                        prefixIconData: FluentIcons.chat_20_regular,
                         primary: Theme.of(context).colorScheme.primary,
-                        onTap: () {},
+                        onTap: () {
+                          if (widget.data.nomorPetugas != null) {
+                            _launchInBrowser(
+                              widget.data.nomorPetugas!,
+                            );
+                          }
+                        },
                       ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        if (type == ScheduleStatusType.accepted)
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Text(
-                  '''Jadwal yang kamu ajukan telah disetujui oleh petugas. Ajuan jadwal yang telah disetujui tidak dapat diubah lagi. Segera hubungi petugas apabila diperlukan.''',
-                  textAlign: TextAlign.justify,
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 15),
-                VarxButton(
-                  label: 'Hubungi Petugas',
-                  prefixIconData: FluentIcons.chat_20_regular,
-                  primary: Theme.of(context).colorScheme.primary,
-                  onTap: () {},
+              const Divider(height: 10, thickness: 10),
+              if (type == ScheduleStatusType.requested)
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text('Ingin mengubah Jadwal Sedia kamu?'),
+                      const SizedBox(height: 15),
+                      VarxButton(
+                        label: 'Ubah Jadwal',
+                        primary: Theme.of(context).colorScheme.error,
+                        onTap: () => Get.dialog<void>(
+                          CustomDialog(
+                            content: const StateInfo(
+                              title: 'Ubah Jadwal Sedia?',
+                              subTitle:
+                                  '''Jadwal yang sebelumnya kamu ajukan akan ditunda dalam pengajuan terlebih dahulu''',
+                              type: StateInfoType.reschedule,
+                            ),
+                            confirmText: 'Ubah Jadwal',
+                            onConfirm: () async {
+                              await scheduleRequestCubit
+                                  .postponeScheduleRequest();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        const Divider(height: 10, thickness: 10),
-        if (type == ScheduleStatusType.requested)
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text('Ingin mengubah Jadwal Sedia kamu?'),
-                const SizedBox(height: 15),
-                VarxButton(
-                  label: 'Ubah Jadwal',
-                  primary: Theme.of(context).colorScheme.primary,
-                  onTap: () {},
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget emptySection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(height: Get.height * 1 / 5),
-        const Center(
-          child: StateInfo(
-            type: StateInfoType.reschedule,
-            title: 'Kamu belum selesai menginputkan Jadwal Sedia kamu',
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ElevatedButton(
-            onPressed: () => Get.toNamed<void>(RequestSchedulePage.route),
-            child: const Text('Mulai Input Jadwal'),
-          ),
-        ),
-      ],
+            ],
+          );
+        }
+        return const SizedBox();
+      },
     );
   }
 }

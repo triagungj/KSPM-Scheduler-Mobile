@@ -11,9 +11,14 @@ import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/s
 import 'package:kspm_scheduler_mobile/presentation/validation/pages/validation_page.dart';
 
 class NavigationPage extends StatefulWidget {
-  const NavigationPage({Key? key}) : super(key: key);
+  const NavigationPage({
+    Key? key,
+    this.selectedIndex = 0,
+  }) : super(key: key);
 
   static const route = '/navigationPage';
+
+  final int selectedIndex;
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
@@ -21,6 +26,12 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   final _selectedIndex = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    _selectedIndex.value = widget.selectedIndex;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +46,7 @@ class _NavigationPageState extends State<NavigationPage> {
     ];
 
     const _widgetItemsPetugas = [
-      HomePage(), 
+      HomePage(),
       ValidationPage(),
       SchedulePage(),
       ProfilePage(),

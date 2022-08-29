@@ -24,7 +24,7 @@
       "flutterMode": "profile",
       "args": [
         "--flavor",
-        "staging",
+        "development",
         "--target",
         "lib/main_development.dart"
       ]

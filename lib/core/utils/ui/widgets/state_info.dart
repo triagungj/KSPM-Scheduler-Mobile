@@ -7,6 +7,7 @@ enum StateInfoType {
   calendarEmpty,
   reschedule,
   signOut,
+  serverError,
 }
 
 class StateInfo extends StatelessWidget {
@@ -46,7 +47,9 @@ class StateInfo extends StatelessWidget {
                       ? AssetsConstants.calendarEmptySvg
                       : type == StateInfoType.reschedule
                           ? AssetsConstants.rescheduleSvg
-                          : AssetsConstants.singOutSvg,
+                          : type == StateInfoType.serverError
+                              ? AssetsConstants.serverError
+                              : AssetsConstants.singOutSvg,
               height: 200,
               width: 200,
             ),

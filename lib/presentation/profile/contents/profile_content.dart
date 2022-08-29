@@ -108,15 +108,15 @@ class _ProfileContentState extends State<ProfileContent> {
                 confirmText: 'Logout',
                 onConfirm: () async {
                   Get.back<void>();
-                  // final sharedPrefs = sl<SharedPrefs>();
-                  // await sharedPrefs.clearAll();
-                  // Future<void>.delayed(
-                  //   const Duration(milliseconds: 50),
-                  //   () => Get.offAllNamed<void>(LoginPage.route),
-                  // );
-                  widget.authBloc.add(
-                    const LogoutEvent(),
+                  final sharedPrefs = sl<SharedPrefs>();
+                  await sharedPrefs.clearAll();
+                  Future<void>.delayed(
+                    const Duration(milliseconds: 50),
+                    () => Get.offAllNamed<void>(LoginPage.route),
                   );
+                  // widget.authBloc.add(
+                  //   const LogoutEvent(),
+                  // );
                 },
               ),
             ),
@@ -130,14 +130,14 @@ class _ProfileContentState extends State<ProfileContent> {
     return Column(
       children: [
         Center(
-          child: SizedBox(
-            height: 80,
-            width: 80,
-            child: VarxIconButton(
-              iconData: FluentIcons.person_16_regular,
-              iconColor: Theme.of(context).colorScheme.onPrimary,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
+          child: VarxAvatar(
+            radius: 39,
+            name: data.name,
+            backgroundImage: data.avatarUrl != null
+                ? NetworkImage(
+                    data.avatarUrl!,
+                  )
+                : null,
           ),
         ),
         const SizedBox(height: 15),

@@ -1,0 +1,331 @@
+openapi: 3.0.3
+info:
+  title: KSPM Scheduler API
+  description: Api Specification for KSPM Scheduler App
+  version: 1.0.0
+
+servers:
+  - url: https://api.dev.kspm.triagungj.site
+  - url: https://api.stg.kspm.triagungj.site
+  - url: https://api.kspm.triagungj.site
+
+tags:
+  - name: Auth
+  - name: Profile
+
+paths:
+  # Auth
+  /auth/login:
+    post:
+      summary: LOGIN
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200":
+          description: Request login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: Login Berhasil
+                  token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9
+  /auth/register:
+    post:
+      summary: REGISTER
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Register"
+      responses:
+        "201":
+          $ref: "#/components/responses/201Created"
+  # Profile
+  /profile:
+    get:
+      summary: GET PROFILE
+      tags:
+        - Profile
+      security:
+        - BearerAuth:
+            - bearer
+      responses:
+        "200":
+          description: Get user profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Profile"
+    put:
+      summary: UPDATE PROFILE
+      tags:
+        - Profile
+      security:
+        - BearerAuth:
+            - bearer
+      requestBody:
+        $ref: "#/components/requestBodies/ProfileBody"
+      responses:
+        "200":
+          $ref: "#/components/responses/201Created"
+# Components
+components:
+  securitySchemes:
+    BearerAuth:
+      description: Auth for Mejaseni API
+      type: http
+      scheme: bearer
+  schemas:
+    Login:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: bebeb
+        password:
+          type: string
+          example: juggernaut
+    Register:
+      type: object
+      required:
+        - name
+        - phone_number
+        - email
+        - username
+        - password
+        - confirm_password
+      properties:
+        name:
+          type: string
+          example: Muhammad Noer
+        phone_number:
+          type: string
+          example: "08412948958295"
+        email:
+          type: string
+          example: mnoer@mail.com
+        username:
+          type: string
+          example: mnoer
+        password:
+          type: string
+          example: password
+        confirm_password:
+          type: string
+          example: password
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 4035efcb-49b2-4076-94cf-a76ee6b0fc17
+        name:
+          type: string
+          example: Muhammad Noerhidayatullah
+        username:
+          type: string
+          example: mnoer
+        email:
+          type: string
+          example: mnoer@mail.com
+        avatar:
+          type: string
+          example: https://randomuser.me/api/portraits/men/14.jpg
+        expertise:
+          type: string
+          example: expertise
+        student_statistic:
+          type: object
+          nullable: true
+          properties:
+            total_active_course:
+              type: integer
+              example: 2
+            total_course:
+              type: integer
+              example: 5
+            total_video:
+              type: integer
+              example: 1
+        coach_statistic:
+          type: object
+          nullable: true
+          properties:
+            total_active_student:
+              type: integer
+              example: 2
+            total_student:
+              type: integer
+              example: 5
+    
+  parameters:
+    Pagination:
+      name: pagination
+      in: query
+      required: true
+      schema:
+        type: object
+        properties:
+          page:
+            type: integer
+            example: 1
+          per_page:
+            type: integer
+            example: 10
+    Page:
+      name: page
+      in: query
+      required: true
+      schema:
+        type: integer
+        example: 1
+    PerPage:
+      name: per_page
+      in: query
+      required: true
+      schema:
+        type: integer
+        example: 10
+    Sort:
+      name: sort
+      in: query
+      schema:
+        type: object
+        properties:
+          order_by:
+            type: string
+            example: "created_at"
+          order:
+            type: string
+            enum:
+              - asc
+              - desc
+            example: asc
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 4035efcb-49b2-4076-94cf-a76ee6b0fc17
+  requestBodies:
+    PaginationBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              page:
+                type: integer
+                example: 1
+              size:
+                type: integer
+                example: 10
+              search:
+                type: string
+                example: musik
+              sort:
+                type: object
+                properties:
+                  order_by:
+                    type: string
+                    example: created_at
+                  order:
+                    type: string
+                    enum:
+                      - asc
+                      - desc
+                    example: asc
+    ProfileBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Muhammad Noerhidayatullah
+              phone_number:
+                type: string
+                example: "0887525235252"
+              username:
+                type: string
+                example: mnoer
+              email:
+                type: string
+                example: mnoer@mail.com
+              expertise:
+                type: string
+                example: music
+              avatar:
+                type: string
+                example: https://randomuser.me/api/portraits/men/14.jpg
+
+  responses:
+    Paginate:
+      description: Pagination
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                example: 20
+              total_filtered:
+                type: integer
+                example: 10
+    201Created:
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 201
+              message:
+                type: string
+                example: created
+    200Success:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: success

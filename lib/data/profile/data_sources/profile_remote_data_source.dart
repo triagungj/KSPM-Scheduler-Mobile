@@ -38,10 +38,22 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
 
   @override
   Future<DefaultEntity> editProfile(EditProfileBody body) async {
+    final data = FormData.fromMap(<String, dynamic>{
+      'image': body.image != null
+          ? await MultipartFile.fromFile(
+              body.image!,
+              filename: 'avatar',
+            )
+          : null,
+      'name': body.name,
+      'phone_number': body.phoneNumber,
+      'member_id': body.memberId,
+    });
+
     try {
       final profileRemote = await client.post<Map<String, dynamic>>(
         ApiPath.profileEdit,
-        data: body,
+        data: data,
       );
 
       return DefaultModel.fromJson(profileRemote.data!);

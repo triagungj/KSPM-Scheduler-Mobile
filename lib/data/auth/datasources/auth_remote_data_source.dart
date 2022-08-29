@@ -33,6 +33,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         error: e.error,
         response: e.response,
       );
+    } catch (e) {
+      throw ServerException();
     }
   }
 

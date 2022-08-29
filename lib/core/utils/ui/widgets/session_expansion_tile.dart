@@ -1,38 +1,29 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/session_entitiy.dart';
 
 class SessionExpansionTile extends StatefulWidget {
   const SessionExpansionTile({
     Key? key,
     required this.title,
     required this.listSession,
-    this.isEnabled = true,
+    required this.sessionNotifier,
   }) : super(key: key);
 
   final String title;
-  final List<Session> listSession;
-  final bool isEnabled;
+  final List<SessionDataResultEntity> listSession;
+  final ValueNotifier<List<SessionDataResultEntity>> sessionNotifier;
 
   @override
   State<SessionExpansionTile> createState() => _SessionExpansionTileState();
 }
 
 class _SessionExpansionTileState extends State<SessionExpansionTile> {
-  final indexSelected = ValueNotifier<List<bool>>([]);
-
-  @override
-  void initState() {
-    super.initState();
-    for (var i = 0; i < widget.listSession.length; i++) {
-      indexSelected.value.add(widget.listSession[i].sessionStatus);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<bool>>(
-        valueListenable: indexSelected,
+    return ValueListenableBuilder<List<SessionDataResultEntity>>(
+        valueListenable: widget.sessionNotifier,
         builder: (context, _value, _widget) {
           return ExpansionTile(
             title: Text(widget.title),
@@ -46,20 +37,24 @@ class _SessionExpansionTileState extends State<SessionExpansionTile> {
             children: List.generate(
               widget.listSession.length,
               (index) => TileItem(
-                title: widget.listSession[index].sessionName,
-                color: _value[index]
+                title: widget.listSession[index].waktu,
+                color: _value.contains(widget.listSession[index])
                     ? Theme.of(context).colorScheme.primaryContainer
                     : null,
-                icon: (_value[index])
+                icon: _value.contains(widget.listSession[index])
                     ? Icon(
                         FluentIcons.checkbox_checked_20_regular,
                         color: Theme.of(context).colorScheme.primary,
                       )
                     : const Icon(FluentIcons.checkbox_unchecked_20_regular),
                 onTap: () {
-                  if (widget.isEnabled) {
+                  if (_value.contains(widget.listSession[index])) {
                     setState(() {
-                      _value[index] = !_value[index];
+                      _value.remove(widget.listSession[index]);
+                    });
+                  } else {
+                    setState(() {
+                      _value.add(widget.listSession[index]);
                     });
                   }
                 },
@@ -68,24 +63,4 @@ class _SessionExpansionTileState extends State<SessionExpansionTile> {
           );
         });
   }
-}
-
-class Meet {
-  Meet({
-    required this.title,
-    required this.listSession,
-  });
-
-  final String title;
-  final List<Session> listSession;
-}
-
-class Session {
-  Session({
-    required this.sessionName,
-    required this.sessionStatus,
-  });
-
-  final String sessionName;
-  bool sessionStatus;
 }

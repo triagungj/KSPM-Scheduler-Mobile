@@ -5,5 +5,5 @@ class AssetsConstants {
   static const String calendarSvg = 'assets/svg/calendar.svg';
   static const String rescheduleSvg = 'assets/svg/reschedule.svg';
   static const String singOutSvg = 'assets/svg/sign_out.svg';
-  
+  static const String serverError = 'assets/svg/server_error.svg';
 }

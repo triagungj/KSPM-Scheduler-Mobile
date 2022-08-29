@@ -19,12 +19,14 @@ class ProfileDataEntity extends Equatable {
     required this.phoneNumber,
     this.memberId,
     this.jabatan,
+    this.avatarUrl,
   });
 
   final String name;
   final String? memberId;
   final String phoneNumber;
   final String? jabatan;
+  final String? avatarUrl;
 
   @override
   List<Object?> get props => [
@@ -32,5 +34,6 @@ class ProfileDataEntity extends Equatable {
         memberId,
         phoneNumber,
         jabatan,
+        avatarUrl,
       ];
 }

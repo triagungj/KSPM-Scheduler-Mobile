@@ -7,7 +7,7 @@ import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/list_tile_wtih_label
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/partisipant_card.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_info_card.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_status_label.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
+// import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_label.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/uploaded_file_box.dart';
@@ -21,7 +21,7 @@ class Template extends StatefulWidget {
 }
 
 class _TemplateState extends State<Template> {
-  final meetNofifier = ValueNotifier<List<Meet>>([]);
+  // final meetNofifier = ValueNotifier<List<Meet>>([]);
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +30,17 @@ class _TemplateState extends State<Template> {
       'Pertemuan Materi 2',
     ];
 
-    final listSession = [
-      Session(sessionName: '09:00 - 10.30', sessionStatus: true),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-    ];
+    // final listSession = [
+    //   Session(sessionName: '09:00 - 10.30', sessionStatus: true),
+    //   Session(sessionName: '09:00 - 10.30', sessionStatus: false),
+    //   Session(sessionName: '09:00 - 10.30', sessionStatus: false),
+    //   Session(sessionName: '09:00 - 10.30', sessionStatus: false),
+    // ];
 
-    meetNofifier.value = [
-      Meet(title: listString[0], listSession: listSession),
-      Meet(title: listString[1], listSession: listSession),
-    ];
+    // meetNofifier.value = [
+    //   Meet(title: listString[0], listSession: listSession),
+    //   Meet(title: listString[1], listSession: listSession),
+    // ];
 
     return Scaffold(
       appBar: AppBar(
@@ -83,20 +83,20 @@ class _TemplateState extends State<Template> {
                 maxLines: 5,
               ),
             ),
-            ValueListenableBuilder<List<Meet>>(
-              valueListenable: meetNofifier,
-              builder: (context, meetValue, _) {
-                return Column(
-                  children: List.generate(
-                    meetValue.length,
-                    (index) => SessionExpansionTile(
-                      title: meetValue[index].title,
-                      listSession: listSession,
-                    ),
-                  ),
-                );
-              },
-            ),
+            // ValueListenableBuilder<List<Meet>>(
+            //   valueListenable: meetNofifier,
+            //   builder: (context, meetValue, _) {
+            //     return Column(
+            //       children: List.generate(
+            //         meetValue.length,
+            //         (index) => SessionExpansionTile(
+            //           title: meetValue[index].title,
+            //           listSession: listSession,
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
             const Padding(
               padding: EdgeInsets.all(20),
               child: VerticalLabel(

@@ -6,7 +6,7 @@ import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/custom_dialog.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/partisipant_card.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
+// import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/session_expansion_tile.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/widgets/schedule_status_icon.dart';
 import 'package:varx_design_system/components/buttons/varx_button.dart';
@@ -27,7 +27,7 @@ class DetailValidationContent extends StatefulWidget {
 }
 
 class _DetailValidationContentState extends State<DetailValidationContent> {
-  final meetNotifier = ValueNotifier<List<Meet>>([]);
+  // final meetNotifier = ValueNotifier<List<Meet>>([]);
 
   final document = ValueNotifier<PDFDocument?>(null);
   bool isError = false;
@@ -51,28 +51,6 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
 
   @override
   Widget build(BuildContext context) {
-    final listString = [
-      'Hari Senin',
-      'Hari Selasa',
-      'Hari Rabu',
-      'Hari Kamis',
-      'Hari Jumat',
-    ];
-
-    final listSession = [
-      Session(sessionName: '09:00 - 10.30', sessionStatus: true),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-      Session(sessionName: '09:00 - 10.30', sessionStatus: false),
-    ];
-    meetNotifier.value = [
-      Meet(title: listString[0], listSession: listSession),
-      Meet(title: listString[1], listSession: listSession),
-      Meet(title: listString[2], listSession: listSession),
-      Meet(title: listString[3], listSession: listSession),
-      Meet(title: listString[4], listSession: listSession),
-    ];
-
     final bottomNavBar = ButtomButtonConfirmation(
       leftWidget: const Icon(
         FluentIcons.dismiss_16_filled,
@@ -80,7 +58,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
       labelLeft: 'Tolak',
       primaryLeft: Theme.of(context).colorScheme.error,
       labelRight: 'Konfirmasi',
-      onPressedRightButton: widget.type == ScheduleStatusType.declined ||
+      onPressedRightButton: widget.type == ScheduleStatusType.rejected ||
               widget.type == ScheduleStatusType.requested
           ? () => Get.dialog<void>(
                 CustomDialog(
@@ -138,7 +116,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (widget.type == ScheduleStatusType.accepted ||
-                  widget.type == ScheduleStatusType.declined)
+                  widget.type == ScheduleStatusType.rejected)
                 Column(
                   children: [
                     Padding(
@@ -179,7 +157,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
                             ],
                           ),
                           const SizedBox(height: 5),
-                          if (widget.type == ScheduleStatusType.declined)
+                          if (widget.type == ScheduleStatusType.rejected)
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
@@ -295,16 +273,16 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
                             ),
                     ),
                     const Divider(thickness: 8, height: 8),
-                    Column(
-                      children: List.generate(
-                        meetNotifier.value.length,
-                        (index) => SessionExpansionTile(
-                          title: meetNotifier.value[index].title,
-                          listSession: listSession,
-                          isEnabled: false,
-                        ),
-                      ),
-                    ),
+                    // Column(
+                    //   children: List.generate(
+                    //     meetNotifier.value.length,
+                    //     (index) => SessionExpansionTile(
+                    //       title: meetNotifier.value[index].title,
+                    //       listSession: listSession,
+                    //       isEnabled: false,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )
               else

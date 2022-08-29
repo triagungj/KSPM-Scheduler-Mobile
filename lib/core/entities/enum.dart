@@ -5,8 +5,8 @@ enum ScheduleStatusType {
   requested,
   @JsonValue('accepted')
   accepted,
-  @JsonValue('declined')
-  declined,
+  @JsonValue('rejected')
+  rejected,
 }
 
 enum ValidationScheduleType {
@@ -29,4 +29,17 @@ enum PrivilegeType {
   pengurus,
   @JsonValue('anggota')
   anggota,
+}
+
+enum DayEnum {
+  @JsonValue('senin')
+  senin,
+  @JsonValue('selasa')
+  selasa,
+  @JsonValue('rabu')
+  rabu,
+  @JsonValue('kamis')
+  kamis,
+  @JsonValue('jumat')
+  jumat,
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:varx_design_system/components/avatar/varx_avatar.dart';
@@ -7,9 +9,13 @@ class AvatarEdit extends StatelessWidget {
     Key? key,
     required this.name,
     this.onEdit,
+    this.imageFile,
+    this.profileImageUrl,
   }) : super(key: key);
 
   final String name;
+  final File? imageFile;
+  final String? profileImageUrl;
   final void Function()? onEdit;
 
   @override
@@ -21,10 +27,17 @@ class AvatarEdit extends StatelessWidget {
         children: [
           Align(
             child: SizedBox(
-              height: 90,
-              width: 110,
+              height: 110,
+              width: 130,
               child: VarxAvatar(
                 name: name,
+                backgroundImage: (imageFile != null)
+                    ? FileImage(imageFile!) as ImageProvider
+                    : profileImageUrl != null
+                        ? NetworkImage(
+                            profileImageUrl!,
+                          )
+                        : null,
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),
             ),

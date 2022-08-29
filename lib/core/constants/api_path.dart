@@ -15,4 +15,5 @@ class ApiPath {
   static const String getRequestSchedule = '/request';
   static const String saveRequestSchedule = '/request/save';
   static const String sendRequestSchedule = '/request/send';
+  static const String postponeScheduleRequest = '/request/postpone';
 }

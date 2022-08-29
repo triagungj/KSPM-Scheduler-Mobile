@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/custom_dialog.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_status_label.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/server_exception_widget.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
@@ -21,9 +22,11 @@ class InputContent extends StatefulWidget {
   const InputContent({
     Key? key,
     required this.data,
+    required this.parentCubit,
   }) : super(key: key);
 
   final ScheduleRequestDataEntity data;
+  final ScheduleRequestCubit parentCubit;
 
   @override
   State<InputContent> createState() => _InputContentState();
@@ -63,18 +66,28 @@ class _InputContentState extends State<InputContent> {
   Widget build(BuildContext context) {
     if (widget.data.status != null) {
       listSessionNotifier.value = widget.data.sessionListId;
-      petugasNoteController.text = widget.data.petugasNotes!;
+      if (widget.data.petugasNotes != null) {
+        petugasNoteController.text = widget.data.petugasNotes!;
+      }
       return requestedSection(
         widget.data.status!,
       );
     } else {
-      return emptySection();
+      return const SizedBox();
     }
   }
 
   Widget requestedSection(ScheduleStatusType type) {
-    return BlocBuilder<ScheduleRequestCubit, ScheduleRequestState>(
+    return BlocConsumer<ScheduleRequestCubit, ScheduleRequestState>(
       bloc: scheduleRequestCubit,
+      listener: (context, state) {
+        if (state is SuccessPostponeScheduleRequest) {
+          Get.back<void>();
+          widget.parentCubit.getListMySession().then(
+                (value) => Get.toNamed<void>(RequestSchedulePage.route),
+              );
+        }
+      },
       builder: (context, state) {
         if (state is LoadingScheduleState) {
           return const LinearProgressIndicator();
@@ -202,11 +215,22 @@ class _InputContentState extends State<InputContent> {
                           const SizedBox(width: 5),
                           Expanded(
                             child: VarxButton(
-                              fullWidth: false,
                               label: 'Ubah Jadwal',
-                              primary: Theme.of(context).colorScheme.primary,
-                              onTap: () => Get.toNamed<void>(
-                                RequestSchedulePage.route,
+                              primary: Theme.of(context).colorScheme.error,
+                              onTap: () => Get.dialog<void>(
+                                CustomDialog(
+                                  content: const StateInfo(
+                                    title: 'Ubah Jadwal Sedia?',
+                                    subTitle:
+                                        '''Jadwal yang sebelumnya kamu ajukan akan ditunda dalam pengajuan terlebih dahulu''',
+                                    type: StateInfoType.reschedule,
+                                  ),
+                                  confirmText: 'Ubah Jadwal',
+                                  onConfirm: () async {
+                                    await scheduleRequestCubit
+                                        .postponeScheduleRequest();
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -251,9 +275,21 @@ class _InputContentState extends State<InputContent> {
                       const SizedBox(height: 15),
                       VarxButton(
                         label: 'Ubah Jadwal',
-                        primary: Theme.of(context).colorScheme.primary,
-                        onTap: () => Get.toNamed<void>(
-                          RequestSchedulePage.route,
+                        primary: Theme.of(context).colorScheme.error,
+                        onTap: () => Get.dialog<void>(
+                          CustomDialog(
+                            content: const StateInfo(
+                              title: 'Ubah Jadwal Sedia?',
+                              subTitle:
+                                  '''Jadwal yang sebelumnya kamu ajukan akan ditunda dalam pengajuan terlebih dahulu''',
+                              type: StateInfoType.reschedule,
+                            ),
+                            confirmText: 'Ubah Jadwal',
+                            onConfirm: () async {
+                              await scheduleRequestCubit
+                                  .postponeScheduleRequest();
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -264,28 +300,6 @@ class _InputContentState extends State<InputContent> {
         }
         return const SizedBox();
       },
-    );
-  }
-
-  Widget emptySection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(height: Get.height * 1 / 5),
-        const Center(
-          child: StateInfo(
-            type: StateInfoType.reschedule,
-            title: 'Kamu belum selesai menginputkan Jadwal Sedia kamu',
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ElevatedButton(
-            onPressed: () => Get.toNamed<void>(RequestSchedulePage.route),
-            child: const Text('Mulai Input Jadwal'),
-          ),
-        ),
-      ],
     );
   }
 }

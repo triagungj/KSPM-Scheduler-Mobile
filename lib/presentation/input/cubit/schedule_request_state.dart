@@ -39,3 +39,9 @@ class SuccessLoadListMySessionState extends ScheduleRequestState {
 
   final ScheduleRequestDataEntity data;
 }
+
+class SuccessPostponeScheduleRequest extends ScheduleRequestState {
+  const SuccessPostponeScheduleRequest(this.message);
+
+  final String message;
+}

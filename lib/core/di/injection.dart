@@ -20,6 +20,7 @@ import 'package:kspm_scheduler_mobile/domain/profile/usecases/get_profile_usecas
 import 'package:kspm_scheduler_mobile/domain/schedule_request/repositories/schedule_request_repository.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/get_list_my_session_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/get_list_session_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/postpone_schedule_request.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/save_schedule_request_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/send_schedule_request_usecase.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
@@ -44,7 +45,7 @@ Future<void> init() async {
   // Bloc
   sl.registerFactory(() => AuthBloc(sl(), sl(), sl()));
   sl.registerFactory(() => ProfileCubit(sl(), sl()));
-  sl.registerFactory(() => ScheduleRequestCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ScheduleRequestCubit(sl(), sl(), sl(), sl(), sl()));
 
   // Use cases
   sl.registerLazySingleton(() => LoginUsecase(sl()));
@@ -58,6 +59,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetListMySessionUsecase(sl()));
   sl.registerLazySingleton(() => SaveScheduleRequestUsecase(sl()));
   sl.registerLazySingleton(() => SendScheduleRequestUsecase(sl()));
+  sl.registerLazySingleton(() => PostponeScheduleRequestUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

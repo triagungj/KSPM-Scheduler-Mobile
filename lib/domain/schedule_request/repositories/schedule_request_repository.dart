@@ -13,6 +13,9 @@ abstract class ScheduleRequestRepository {
   Future<Either<Failure, DefaultEntity>> sendRequestSchedule(
     SaveScheduleRequestBody body,
   );
+  Future<Either<Failure, DefaultEntity>> postponeRequestSchedule(
+    NoParams noParams,
+  );
   Future<Either<Failure, SessionEntity>> getListSession(NoParams noParams);
   Future<Either<Failure, ScheduleRequestEntitiy>> getListMySession(
     NoParams noParams,

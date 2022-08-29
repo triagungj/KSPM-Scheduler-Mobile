@@ -6,6 +6,7 @@ import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/entities.
 import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/schedule_request_entity.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/get_list_my_session_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/get_list_session_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/postpone_schedule_request.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/save_schedule_request_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/send_schedule_request_usecase.dart';
 
@@ -17,6 +18,7 @@ class ScheduleRequestCubit extends Cubit<ScheduleRequestState> {
     this.saveScheduleRequestUsecase,
     this.getListMySessionUsecase,
     this.sendScheduleRequestUsecase,
+    this.postponeScheduleRequestUsecase,
   ) : super(InitialScheduleState());
 
   Future<void> getListSession() async {
@@ -40,7 +42,8 @@ class ScheduleRequestCubit extends Cubit<ScheduleRequestState> {
       (r) => emit(SuccessSaveScheduleRequestState(r.message)),
     );
   }
-   Future<void> sendScheduleRequest(SaveScheduleRequestBody params) async {
+
+  Future<void> sendScheduleRequest(SaveScheduleRequestBody params) async {
     emit(LoadingScheduleState());
 
     final failureOrSuccess = await sendScheduleRequestUsecase.call(params);
@@ -62,8 +65,22 @@ class ScheduleRequestCubit extends Cubit<ScheduleRequestState> {
     );
   }
 
+  Future<void> postponeScheduleRequest() async {
+    emit(LoadingScheduleState());
+
+    final failureOrSuccess = await postponeScheduleRequestUsecase.call(
+      NoParams(),
+    );
+
+    failureOrSuccess.fold(
+      (l) => emit(FailureScheduleState(l.message)),
+      (r) => emit(SuccessPostponeScheduleRequest(r.message)),
+    );
+  }
+
   final GetListSessionUsecase getListSessionUsecase;
   final SaveScheduleRequestUsecase saveScheduleRequestUsecase;
   final SendScheduleRequestUsecase sendScheduleRequestUsecase;
   final GetListMySessionUsecase getListMySessionUsecase;
+  final PostponeScheduleRequestUsecase postponeScheduleRequestUsecase;
 }

@@ -74,7 +74,9 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
             setState(() {
               listSessionNotifier.value.clear();
               listSessionNotifier.value.addAll(state.data.sessionListId);
-              notesParticipantController.text = state.data.partisipantNotes!;
+              if (state.data.partisipantNotes != null) {
+                notesParticipantController.text = state.data.partisipantNotes!;
+              }
               if (state.data.bukti != null) {
                 fileUrlNotifier.value = state.data.bukti;
               }
@@ -103,55 +105,60 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
         builder: (context, state) {
           return Scaffold(
             body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Stack(
                 children: [
-                  if (state is LoadingScheduleState)
-                    const LinearProgressIndicator(),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Text(
-                      'Inputkan Jadwal Sedia kamu',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                  ValueListenableBuilder<List<int>>(
-                    valueListenable: listSessionNotifier,
-                    builder: (context, meetValue, _) {
-                      return Column(
-                        children: List.generate(
-                          widget.data.length,
-                          (index) {
-                            final data = widget.data[index];
-                            return SessionExpansionWidget(
-                              title: 'Hari ${data.hari.name.capitalize}',
-                              listSession: data.result,
-                              sessionNotifier: listSessionNotifier,
-                            );
-                          },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Text(
+                          'Inputkan Jadwal Sedia kamu',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                      );
-                    },
+                      ),
+                      ValueListenableBuilder<List<int>>(
+                        valueListenable: listSessionNotifier,
+                        builder: (context, meetValue, _) {
+                          return Column(
+                            children: List.generate(
+                              widget.data.length,
+                              (index) {
+                                final data = widget.data[index];
+                                return SessionExpansionWidget(
+                                  title: 'Hari ${data.hari.name.capitalize}',
+                                  listSession: data.result,
+                                  sessionNotifier: listSessionNotifier,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      const Divider(height: 10, thickness: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            uploadSection(),
+                            const SizedBox(height: 10),
+                            notesSection(),
+                            const SizedBox(height: 15),
+                            agreeementSection(),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      if (state is LoadingScheduleState)
+                        const LinearProgressIndicator(),
+                    ],
                   ),
-                  const Divider(height: 10, thickness: 10),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        uploadSection(),
-                        const SizedBox(height: 10),
-                        notesSection(),
-                        const SizedBox(height: 15),
-                        agreeementSection(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 40),
+                  
                 ],
               ),
             ),
             bottomNavigationBar: (state is LoadingScheduleState)
-                ? null
+                ? const LinearProgressIndicator()
                 : ValueListenableBuilder<bool>(
                     valueListenable: agreementNotifier,
                     builder: (context, _value, _widget) {

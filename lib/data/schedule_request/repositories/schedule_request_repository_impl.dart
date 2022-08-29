@@ -23,7 +23,7 @@ class ScheduleRequestRepositoryImpl implements ScheduleRequestRepository {
     SaveScheduleRequestBody body,
   ) async {
     try {
-      final remoteGetProfile = await remoteDataSource.saveRequestSchedule(body);
+      final remoteGetProfile = await remoteDataSource.saveScheduleRequest(body);
 
       return Right(remoteGetProfile);
     } on DioError catch (e) {
@@ -49,7 +49,7 @@ class ScheduleRequestRepositoryImpl implements ScheduleRequestRepository {
     SaveScheduleRequestBody body,
   ) async {
     try {
-      final remoteGetProfile = await remoteDataSource.sendRequestSchedule(body);
+      final remoteGetProfile = await remoteDataSource.sendScheduleRequest(body);
 
       return Right(remoteGetProfile);
     } on DioError catch (e) {
@@ -102,6 +102,34 @@ class ScheduleRequestRepositoryImpl implements ScheduleRequestRepository {
   ) async {
     try {
       final remoteSession = await remoteDataSource.getListMySession(noParams);
+
+      return Right(remoteSession);
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        log('${e.response!.data}');
+        log('${e.response!.headers}');
+        return Left(ServerFailure(e.response!.data['message'].toString()));
+      } else {
+        // Something happened in setting up or sending the request
+        //that triggered an Error
+        log(e.message);
+        return const Left(ServerFailure(errorMsg));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DefaultEntity>> postponeRequestSchedule(
+    NoParams noParams,
+  ) async {
+    try {
+      final remoteSession = await remoteDataSource.postponeScheduleRequest(
+        noParams,
+      );
 
       return Right(remoteSession);
     } on DioError catch (e) {

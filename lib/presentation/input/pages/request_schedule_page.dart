@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/server_exception_widget.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/contents/request_schedule_content.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_request_cubit.dart';
 
@@ -44,14 +44,25 @@ class _RequestSchedulePageState extends State<RequestSchedulePage> {
             appBar: AppBar(
               title: const Text('Pengajuan Jadwal'),
             ),
-            body: Stack(
-              children: [
-                if (state is SuccessGetListSessionState)
-                  RequestScheduleContent(
-                    data: state.data,
-                  ),
-                if (state is LoadingScheduleState) const LoadingWithText(),
-              ],
+            body: RefreshIndicator(
+              onRefresh: () async => scheduleRequestCubit.getListSession(),
+              child: Stack(
+                children: [
+                  if (state is SuccessGetListSessionState)
+                    RequestScheduleContent(
+                      data: state.data,
+                    ),
+                  if (state is LoadingScheduleState)
+                    const Center(child: CircularProgressIndicator()),
+                  if (state is FailureScheduleState)
+                    ListView(
+                      children: [
+                        SizedBox(height: Get.height * 0.2),
+                        const ServerExceptionWidget(),
+                      ],
+                    ),
+                ],
+              ),
             ),
           );
         },

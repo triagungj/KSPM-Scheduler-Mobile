@@ -11,9 +11,10 @@ import 'package:kspm_scheduler_mobile/domain/schedule_request/entities/schedule_
 
 abstract class ScheduleRequestRemoteDataSource {
   Future<SessionEntity> getListSession(NoParams noParams);
-  Future<DefaultEntity> saveRequestSchedule(SaveScheduleRequestBody body);
-  Future<DefaultEntity> sendRequestSchedule(SaveScheduleRequestBody body);
   Future<ScheduleRequestEntitiy> getListMySession(NoParams noParams);
+  Future<DefaultEntity> saveScheduleRequest(SaveScheduleRequestBody body);
+  Future<DefaultEntity> sendScheduleRequest(SaveScheduleRequestBody body);
+  Future<DefaultEntity> postponeScheduleRequest(NoParams noParams);
 }
 
 class ScheduleRequestRemoteDataSourceImpl
@@ -42,7 +43,7 @@ class ScheduleRequestRemoteDataSourceImpl
   }
 
   @override
-  Future<DefaultEntity> saveRequestSchedule(
+  Future<DefaultEntity> saveScheduleRequest(
     SaveScheduleRequestBody body,
   ) async {
     final data = FormData.fromMap(<String, dynamic>{
@@ -72,8 +73,9 @@ class ScheduleRequestRemoteDataSourceImpl
       throw ServerException();
     }
   }
+
   @override
-  Future<DefaultEntity> sendRequestSchedule(
+  Future<DefaultEntity> sendScheduleRequest(
     SaveScheduleRequestBody body,
   ) async {
     final data = FormData.fromMap(<String, dynamic>{
@@ -111,6 +113,26 @@ class ScheduleRequestRemoteDataSourceImpl
         ApiPath.getRequestSchedule,
       );
       return ScheduleRequestModel.fromJson(response.data!);
+    } on DioError catch (e) {
+      throw DioError(
+        requestOptions: e.requestOptions,
+        error: e.error,
+        response: e.response,
+      );
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<DefaultEntity> postponeScheduleRequest(
+    NoParams noParams,
+  ) async {
+    try {
+      final response = await _client.get<Map<String, dynamic>>(
+        ApiPath.postponeScheduleRequest,
+      );
+      return DefaultModel.fromJson(response.data!);
     } on DioError catch (e) {
       throw DioError(
         requestOptions: e.requestOptions,

@@ -28,6 +28,7 @@ class SuccessSaveScheduleRequestState extends ScheduleRequestState {
 
   final String message;
 }
+
 class SuccessSendScheduleRequestState extends ScheduleRequestState {
   const SuccessSendScheduleRequestState(this.message);
 

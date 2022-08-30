@@ -50,7 +50,7 @@ class ListValidationPage extends StatelessWidget {
               10,
               (index) => TileItem(
                 title: 'Tri Agung J',
-                onTap: ()=> Get.toNamed<void>(DetailValidationPage.route),
+                onTap: () => Get.toNamed<void>(DetailValidationPage.route),
               ),
             ),
           ),

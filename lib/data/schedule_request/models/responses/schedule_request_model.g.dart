@@ -20,7 +20,7 @@ ScheduleRequestDataModel _$ScheduleRequestDataModelFromJson(
       id: json['id'] as String,
       status: $enumDecodeNullable(_$ScheduleStatusTypeEnumMap, json['status']),
       nomorPetugas: json['nomor_petugas'] as String?,
-      partisipantNotes: json['partisipant_notes'] as String?,
+      partisipanNotes: json['partisipan_notes'] as String?,
       petugasNotes: json['petugas_notes'] as String?,
       sessionListId: (json['session_list_id'] as List<dynamic>)
           .map((dynamic e) => e as int)

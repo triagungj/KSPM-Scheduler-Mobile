@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';

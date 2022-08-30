@@ -8,7 +8,8 @@ class TextFormWithLabel extends StatelessWidget {
     this.controller,
     this.isEnabled = true,
     this.dropdown = false,
-    this.obsecureText = false, this.action,
+    this.obsecureText = false,
+    this.action,
   }) : super(key: key);
 
   final String label;

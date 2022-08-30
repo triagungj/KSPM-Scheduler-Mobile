@@ -74,8 +74,8 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
             setState(() {
               listSessionNotifier.value.clear();
               listSessionNotifier.value.addAll(state.data.sessionListId);
-              if (state.data.partisipantNotes != null) {
-                notesParticipantController.text = state.data.partisipantNotes!;
+              if (state.data.partisipanNotes != null) {
+                notesParticipantController.text = state.data.partisipanNotes!;
               }
               if (state.data.bukti != null) {
                 fileUrlNotifier.value = state.data.bukti;
@@ -153,7 +153,6 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
                         const LinearProgressIndicator(),
                     ],
                   ),
-                  
                 ],
               ),
             ),
@@ -168,7 +167,7 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
                                 scheduleRequestCubit.sendScheduleRequest(
                                   SaveScheduleRequestBody(
                                     listSessionId: listSessionNotifier.value,
-                                    partisipantNotes:
+                                    partisipanNotes:
                                         notesParticipantController.text,
                                     file: (fileNotifier.value != null)
                                         ? fileNotifier.value!.path
@@ -181,7 +180,7 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
                           scheduleRequestCubit.saveScheduleRequest(
                             SaveScheduleRequestBody(
                               listSessionId: listSessionNotifier.value,
-                              partisipantNotes: notesParticipantController.text,
+                              partisipanNotes: notesParticipantController.text,
                               file: (fileNotifier.value != null)
                                   ? fileNotifier.value!.path
                                   : null,

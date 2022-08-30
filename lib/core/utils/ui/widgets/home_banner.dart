@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kspm_scheduler_mobile/core/constants/assets_constants.dart';
 

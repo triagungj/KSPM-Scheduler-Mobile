@@ -24,7 +24,7 @@ class ScheduleRequestDataModel extends ScheduleRequestDataEntity {
     required String id,
     ScheduleStatusType? status,
     String? nomorPetugas,
-    String? partisipantNotes,
+    String? partisipanNotes,
     String? petugasNotes,
     required List<int> sessionListId,
     String? bukti,
@@ -33,7 +33,7 @@ class ScheduleRequestDataModel extends ScheduleRequestDataEntity {
           nomorPetugas: nomorPetugas,
           sessionListId: sessionListId,
           bukti: bukti,
-          partisipantNotes: partisipantNotes,
+          partisipanNotes: partisipanNotes,
           petugasNotes: petugasNotes,
           status: status,
         );

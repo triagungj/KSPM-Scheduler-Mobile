@@ -39,7 +39,7 @@ class _InputSchedulePageState extends State<InputSchedulePage> {
               appBar: AppBar(
                 title: const Text('Input Jadwal'),
               ),
-              bottomNavigationBar: (state is LoadingScheduleState)
+              bottomNavigationBar: (state is LoadingScheduleRequestState)
                   ? const LinearProgressIndicator()
                   : null,
               body: RefreshIndicator(
@@ -55,7 +55,7 @@ class _InputSchedulePageState extends State<InputSchedulePage> {
                           )
                         else
                           emptySection(),
-                      if (state is FailureScheduleState)
+                      if (state is FailureScheduleRequestState)
                         Column(
                           children: [
                             SizedBox(height: Get.height * 0.2),

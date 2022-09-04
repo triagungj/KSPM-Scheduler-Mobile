@@ -9,7 +9,7 @@ part of 'save_schedule_request_body.dart';
 Map<String, dynamic> _$SaveScheduleRequestBodyToJson(
         SaveScheduleRequestBody instance) =>
     <String, dynamic>{
-      'partisipant_notes': instance.partisipantNotes,
+      'partisipan_notes': instance.partisipanNotes,
       'list_session_id': instance.listSessionId,
       'file': instance.file,
     };

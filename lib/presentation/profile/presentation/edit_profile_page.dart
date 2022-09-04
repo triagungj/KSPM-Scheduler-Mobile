@@ -36,6 +36,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final phoneController = TextEditingController();
   final jabatanController = TextEditingController();
 
+  final avatarUrlNotifier = ValueNotifier<String?>(null);
   final avatarFileNotifier = ValueNotifier<File?>(null);
 
   Future<void> getProfile() async {
@@ -80,6 +81,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             nameController.text = state.data.name;
             phoneController.text = state.data.phoneNumber;
             if (!isPetugas) {
+              avatarUrlNotifier.value = state.data.avatarUrl;
               numberController.text = state.data.memberId!;
               jabatanController.text = state.data.jabatan!;
             }
@@ -116,6 +118,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     onRefresh: () async => profileCubit.getProfile(),
                     child: ListView(
                       children: [
+                        const SizedBox(height: 15),
                         if (state is FailureProfileState)
                           Column(
                             children: [
@@ -130,16 +133,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 valueListenable: avatarFileNotifier,
                                 builder: (context, _value, _widget) {
                                   return AvatarEdit(
-                                    name: state.data.name,
+                                    name: nameController.text,
                                     imageFile: _value,
-                                    profileImageUrl: state.data.avatarUrl,
-                                    onEdit: () => bottomSheet(
-                                      context,
-                                      GetImageBottomSheet(
-                                        onCamera: () => _getImage(true),
-                                        onGallery: () => _getImage(false),
-                                      ),
-                                    ),
+                                    profileImageUrl: avatarUrlNotifier.value,
+                                    onEdit: (!isPetugas)
+                                        ? () => bottomSheet(
+                                              context,
+                                              GetImageBottomSheet(
+                                                onCamera: () => _getImage(true),
+                                                onGallery: () =>
+                                                    _getImage(false),
+                                              ),
+                                            )
+                                        : null,
                                   );
                                 },
                               ),
@@ -202,7 +208,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ),
                   )
-                : null,
+                : (state is LoadingProfileState)
+                    ? const LinearProgressIndicator()
+                    : null,
           );
         },
       ),

@@ -54,7 +54,7 @@ class ScheduleRequestRemoteDataSourceImpl
             )
           : null,
       'list_session_id[]': body.listSessionId,
-      'partisipant_notes': body.partisipantNotes,
+      'partisipan_notes': body.partisipanNotes,
     });
 
     try {
@@ -86,7 +86,7 @@ class ScheduleRequestRemoteDataSourceImpl
             )
           : null,
       'list_session_id[]': body.listSessionId,
-      'partisipant_notes': body.partisipantNotes,
+      'partisipan_notes': body.partisipanNotes,
     });
 
     try {

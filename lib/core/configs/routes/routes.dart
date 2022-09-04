@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:kspm_scheduler_mobile/core/entities/classes.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/entities/validation_type_entity.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/info_detail_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/home/pages/info_page.dart';
@@ -17,10 +17,10 @@ class Routes {
     GetPage<void>(
       name: NavigationPage.route,
       page: () => (Get.arguments == null)
-        ? const NavigationPage()
-        : NavigationPage(
-          selectedIndex: Get.arguments as int,
-        ),
+          ? const NavigationPage()
+          : NavigationPage(
+              selectedIndex: Get.arguments as int,
+            ),
     ),
     GetPage<void>(
       name: LoginPage.route,
@@ -64,13 +64,15 @@ class Routes {
     GetPage<void>(
       name: ListValidationPage.route,
       page: () => ListValidationPage(
-        validationEntity: Get.arguments as ValidationEntity,
+        validationTypeEntity: Get.arguments as ValidationTypeEntity,
       ),
       transition: Transition.cupertino,
     ),
     GetPage<void>(
       name: DetailValidationPage.route,
-      page: DetailValidationPage.new,
+      page: () => DetailValidationPage(
+        scheduleRequestId: Get.arguments as String,
+      ),
       transition: Transition.cupertino,
     ),
 

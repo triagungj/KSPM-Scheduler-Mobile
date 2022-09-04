@@ -89,10 +89,10 @@ class _InputContentState extends State<InputContent> {
         }
       },
       builder: (context, state) {
-        if (state is LoadingScheduleState) {
+        if (state is LoadingScheduleRequestState) {
           return const LinearProgressIndicator();
         }
-        if (state is FailureScheduleState) {
+        if (state is FailureScheduleRequestState) {
           return Column(
             children: [
               SizedBox(height: Get.height * 0.2),

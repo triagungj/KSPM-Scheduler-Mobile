@@ -19,61 +19,61 @@ class ScheduleRequestCubit extends Cubit<ScheduleRequestState> {
     this.getListMySessionUsecase,
     this.sendScheduleRequestUsecase,
     this.postponeScheduleRequestUsecase,
-  ) : super(InitialScheduleState());
+  ) : super(InitialScheduleRequestState());
 
   Future<void> getListSession() async {
-    emit(LoadingScheduleState());
+    emit(LoadingScheduleRequestState());
 
     final failureOrSuccess = await getListSessionUsecase.call(NoParams());
 
     failureOrSuccess.fold(
-      (l) => emit(FailureScheduleState(l.message)),
+      (l) => emit(FailureScheduleRequestState(l.message)),
       (r) => emit(SuccessGetListSessionState(r.data)),
     );
   }
 
   Future<void> saveScheduleRequest(SaveScheduleRequestBody params) async {
-    emit(LoadingScheduleState());
+    emit(LoadingScheduleRequestState());
 
     final failureOrSuccess = await saveScheduleRequestUsecase.call(params);
 
     failureOrSuccess.fold(
-      (l) => emit(FailureScheduleState(l.message)),
+      (l) => emit(FailureScheduleRequestState(l.message)),
       (r) => emit(SuccessSaveScheduleRequestState(r.message)),
     );
   }
 
   Future<void> sendScheduleRequest(SaveScheduleRequestBody params) async {
-    emit(LoadingScheduleState());
+    emit(LoadingScheduleRequestState());
 
     final failureOrSuccess = await sendScheduleRequestUsecase.call(params);
 
     failureOrSuccess.fold(
-      (l) => emit(FailureScheduleState(l.message)),
+      (l) => emit(FailureScheduleRequestState(l.message)),
       (r) => emit(SuccessSendScheduleRequestState(r.message)),
     );
   }
 
   Future<void> getListMySession() async {
-    emit(LoadingScheduleState());
+    emit(LoadingScheduleRequestState());
 
     final failureOrSuccess = await getListMySessionUsecase.call(NoParams());
 
     failureOrSuccess.fold(
-      (l) => emit(FailureScheduleState(l.message)),
+      (l) => emit(FailureScheduleRequestState(l.message)),
       (r) => emit(SuccessLoadListMySessionState(r.data)),
     );
   }
 
   Future<void> postponeScheduleRequest() async {
-    emit(LoadingScheduleState());
+    emit(LoadingScheduleRequestState());
 
     final failureOrSuccess = await postponeScheduleRequestUsecase.call(
       NoParams(),
     );
 
     failureOrSuccess.fold(
-      (l) => emit(FailureScheduleState(l.message)),
+      (l) => emit(FailureScheduleRequestState(l.message)),
       (r) => emit(SuccessPostponeScheduleRequest(r.message)),
     );
   }

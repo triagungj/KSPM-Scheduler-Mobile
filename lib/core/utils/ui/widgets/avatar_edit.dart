@@ -21,16 +21,17 @@ class AvatarEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110,
-      width: 100,
+      height: 130,
+      width: 110,
       child: Stack(
         children: [
           Align(
             child: SizedBox(
-              height: 110,
-              width: 130,
+              height: 130,
+              width: 110,
               child: VarxAvatar(
                 name: name,
+                radius: 150,
                 backgroundImage: (imageFile != null)
                     ? FileImage(imageFile!) as ImageProvider
                     : profileImageUrl != null
@@ -42,20 +43,21 @@ class AvatarEdit extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              child: IconButton(
-                onPressed: onEdit,
-                icon: Icon(
-                  FluentIcons.edit_16_filled,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurface,
+          if (onEdit != null)
+            Align(
+              alignment: Alignment.bottomRight,
+              child: CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                child: IconButton(
+                  onPressed: onEdit,
+                  icon: Icon(
+                    FluentIcons.edit_16_filled,
+                    size: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );

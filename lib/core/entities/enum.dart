@@ -9,9 +9,9 @@ enum ScheduleStatusType {
   rejected,
 }
 
-enum ValidationScheduleType {
-  @JsonValue('not_validated')
-  notValidated,
+enum ValidationType {
+  @JsonValue('requested')
+  requested,
   @JsonValue('rejected')
   rejected,
   @JsonValue('empty')
@@ -24,7 +24,7 @@ enum ValidationScheduleType {
   all,
 }
 
-enum PrivilegeType {
+enum PartisipanType {
   @JsonValue('pengurus')
   pengurus,
   @JsonValue('anggota')

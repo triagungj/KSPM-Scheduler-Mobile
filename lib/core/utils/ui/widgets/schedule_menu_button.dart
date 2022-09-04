@@ -1,9 +1,9 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kspm_scheduler_mobile/core/entities/classes.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/circle_item_button.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/entities/validation_type_entity.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/pages/list_validation_page.dart';
 
 class ScheduleMenuButton extends StatelessWidget {
@@ -15,10 +15,10 @@ class ScheduleMenuButton extends StatelessWidget {
     required this.validated,
     required this.accepted,
     required this.total,
-    this.privilegeType,
+    this.partisipanType,
   }) : super(key: key);
 
-  final PrivilegeType? privilegeType;
+  final PartisipanType? partisipanType;
   final int notValidated;
   final int rejected;
   final int empty;
@@ -42,9 +42,9 @@ class ScheduleMenuButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              privilegeType == PrivilegeType.anggota
+              partisipanType == PartisipanType.anggota
                   ? 'Jadwal Anggota'
-                  : privilegeType == PrivilegeType.pengurus
+                  : partisipanType == PartisipanType.pengurus
                       ? 'Jadwal Pengurus'
                       : 'Informasi Jadwal',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -63,13 +63,12 @@ class ScheduleMenuButton extends StatelessWidget {
                   iconData: FluentIcons.calendar_clock_24_filled,
                   componentColor: Theme.of(context).colorScheme.error,
                   onTap: () {
-                    if (privilegeType != null) {
+                    if (partisipanType != null) {
                       Get.toNamed<void>(
                         ListValidationPage.route,
-                        arguments: ValidationEntity(
-                          privilegeType: privilegeType!,
-                          validationScheduleType:
-                              ValidationScheduleType.notValidated,
+                        arguments: ValidationTypeEntity(
+                          partisipanType: partisipanType!,
+                          validationType: ValidationType.requested,
                         ),
                       );
                     }
@@ -81,13 +80,12 @@ class ScheduleMenuButton extends StatelessWidget {
                   iconData: FluentIcons.calendar_error_24_filled,
                   componentColor: Theme.of(context).colorScheme.error,
                   onTap: () {
-                    if (privilegeType != null) {
+                    if (partisipanType != null) {
                       Get.toNamed<void>(
                         ListValidationPage.route,
-                        arguments: ValidationEntity(
-                          privilegeType: privilegeType!,
-                          validationScheduleType:
-                              ValidationScheduleType.rejected,
+                        arguments: ValidationTypeEntity(
+                          partisipanType: partisipanType!,
+                          validationType: ValidationType.rejected,
                         ),
                       );
                     }
@@ -99,12 +97,12 @@ class ScheduleMenuButton extends StatelessWidget {
                   iconData: FluentIcons.calendar_empty_24_filled,
                   componentColor: Theme.of(context).colorScheme.error,
                   onTap: () {
-                    if (privilegeType != null) {
+                    if (partisipanType != null) {
                       Get.toNamed<void>(
                         ListValidationPage.route,
-                        arguments: ValidationEntity(
-                          privilegeType: privilegeType!,
-                          validationScheduleType: ValidationScheduleType.empty,
+                        arguments: ValidationTypeEntity(
+                          partisipanType: partisipanType!,
+                          validationType: ValidationType.empty,
                         ),
                       );
                     }
@@ -117,13 +115,12 @@ class ScheduleMenuButton extends StatelessWidget {
                   componentColor:
                       Theme.of(context).colorScheme.onPrimaryContainer,
                   onTap: () {
-                    if (privilegeType != null) {
+                    if (partisipanType != null) {
                       Get.toNamed<void>(
                         ListValidationPage.route,
-                        arguments: ValidationEntity(
-                          privilegeType: privilegeType!,
-                          validationScheduleType:
-                              ValidationScheduleType.validated,
+                        arguments: ValidationTypeEntity(
+                          partisipanType: partisipanType!,
+                          validationType: ValidationType.validated,
                         ),
                       );
                     }
@@ -136,13 +133,12 @@ class ScheduleMenuButton extends StatelessWidget {
                   componentColor:
                       Theme.of(context).colorScheme.onPrimaryContainer,
                   onTap: () {
-                    if (privilegeType != null) {
+                    if (partisipanType != null) {
                       Get.toNamed<void>(
                         ListValidationPage.route,
-                        arguments: ValidationEntity(
-                          privilegeType: privilegeType!,
-                          validationScheduleType:
-                              ValidationScheduleType.accepted,
+                        arguments: ValidationTypeEntity(
+                          partisipanType: partisipanType!,
+                          validationType: ValidationType.accepted,
                         ),
                       );
                     }
@@ -155,12 +151,12 @@ class ScheduleMenuButton extends StatelessWidget {
                   componentColor:
                       Theme.of(context).colorScheme.onPrimaryContainer,
                   onTap: () {
-                    if (privilegeType != null) {
+                    if (partisipanType != null) {
                       Get.toNamed<void>(
                         ListValidationPage.route,
-                        arguments: ValidationEntity(
-                          privilegeType: privilegeType!,
-                          validationScheduleType: ValidationScheduleType.all,
+                        arguments: ValidationTypeEntity(
+                          partisipanType: partisipanType!,
+                          validationType: ValidationType.all,
                         ),
                       );
                     }

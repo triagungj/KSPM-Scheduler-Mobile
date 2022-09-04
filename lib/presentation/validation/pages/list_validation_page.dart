@@ -1,60 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:kspm_scheduler_mobile/core/entities/classes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_item.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/tile_label.dart';
-import 'package:kspm_scheduler_mobile/presentation/validation/pages/detail_validation_page.dart';
+import 'package:kspm_scheduler_mobile/data/validation/models/requests/validation_type_body.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/entities/validation_type_entity.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/contents/list_validation_content.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/cubit/validation_cubit.dart';
 
-class ListValidationPage extends StatelessWidget {
+class ListValidationPage extends StatefulWidget {
   const ListValidationPage({
     Key? key,
-    required this.validationEntity,
+    required this.validationTypeEntity,
   }) : super(key: key);
 
   static const String route = '/listValidationPage';
-  final ValidationEntity validationEntity;
+  final ValidationTypeEntity validationTypeEntity;
+
+  @override
+  State<ListValidationPage> createState() => _ListValidationPageState();
+}
+
+class _ListValidationPageState extends State<ListValidationPage> {
+  final validationCubit = sl<ValidationCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    validationCubit.getListValidation(ValidationTypeBody(
+      partisipanType: widget.validationTypeEntity.partisipanType,
+      validationType: widget.validationTypeEntity.validationType,
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final privilegeType = validationEntity.privilegeType;
-    final validationType = validationEntity.validationScheduleType;
+    final paritipanType = widget.validationTypeEntity.partisipanType;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          privilegeType == PrivilegeType.anggota
-              ? 'Jadwal Anggota'
-              : 'Jadwal Pengurus',
+    return BlocProvider<ValidationCubit>(
+      create: (context) => validationCubit,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            paritipanType == PartisipanType.anggota
+                ? 'Jadwal Anggota'
+                : 'Jadwal Pengurus',
+          ),
         ),
-      ),
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          TileLabel(
-            label: validationType == ValidationScheduleType.notValidated
-                ? 'Jadwal Belum tervalidasi'
-                : validationType == ValidationScheduleType.rejected
-                    ? 'Jadwal Ditolak'
-                    : validationType == ValidationScheduleType.empty
-                        ? 'Belum Menginputkan'
-                        : validationType == ValidationScheduleType.validated
-                            ? 'Jadwal Tervalidasi'
-                            : validationType == ValidationScheduleType.accepted
-                                ? 'Jadwal Diterima'
-                                : 'Semua Pengurus',
-            suffixLabel: 'Total: 4',
-          ),
-          Column(
-            children: List.generate(
-              10,
-              (index) => TileItem(
-                title: 'Tri Agung J',
-                onTap: () => Get.toNamed<void>(DetailValidationPage.route),
-              ),
-            ),
-          ),
-        ],
+        body: ListValidationContent(
+          validationCubit: validationCubit,
+          validationTypeEntity: widget.validationTypeEntity,
+        ),
       ),
     );
   }

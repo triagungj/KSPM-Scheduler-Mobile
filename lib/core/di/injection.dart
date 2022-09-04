@@ -10,6 +10,8 @@ import 'package:kspm_scheduler_mobile/data/profile/data_sources/profile_remote_d
 import 'package:kspm_scheduler_mobile/data/profile/repositories/profile_repository_impl.dart';
 import 'package:kspm_scheduler_mobile/data/schedule_request/data_sources/schedule_request_remote_data_source.dart';
 import 'package:kspm_scheduler_mobile/data/schedule_request/repositories/schedule_request_repository_impl.dart';
+import 'package:kspm_scheduler_mobile/data/validation/data_sources/validation_remote_data_source.dart';
+import 'package:kspm_scheduler_mobile/data/validation/repositories/validation_repository_impl.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/repositories/repository.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/change_password_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/logout_usecase.dart';
@@ -23,9 +25,16 @@ import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/get_list_
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/postpone_schedule_request.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/save_schedule_request_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule_request/usecases/send_schedule_request_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/repositories/validation_repository.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/usecases/accept_validation_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/usecases/get_detail_validation_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/usecases/get_list_count_validation_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/usecases/get_list_validation_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/validation/usecases/reject_validation_usecase.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_request_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/cubit/profile_cubit.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/cubit/validation_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -46,6 +55,7 @@ Future<void> init() async {
   sl.registerFactory(() => AuthBloc(sl(), sl(), sl()));
   sl.registerFactory(() => ProfileCubit(sl(), sl()));
   sl.registerFactory(() => ScheduleRequestCubit(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ValidationCubit(sl(), sl(), sl(), sl(), sl()));
 
   // Use cases
   sl.registerLazySingleton(() => LoginUsecase(sl()));
@@ -61,6 +71,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SendScheduleRequestUsecase(sl()));
   sl.registerLazySingleton(() => PostponeScheduleRequestUsecase(sl()));
 
+  sl.registerLazySingleton(() => GetListCountValidationUsecase(sl()));
+  sl.registerLazySingleton(() => GetListValidationUsecase(sl()));
+  sl.registerLazySingleton(() => GetDetailValidationUsecase(sl()));
+  sl.registerLazySingleton(() => RejectValidationUsecase(sl()));
+  sl.registerLazySingleton(() => AcceptValidationUsecase(sl()));
+
   // Repository
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(sl(), sl()));
@@ -69,6 +85,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<ScheduleRequestRepository>(
     () => ScheduleRequestRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<ValidationRepository>(
+    () => ValidationRepositoryImpl(sl()),
   );
 
   // Data sources
@@ -80,6 +99,8 @@ Future<void> init() async {
       () => ProfileRemoteDataSourceImpl(sl()));
   sl.registerLazySingleton<ScheduleRequestRemoteDataSource>(
       () => ScheduleRequestRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<ValidationRemoteDataSource>(
+      () => ValidationRemoteDataSourceImpl(sl()));
 
   // Network
   sl.registerLazySingleton(() => sl<HttpClient>().dio);

@@ -30,7 +30,7 @@ class _RequestSchedulePageState extends State<RequestSchedulePage> {
       child: BlocConsumer<ScheduleRequestCubit, ScheduleRequestState>(
         bloc: scheduleRequestCubit,
         listener: (context, state) {
-          if (state is FailureScheduleState) {
+          if (state is FailureScheduleRequestState) {
             Get.snackbar(
               'Gagal',
               state.message,
@@ -52,9 +52,9 @@ class _RequestSchedulePageState extends State<RequestSchedulePage> {
                     RequestScheduleContent(
                       data: state.data,
                     ),
-                  if (state is LoadingScheduleState)
+                  if (state is LoadingScheduleRequestState)
                     const Center(child: CircularProgressIndicator()),
-                  if (state is FailureScheduleState)
+                  if (state is FailureScheduleRequestState)
                     ListView(
                       children: [
                         SizedBox(height: Get.height * 0.2),

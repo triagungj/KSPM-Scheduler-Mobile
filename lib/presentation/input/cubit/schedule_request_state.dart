@@ -7,12 +7,12 @@ abstract class ScheduleRequestState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialScheduleState extends ScheduleRequestState {}
+class InitialScheduleRequestState extends ScheduleRequestState {}
 
-class LoadingScheduleState extends ScheduleRequestState {}
+class LoadingScheduleRequestState extends ScheduleRequestState {}
 
-class FailureScheduleState extends ScheduleRequestState {
-  const FailureScheduleState(this.message);
+class FailureScheduleRequestState extends ScheduleRequestState {
+  const FailureScheduleRequestState(this.message);
 
   final String message;
 }

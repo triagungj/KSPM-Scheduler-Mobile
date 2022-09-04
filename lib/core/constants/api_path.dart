@@ -16,4 +16,11 @@ class ApiPath {
   static const String saveRequestSchedule = '/request/save';
   static const String sendRequestSchedule = '/request/send';
   static const String postponeScheduleRequest = '/request/postpone';
+
+  // * VALIDATION
+  static const String validation = '/validation';
+  static const String getListCountValidation = '$validation/count';
+  static const String getListValidation = '$validation/list';
+  static const String rejectValidation = '$validation/reject';
+  static const String acceptValidation = '$validation/accept';
 }

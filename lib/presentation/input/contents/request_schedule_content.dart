@@ -62,7 +62,7 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
       child: BlocConsumer<ScheduleRequestCubit, ScheduleRequestState>(
         bloc: scheduleRequestCubit,
         listener: (context, state) {
-          if (state is FailureScheduleState) {
+          if (state is FailureScheduleRequestState) {
             Get.snackbar(
               'Gagal',
               state.message,
@@ -149,14 +149,12 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
                         ),
                       ),
                       const SizedBox(height: 40),
-                      if (state is LoadingScheduleState)
-                        const LinearProgressIndicator(),
                     ],
                   ),
                 ],
               ),
             ),
-            bottomNavigationBar: (state is LoadingScheduleState)
+            bottomNavigationBar: (state is LoadingScheduleRequestState)
                 ? const LinearProgressIndicator()
                 : ValueListenableBuilder<bool>(
                     valueListenable: agreementNotifier,
@@ -241,20 +239,23 @@ class _RequestScheduleContentState extends State<RequestScheduleContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
+        Text(
           'Keterangan',
-          // style: Theme.of(context)
-          //     .textTheme
-          //     .labelLarge!
-          //     .copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: Theme.of(context)
+              .textTheme
+              .labelLarge!
+              .copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         const SizedBox(height: 10),
         TextFormField(
           controller: notesParticipantController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText:
                 '''Tambahkan keterangan bila perlu (Contoh apabila terdapat jadwal di luar perkuliahan)''',
-            // hintStyle: Theme.of(context).textTheme.bodySmall,
+            hintStyle: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(color: Theme.of(context).colorScheme.outline),
           ),
           maxLines: 5,
         ),

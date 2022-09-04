@@ -10,12 +10,14 @@ class PartisipantCard extends StatelessWidget {
     required this.textPosition,
     required this.textNumber,
     required this.phoneNumber,
+    this.avatarUrl,
   }) : super(key: key);
 
   final String textName;
   final String textPosition;
   final String textNumber;
   final String phoneNumber;
+  final String? avatarUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,11 @@ class PartisipantCard extends StatelessWidget {
               VarxAvatar(
                 name: textName,
                 backgroundColor: Theme.of(context).colorScheme.primary,
+                backgroundImage: avatarUrl != null
+                    ? NetworkImage(
+                        avatarUrl!,
+                      )
+                    : null,
               ),
               const SizedBox(width: 10),
               Expanded(

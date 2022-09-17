@@ -92,7 +92,7 @@ class ScheduleMenuButton extends StatelessWidget {
                   },
                 ),
                 CircleItemButton(
-                  label: 'Belum Menginput',
+                  label: 'Belum Mengajukan',
                   count: empty,
                   iconData: FluentIcons.calendar_empty_24_filled,
                   componentColor: Theme.of(context).colorScheme.error,

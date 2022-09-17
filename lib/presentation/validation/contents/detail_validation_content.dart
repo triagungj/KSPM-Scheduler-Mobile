@@ -3,6 +3,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
@@ -130,6 +131,14 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
           : null,
     );
 
+    var dateTime = '';
+    if (widget.data.validateAt != null) {
+      final validateTime =
+          DateTime.parse('${widget.data.validateAt!}Z').toLocal();
+      final dateFormat = DateFormat('EEEE, dd MMM yyyy, HH:mm');
+      dateTime = dateFormat.format(validateTime);
+    }
+
     final validatorHeader = Column(
       children: [
         Padding(
@@ -152,7 +161,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '''Tanggal Validasi: ${widget.data.validateAt}''',
+                          'Tanggal Validasi: $dateTime',
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
@@ -190,27 +199,26 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
         const Divider(height: 5, thickness: 5),
       ],
     );
-    
+
     final partisipanEmptySeciton = Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          SizedBox(height: Get.height * 0.15),
-                          StateInfo(
-                            title:
-                                '''${widget.data.partisipan.name} belum mengajukan jadwal''',
-                            type: StateInfoType.calendarEmpty,
-                          ),
-                          VarxButton(
-                            label: '''Hubungi ${widget.data.partisipan.name}''',
-                            prefixIconData: FluentIcons.chat_24_regular,
-                            onTap: () {},
-                          ),
-                          SizedBox(height: Get.height * 0.25),
-                        ],
-                      ),
-                    );
-    
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          SizedBox(height: Get.height * 0.15),
+          StateInfo(
+            title: '''${widget.data.partisipan.name} belum mengajukan jadwal''',
+            type: StateInfoType.calendarEmpty,
+          ),
+          VarxButton(
+            label: '''Hubungi ${widget.data.partisipan.name}''',
+            prefixIconData: FluentIcons.chat_24_regular,
+            onTap: () {},
+          ),
+          SizedBox(height: Get.height * 0.25),
+        ],
+      ),
+    );
+
     return BlocConsumer<ValidationCubit, ValidationState>(
       bloc: validationCubit,
       listener: (context, state) {

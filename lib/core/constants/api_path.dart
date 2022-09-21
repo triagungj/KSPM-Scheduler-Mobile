@@ -23,4 +23,11 @@ class ApiPath {
   static const String getListValidation = '$validation/list';
   static const String rejectValidation = '$validation/reject';
   static const String acceptValidation = '$validation/accept';
+
+  // * SCHEDULE
+  static const String schedule = '/schedule';
+  static const String scheduleList = '$schedule/list';
+  static const String scheduleListDetail = '$schedule/session';
+  static const String scheduleDetail = '$schedule/detail';
+  static const String scheduleGenerate = '$schedule/generate';
 }

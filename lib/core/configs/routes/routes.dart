@@ -7,8 +7,6 @@ import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_
 import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/change_password_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/edit_profile_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/detail_session_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/schedule/presentation/pages/session_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/pages/detail_validation_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/pages/list_validation_page.dart';
 
@@ -40,18 +38,6 @@ class Routes {
     ),
 
     // Schedule
-    GetPage<void>(
-      name: SessionPage.route,
-      page: SessionPage.new,
-      transition: Transition.cupertino,
-    ),
-    GetPage<void>(
-      name: DetailSessionPage.route,
-      page: () => DetailSessionPage(
-        title: Get.arguments as String,
-      ),
-      transition: Transition.cupertino,
-    ),
 
     // Input
     GetPage<void>(

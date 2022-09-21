@@ -26,7 +26,7 @@ class SuccessLoadListMyScheduleState extends ScheduleState {
 class SuccessLoadListScheduleState extends ScheduleState {
   const SuccessLoadListScheduleState(this.data);
 
-  final ListScheduleDataEntity data;
+  final ListScheduleDataEntity? data;
 }
 
 class SuccessLoadListDetailScheduleState extends ScheduleState {

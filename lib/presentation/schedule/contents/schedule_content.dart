@@ -15,11 +15,11 @@ import 'package:varx_design_system/components/buttons/varx_button.dart';
 class ScheduleContent extends StatefulWidget {
   const ScheduleContent({
     Key? key,
-    required this.data,
+    this.data,
     required this.cubit,
   }) : super(key: key);
 
-  final ListScheduleDataEntity data;
+  final ListScheduleDataEntity? data;
   final ScheduleCubit cubit;
 
   @override
@@ -70,9 +70,9 @@ class _ScheduleContentState extends State<ScheduleContent> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (widget.data.published)
+                  if (widget.data != null)
                     MeetContent(
-                      data: widget.data,
+                      data: widget.data!,
                     )
                   else
                     Column(

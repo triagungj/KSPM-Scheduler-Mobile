@@ -7,7 +7,7 @@ part 'list_schedule_model.g.dart';
 class ListScheduleModel extends ListScheduleEntity {
   const ListScheduleModel({
     required int status,
-    required ListScheduleDataModel data,
+    ListScheduleDataModel? data,
   }) : super(
           status: status,
           data: data,

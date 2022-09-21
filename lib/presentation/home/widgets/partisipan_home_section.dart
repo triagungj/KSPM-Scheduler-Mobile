@@ -1,8 +1,11 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/constants/assets_constants.dart';
+import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
 import 'package:kspm_scheduler_mobile/presentation/schedule/cubit/schedule_cubit.dart';
 
@@ -69,7 +72,8 @@ class PartisipanHomeSection extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (state.data.schedules == null)
+                      if (state.data.scheduleStatus !=
+                          ScheduleStatusType.accepted)
                         Column(
                           children: [
                             const SizedBox(height: 15),
@@ -80,7 +84,13 @@ class PartisipanHomeSection extends StatelessWidget {
                             ),
                             const SizedBox(height: 15),
                             Text(
-                              'Kamu Belum Mengajukan Jadwal',
+                              (state.data.scheduleStatus ==
+                                      ScheduleStatusType.requested)
+                                  ? 'Jadwal Sedia kamu sedang diajukan, harap menunggu untuk disetujui petugas'
+                                  : state.data.scheduleStatus ==
+                                          ScheduleStatusType.rejected
+                                      ? 'Jadwal Sedia kamu ditolak! Harap mengatur ulang Jadwal Sedia kamu!'
+                                      : 'Kamu belum mengajukan Jadwal Sedia, inputkan terlebih dahulu di halaman Input, ya!',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -88,11 +98,13 @@ class PartisipanHomeSection extends StatelessWidget {
                                     color:
                                         Theme.of(context).colorScheme.onPrimary,
                                   ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
-                      if (state.data.schedules != null &&
-                          state.data.schedules!.isEmpty)
+                      if (state.data.scheduleStatus ==
+                              ScheduleStatusType.accepted &&
+                          state.data.schedules.isEmpty)
                         Column(
                           children: [
                             const SizedBox(height: 15),
@@ -114,8 +126,9 @@ class PartisipanHomeSection extends StatelessWidget {
                             ),
                           ],
                         ),
-                      if (state.data.schedules != null &&
-                          state.data.schedules!.isNotEmpty)
+                      if (state.data.scheduleStatus ==
+                              ScheduleStatusType.accepted &&
+                          state.data.schedules.isNotEmpty)
                         Column(
                           children: [
                             Text(
@@ -132,9 +145,9 @@ class PartisipanHomeSection extends StatelessWidget {
                             const SizedBox(height: 15),
                             Column(
                               children: List.generate(
-                                state.data.schedules!.length,
+                                state.data.schedules.length,
                                 (index) {
-                                  final sesi = state.data.schedules![index];
+                                  final sesi = state.data.schedules[index];
                                   final nameSesi = sesi.pertemuan;
                                   final detailSesi =
                                       '''${sesi.hari.name.capitalizeFirst}, ${sesi.waktu} (${sesi.name})''';

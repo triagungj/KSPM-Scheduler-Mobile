@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 class ListScheduleEntity extends Equatable {
   const ListScheduleEntity({
     required this.status,
-    required this.data,
+    this.data,
   });
 
   final int status;
-  final ListScheduleDataEntity data;
+  final ListScheduleDataEntity? data;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         status,
         data,
       ];

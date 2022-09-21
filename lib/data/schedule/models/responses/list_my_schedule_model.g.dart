@@ -17,11 +17,18 @@ ListMyScheduleDataModel _$ListMyScheduleDataModelFromJson(
         Map<String, dynamic> json) =>
     ListMyScheduleDataModel(
       name: json['name'] as String,
-      schedules: (json['schedules'] as List<dynamic>?)
-          ?.map(
-              (dynamic e) => ScheduleModel.fromJson(e as Map<String, dynamic>))
+      scheduleStatus: $enumDecodeNullable(
+          _$ScheduleStatusTypeEnumMap, json['schedule_status']),
+      schedules: (json['schedules'] as List<dynamic>)
+          .map((dynamic e) => ScheduleModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
+
+const _$ScheduleStatusTypeEnumMap = {
+  ScheduleStatusType.requested: 'requested',
+  ScheduleStatusType.accepted: 'accepted',
+  ScheduleStatusType.rejected: 'rejected',
+};
 
 ScheduleModel _$ScheduleModelFromJson(Map<String, dynamic> json) =>
     ScheduleModel(

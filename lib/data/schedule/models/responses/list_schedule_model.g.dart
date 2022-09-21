@@ -9,8 +9,10 @@ part of 'list_schedule_model.dart';
 ListScheduleModel _$ListScheduleModelFromJson(Map<String, dynamic> json) =>
     ListScheduleModel(
       status: json['status'] as int,
-      data:
-          ListScheduleDataModel.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : ListScheduleDataModel.fromJson(
+              json['data'] as Map<String, dynamic>),
     );
 
 ListScheduleDataModel _$ListScheduleDataModelFromJson(

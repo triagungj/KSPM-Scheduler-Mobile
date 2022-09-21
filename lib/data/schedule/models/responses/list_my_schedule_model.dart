@@ -21,9 +21,11 @@ class ListMyScheduleModel extends ListMyScheduleEntity {
 class ListMyScheduleDataModel extends ListMyScheduleDataEntity {
   const ListMyScheduleDataModel({
     required String name,
-    List<ScheduleModel>? schedules,
+    ScheduleStatusType? scheduleStatus,
+    required List<ScheduleModel> schedules,
   }) : super(
           name: name,
+          scheduleStatus: scheduleStatus,
           schedules: schedules,
         );
 

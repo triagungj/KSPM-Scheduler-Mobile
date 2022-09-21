@@ -29,7 +29,7 @@ class App extends StatelessWidget {
 
     return GetMaterialApp(
       theme: CustomTheme.lightTheme,
-      darkTheme: CustomTheme.darkTheme,
+      darkTheme: CustomTheme.lightTheme,
       navigatorObservers: [routeObserver],
       initialRoute: initialRoute(),
       getPages: Routes.page.map((page) => page).toList(),

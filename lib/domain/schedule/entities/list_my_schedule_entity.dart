@@ -17,14 +17,16 @@ class ListMyScheduleEntity extends Equatable {
 class ListMyScheduleDataEntity extends Equatable {
   const ListMyScheduleDataEntity({
     required this.name,
-    this.schedules,
+    this.scheduleStatus,
+    required this.schedules,
   });
 
   final String name;
-  final List<ScheduleEntity>? schedules;
+  final ScheduleStatusType? scheduleStatus;
+  final List<ScheduleEntity> schedules;
 
   @override
-  List<Object?> get props => [name, schedules];
+  List<Object?> get props => [name, scheduleStatus, schedules];
 }
 
 class ScheduleEntity extends Equatable {

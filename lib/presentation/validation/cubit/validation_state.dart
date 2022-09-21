@@ -40,6 +40,7 @@ class SuccessRejectValidationState extends ValidationState {
 
   final String message;
 }
+
 class SuccessAcceptValidationState extends ValidationState {
   const SuccessAcceptValidationState(this.message);
 

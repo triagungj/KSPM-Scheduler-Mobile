@@ -33,7 +33,7 @@ void main() {
         log(details.exceptionAsString(), stackTrace: details.stack);
       };
 
-      FlavorSettings.staging();
+      FlavorSettings.production();
 
       await di.init();
 

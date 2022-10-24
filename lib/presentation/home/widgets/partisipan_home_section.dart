@@ -86,7 +86,7 @@ class PartisipanHomeSection extends StatelessWidget {
                             Text(
                               (state.data.scheduleStatus ==
                                       ScheduleStatusType.requested)
-                                  ? 'Jadwal Sedia kamu sedang diajukan, harap menunggu untuk disetujui petugas'
+                                  ? 'Jadwal Sedia kamu berhasil diajukan, harap menunggu untuk disetujui petugas'
                                   : state.data.scheduleStatus ==
                                           ScheduleStatusType.rejected
                                       ? 'Jadwal Sedia kamu ditolak! Harap mengatur ulang Jadwal Sedia kamu!'

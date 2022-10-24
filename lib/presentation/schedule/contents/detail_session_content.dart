@@ -34,6 +34,7 @@ class _DetailSessionContentState extends State<DetailSessionContent> {
             children: List.generate(
               widget.data.listPartisipan.length,
               (index) => PartisipantCard(
+                avatarUrl: widget.data.listPartisipan[index].avatarUrl,
                 textName: widget.data.listPartisipan[index].name,
                 textPosition: widget.data.listPartisipan[index].jabatan,
                 textNumber: widget.data.listPartisipan[index].memberId,

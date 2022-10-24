@@ -36,7 +36,7 @@ class _PetugasHomeSectionState extends State<PetugasHomeSection> {
         }
         if (state is FailureValidationState) {
           return SizedBox(
-            height: 255,
+            height: 300,
             child: StateInfo(
               type: StateInfoType.serverError,
               title: 'Server Error',

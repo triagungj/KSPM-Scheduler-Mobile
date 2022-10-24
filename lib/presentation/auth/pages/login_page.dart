@@ -9,7 +9,6 @@ class LoginPage extends StatelessWidget {
 
   static const route = '/loginPage';
 
-  // Bloc
   final authBloc = sl<AuthBloc>();
 
   @override

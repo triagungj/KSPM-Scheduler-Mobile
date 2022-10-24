@@ -50,3 +50,12 @@ class ChangePasswordSuccess extends AuthState {
   @override
   List<Object> get props => [response];
 }
+
+class GetAdminContactSuccess extends AuthState {
+  const GetAdminContactSuccess(this.message);
+
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
+}

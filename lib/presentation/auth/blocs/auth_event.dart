@@ -28,3 +28,10 @@ class ChangePasswordEvent extends AuthEvent {
   @override
   List<Object?> get props => [body];
 }
+
+class GetAdminContactEvent extends AuthEvent {
+  const GetAdminContactEvent();
+
+  @override
+  List<Object?> get props => [];
+}

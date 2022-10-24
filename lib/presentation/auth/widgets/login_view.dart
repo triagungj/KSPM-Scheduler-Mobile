@@ -28,7 +28,7 @@ class _LoginViewState extends State<LoginView> {
   // Key
   final _formLoginKey = GlobalKey<FormState>();
 
-  Future<void> _launchInBrowser(String phoneNumber) async {
+  Future<void> _directContact(String phoneNumber) async {
     try {
       await launchUrl(
         Uri(
@@ -64,6 +64,10 @@ class _LoginViewState extends State<LoginView> {
 
         if (state is AuthSuccess) {
           Get.offAllNamed<void>(NavigationPage.route);
+        }
+
+        if (state is GetAdminContactSuccess) {
+          _directContact(state.message);
         }
       },
       builder: (context, state) {
@@ -124,9 +128,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                _launchInBrowser(
-                  '6282262401237',
-                );
+                widget.authBloc.add(const GetAdminContactEvent());
               },
           ),
         ],

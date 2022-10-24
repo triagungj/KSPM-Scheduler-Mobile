@@ -11,6 +11,7 @@ abstract class AuthRemoteDataSource {
   Future<LoginEntity> requestLogin(LoginBody body);
   Future<DefaultEntity> requestLogout(NoParams noParams);
   Future<DefaultEntity> changePassword(ChangePasswordBody body);
+  Future<DefaultEntity> getAdminContact(NoParams noParams);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -63,6 +64,27 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final _response = await _client.post<Map<String, dynamic>>(
         ApiPath.changePassword,
         data: body,
+      );
+
+      return DefaultModel.fromJson(_response.data!);
+    } on DioError catch (e) {
+      throw DioError(
+        requestOptions: e.requestOptions,
+        error: e.error,
+        response: e.response,
+      );
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<DefaultEntity> getAdminContact(
+    NoParams noParams,
+  ) async {
+    try {
+      final _response = await _client.get<Map<String, dynamic>>(
+        ApiPath.contact,
       );
 
       return DefaultModel.fromJson(_response.data!);

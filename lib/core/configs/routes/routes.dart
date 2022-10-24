@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/domain/validation/entities/validation_type_entity.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/pages/login_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/home/pages/info_detail_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/home/pages/info_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/info/pages/info_detail_page.dart';
+import 'package:kspm_scheduler_mobile/presentation/info/pages/info_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/presentation/change_password_page.dart';
@@ -32,7 +32,7 @@ class Routes {
     GetPage<void>(
       name: InfoDetailPage.route,
       page: () => InfoDetailPage(
-        info: Get.arguments as Info,
+        id: Get.arguments as String,
       ),
       transition: Transition.cupertino,
     ),

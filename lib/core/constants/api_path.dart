@@ -3,12 +3,14 @@ class ApiPath {
   static const String login = '/auth/login';
   static const String logout = '/auth/logout';
   static const String changePassword = '/auth/change-password';
+  static const String contact = '/auth/contact';
 
   /// * PROFILE
   static const String profile = '/profile';
   static const String profileEdit = '/profile/edit';
 
-  /// * SESSION
+  /// * INFO
+  static const String info = '/news';
 
   // * REQUEST SCHEDULE
   static const String session = '/request/session';

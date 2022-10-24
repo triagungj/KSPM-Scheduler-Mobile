@@ -182,7 +182,7 @@ class _InputContentState extends State<InputContent> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Jadwal yang kamu ajukan ditolak oleh Petugas Jadwal.',
+                          '''Jadwal yang kamu ajukan ditolak oleh Petugas Jadwal.''',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 15),

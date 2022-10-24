@@ -11,7 +11,7 @@ import 'package:kspm_scheduler_mobile/presentation/info/pages/info_detail_page.d
 import 'package:varx_design_system/components/empty_states/empty_state.dart';
 
 class InfoContent extends StatelessWidget {
-  const   InfoContent({
+  const InfoContent({
     Key? key,
     required this.cubit,
     required this.pagingController,

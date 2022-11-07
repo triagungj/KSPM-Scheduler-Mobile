@@ -1,9 +1,11 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/circle_item_button.dart';
 import 'package:kspm_scheduler_mobile/domain/validation/entities/validation_type_entity.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/cubit/validation_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/pages/list_validation_page.dart';
 
 class ScheduleMenuButton extends StatelessWidget {
@@ -70,7 +72,11 @@ class ScheduleMenuButton extends StatelessWidget {
                           partisipanType: partisipanType!,
                           validationType: ValidationType.requested,
                         ),
-                      );
+                      )?.then((value) {
+                        context
+                            .read<ValidationCubit>()
+                            .getListCountValidation();
+                      });
                     }
                   },
                 ),
@@ -87,7 +93,11 @@ class ScheduleMenuButton extends StatelessWidget {
                           partisipanType: partisipanType!,
                           validationType: ValidationType.rejected,
                         ),
-                      );
+                      )?.then((value) {
+                        context
+                            .read<ValidationCubit>()
+                            .getListCountValidation();
+                      });
                     }
                   },
                 ),
@@ -122,7 +132,11 @@ class ScheduleMenuButton extends StatelessWidget {
                           partisipanType: partisipanType!,
                           validationType: ValidationType.validated,
                         ),
-                      );
+                      )?.then((value) {
+                        context
+                            .read<ValidationCubit>()
+                            .getListCountValidation();
+                      });
                     }
                   },
                 ),
@@ -140,7 +154,11 @@ class ScheduleMenuButton extends StatelessWidget {
                           partisipanType: partisipanType!,
                           validationType: ValidationType.accepted,
                         ),
-                      );
+                      )?.then((value) {
+                        context
+                            .read<ValidationCubit>()
+                            .getListCountValidation();
+                      });
                     }
                   },
                 ),
@@ -158,7 +176,11 @@ class ScheduleMenuButton extends StatelessWidget {
                           partisipanType: partisipanType!,
                           validationType: ValidationType.all,
                         ),
-                      );
+                      )?.then((value) {
+                        context
+                            .read<ValidationCubit>()
+                            .getListCountValidation();
+                      });
                     }
                   },
                 ),

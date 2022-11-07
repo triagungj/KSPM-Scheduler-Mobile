@@ -8,15 +8,15 @@ class LoginModel extends LoginEntity {
   const LoginModel({
     required int status,
     required bool isPetugas,
-    bool? isSuperuser,
     required String message,
     required String token,
+    bool? updated,
   }) : super(
           status: status,
           isPetugas: isPetugas,
-          isSuperuser: isSuperuser,
           message: message,
           token: token,
+          updated: updated,
         );
 
   factory LoginModel.fromJson(Map<String, dynamic> json) =>

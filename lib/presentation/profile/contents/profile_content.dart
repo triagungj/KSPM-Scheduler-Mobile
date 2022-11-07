@@ -2,6 +2,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/custom_dialog.dart';
@@ -127,6 +128,8 @@ class _ProfileContentState extends State<ProfileContent> {
   }
 
   Widget profileHeader(ProfileDataEntity data) {
+    final sharedPrefs = sl<SharedPrefs>();
+    final isPetugas = sharedPrefs.getBool(KeyConstants.keyIsPetugas) ?? false;
     return Column(
       children: [
         Center(
@@ -146,12 +149,20 @@ class _ProfileContentState extends State<ProfileContent> {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 5),
-        Text(
-          data.jabatan ?? 'Validator',
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-        ),
+        if (!isPetugas)
+          Text(
+            data.jabatan ?? '-',
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+        if (isPetugas)
+          Text(
+            data.jabatan ?? 'Petugas Jadwal',
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
         const SizedBox(height: 5),
         Text(
           data.memberId ?? '',

@@ -12,6 +12,6 @@ class LoginUsecase extends UseCase<LoginEntity, LoginBody> {
 
   @override
   Future<Either<Failure, LoginEntity>> call(LoginBody params) {
-    return _repository.requestLogin(params);
+  return _repository.requestLogin(params);
   }
 }

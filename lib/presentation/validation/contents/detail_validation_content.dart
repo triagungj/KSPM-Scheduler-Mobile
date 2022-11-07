@@ -17,7 +17,9 @@ import 'package:kspm_scheduler_mobile/domain/validation/entities/detail_validati
 import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_request_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/widgets/session_expansion_widget.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/cubit/validation_cubit.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/pages/list_validation_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/widgets/schedule_status_icon.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:varx_design_system/varx_design_system.dart';
 
 class DetailValidationContent extends StatefulWidget {
@@ -51,6 +53,22 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
       setState(() {
         isError = true;
       });
+    }
+  }
+
+  Future<void> _contactDirect(String phoneNumber) async {
+    try {
+      await launchUrl(
+        Uri(
+          scheme: 'https',
+          host: 'api.whatsapp.com',
+          path: 'send',
+          query: 'phone=$phoneNumber',
+        ),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -212,7 +230,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
           VarxButton(
             label: '''Hubungi ${widget.data.partisipan.name}''',
             prefixIconData: FluentIcons.chat_24_regular,
-            onTap: () {},
+            onTap: () => _contactDirect(widget.data.partisipan.phone),
           ),
           SizedBox(height: Get.height * 0.25),
         ],
@@ -223,18 +241,23 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
       bloc: validationCubit,
       listener: (context, state) {
         if (state is SuccessRejectValidationState) {
+          Get.until(
+            (route) => route.settings.name == ListValidationPage.route,
+          );
+
           AppSnackbar.snackbarSuccess(
             'Berhasil!',
             'Ajuan jadwal partisipan ditolak',
           );
-          widget.parentCubit.getDetailValidation(widget.data.id);
         }
         if (state is SuccessAcceptValidationState) {
+          Get.until(
+            (route) => route.settings.name == ListValidationPage.route,
+          );
           AppSnackbar.snackbarSuccess(
             'Berhasil!',
             'Ajuan jadwal partisipan diterima',
           );
-          widget.parentCubit.getDetailValidation(widget.data.id);
         }
         if (state is FailureValidationState) {
           AppSnackbar.snackbarFailure(

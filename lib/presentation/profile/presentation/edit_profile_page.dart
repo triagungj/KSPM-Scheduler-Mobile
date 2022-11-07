@@ -4,23 +4,26 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:kspm_scheduler_mobile/core/constants/key_constants.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/services/shared_prefs.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/avatar_edit.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/bottom_sheet.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/get_images_bottomsheet.dart';
+import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/loading_with_text.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/server_exception_widget.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/text_form_with_label.dart';
 import 'package:kspm_scheduler_mobile/data/profile/models/request/edit_profile_body.dart';
+import 'package:kspm_scheduler_mobile/domain/profile/entities/jabatan_entitiy.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
+import 'package:kspm_scheduler_mobile/presentation/profile/contents/edit_profice_content.dart';
 import 'package:kspm_scheduler_mobile/presentation/profile/cubit/profile_cubit.dart';
 import 'package:varx_design_system/themes/varx_color.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+  const EditProfilePage({
+    Key? key,
+    this.isNewAccount = false,
+  }) : super(key: key);
+
+  final bool? isNewAccount;
 
   static const String route = '/editProfilePage';
 
@@ -28,41 +31,38 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
+List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+
 class _EditProfilePageState extends State<EditProfilePage> {
   final profileCubit = sl<ProfileCubit>();
 
   final nameController = TextEditingController();
   final numberController = TextEditingController();
   final phoneController = TextEditingController();
-  final jabatanController = TextEditingController();
+  final jabatanNotifier = ValueNotifier<String?>(null);
 
+  final listJabatanNotifier = ValueNotifier<List<JabatanDataEntity>>([]);
   final avatarUrlNotifier = ValueNotifier<String?>(null);
   final avatarFileNotifier = ValueNotifier<File?>(null);
+  String dropdownValue = list.first;
+
+  void refresh() {
+    getListJabatan();
+    getProfile();
+  }
+
+  Future<void> getListJabatan() async {
+    await profileCubit.getListJabatan();
+  }
 
   Future<void> getProfile() async {
     await profileCubit.getProfile();
   }
 
-  Future<void> _getImage(bool fromCamera) async {
-    await ImagePicker()
-        .pickImage(
-      source: fromCamera ? ImageSource.camera : ImageSource.gallery,
-      preferredCameraDevice: CameraDevice.front,
-      imageQuality: 30,
-    )
-        .then((value) {
-      if (value != null) {
-        avatarFileNotifier.value = File(value.path);
-
-        Get.back<void>();
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    profileCubit.getProfile();
+    refresh();
   }
 
   @override
@@ -82,8 +82,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             phoneController.text = state.data.phoneNumber;
             if (!isPetugas) {
               avatarUrlNotifier.value = state.data.avatarUrl;
-              numberController.text = state.data.memberId!;
-              jabatanController.text = state.data.jabatan!;
+              numberController.text = state.data.memberId ?? '';
+              jabatanNotifier.value = state.data.jabatanId;
             }
           }
           if (state is FailureProfileState) {
@@ -94,6 +94,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               colorText: Theme.of(context).colorScheme.onPrimary,
             );
           }
+          if (state is SuccessGetListJabatanState) {
+            listJabatanNotifier.value = state.data;
+          }
           if (state is SuccessEditProfileState) {
             Get.snackbar(
               'Success',
@@ -101,7 +104,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               backgroundColor: VarxColor.success60,
               colorText: Theme.of(context).colorScheme.onPrimary,
             );
-            Get.offAllNamed<void>(NavigationPage.route, arguments: 3);
+            Get.offAllNamed<void>(
+              NavigationPage.route,
+              arguments: widget.isNewAccount ?? false ? 0 : 3,
+            );
           }
         },
         builder: (context, state) {
@@ -111,106 +117,59 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             body: Stack(
               children: [
+                RefreshIndicator(
+                  onRefresh: () async => refresh(),
+                  child: ListView(
+                    children: [
+                      const SizedBox(height: 15),
+                      if (state is FailureGetListJabatanState)
+                        Column(
+                          children: [
+                            SizedBox(height: Get.height * 0.2),
+                            const ServerExceptionWidget(),
+                          ],
+                        )
+                      else
+                        EditProfileContent(
+                          nameController: nameController,
+                          numberController: numberController,
+                          phoneController: phoneController,
+                          jabatanNotifier: jabatanNotifier,
+                          avatarUrlNotifier: avatarUrlNotifier,
+                          avatarFileNotifier: avatarFileNotifier,
+                          listJabatanNotifier: listJabatanNotifier,
+                          isPetugas: isPetugas,
+                        )
+                    ],
+                  ),
+                ),
                 if (state is LoadingProfileState)
-                  const Center(child: CircularProgressIndicator())
-                else
-                  RefreshIndicator(
-                    onRefresh: () async => profileCubit.getProfile(),
-                    child: ListView(
-                      children: [
-                        const SizedBox(height: 15),
-                        if (state is FailureProfileState)
-                          Column(
-                            children: [
-                              SizedBox(height: Get.height * 0.2),
-                              const ServerExceptionWidget(),
-                            ],
-                          ),
-                        if (state is SuccessGetProfileState)
-                          Column(
-                            children: [
-                              ValueListenableBuilder<File?>(
-                                valueListenable: avatarFileNotifier,
-                                builder: (context, _value, _widget) {
-                                  return AvatarEdit(
-                                    name: nameController.text,
-                                    imageFile: _value,
-                                    profileImageUrl: avatarUrlNotifier.value,
-                                    onEdit: (!isPetugas)
-                                        ? () => bottomSheet(
-                                              context,
-                                              GetImageBottomSheet(
-                                                onCamera: () => _getImage(true),
-                                                onGallery: () =>
-                                                    _getImage(false),
-                                              ),
-                                            )
-                                        : null,
-                                  );
-                                },
-                              ),
-                              const SizedBox(height: 10),
-                              ColoredBox(
-                                color: Theme.of(context).cardColor,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    children: [
-                                      TextFormWithLabel(
-                                        label: 'Nama Lengkap',
-                                        controller: nameController,
-                                      ),
-                                      const SizedBox(height: 10),
-                                      if (!isPetugas)
-                                        TextFormWithLabel(
-                                          label: 'Jabatan',
-                                          controller: jabatanController,
-                                          isEnabled: false,
-                                          dropdown: true,
-                                        ),
-                                      const SizedBox(height: 10),
-                                      if (!isPetugas)
-                                        TextFormWithLabel(
-                                          label: 'Nomor Anggota',
-                                          controller: numberController,
-                                        ),
-                                      const SizedBox(height: 10),
-                                      TextFormWithLabel(
-                                        label: 'Nomor Whatsapp',
-                                        controller: phoneController,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
+                  const Center(
+                    child: LoadingWithText(),
                   ),
               ],
             ),
-            bottomNavigationBar: (state is SuccessGetProfileState)
-                ? ButtomButtonConfirmation(
+            bottomNavigationBar: (state is LoadingProfileState)
+                ? const LinearProgressIndicator()
+                : ButtomButtonConfirmation(
                     labelLeft: 'Kembali',
                     leftWidget: const Icon(FluentIcons.arrow_left_24_filled),
                     onPressedLeftButton: () => Get.back<void>(),
                     labelRight: 'Simpan',
                     rightWidget: const Icon(FluentIcons.save_16_regular),
-                    onPressedRightButton: () => profileCubit.editProfile(
-                      EditProfileBody(
-                        name: nameController.text,
-                        phoneNumber: phoneController.text,
-                        memberId: numberController.text,
-                        image: avatarFileNotifier.value != null
-                            ? avatarFileNotifier.value!.path
-                            : null,
-                      ),
-                    ),
-                  )
-                : (state is LoadingProfileState)
-                    ? const LinearProgressIndicator()
-                    : null,
+                    onPressedRightButton: () {
+                      profileCubit.editProfile(
+                        EditProfileBody(
+                          name: nameController.text,
+                          phoneNumber: phoneController.text,
+                          memberId: numberController.text,
+                          jabatanId: jabatanNotifier.value!,
+                          image: avatarFileNotifier.value != null
+                              ? avatarFileNotifier.value!.path
+                              : null,
+                        ),
+                      );
+                    }),
           );
         },
       ),

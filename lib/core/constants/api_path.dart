@@ -8,6 +8,7 @@ class ApiPath {
   /// * PROFILE
   static const String profile = '/profile';
   static const String profileEdit = '/profile/edit';
+  static const String jabatans = '/jabatans';
 
   /// * INFO
   static const String info = '/news';
@@ -31,5 +32,4 @@ class ApiPath {
   static const String scheduleList = '$schedule/list';
   static const String scheduleListDetail = '$schedule/session';
   static const String scheduleDetail = '$schedule/detail';
-  static const String scheduleGenerate = '$schedule/generate';
 }

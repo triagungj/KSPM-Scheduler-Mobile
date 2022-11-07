@@ -33,13 +33,6 @@ class AuthRepositoryImpl implements AuthRepository {
         remoteLogin.isPetugas,
       );
 
-      if (remoteLogin.isSuperuser != null) {
-        await sharedPrefs.putBool(
-          KeyConstants.keyIsSuperUser,
-          remoteLogin.isSuperuser!,
-        );
-      }
-
       return Right(remoteLogin);
     } on DioError catch (e) {
       // The request was made and the server responded with a status code

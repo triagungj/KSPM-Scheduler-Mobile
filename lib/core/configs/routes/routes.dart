@@ -65,7 +65,9 @@ class Routes {
     // PROFILE
     GetPage<void>(
       name: EditProfilePage.route,
-      page: EditProfilePage.new,
+      page: () => EditProfilePage(
+        isNewAccount: Get.arguments as bool?,
+      ),
       transition: Transition.cupertino,
     ),
     GetPage<void>(

@@ -9,10 +9,14 @@ import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/auth/widgets/login_form.dart';
 import 'package:kspm_scheduler_mobile/presentation/navigation/pages/navigation.dart';
+import 'package:kspm_scheduler_mobile/presentation/profile/presentation/edit_profile_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key, required this.authBloc}) : super(key: key);
+  const LoginView({
+    Key? key,
+    required this.authBloc,
+  }) : super(key: key);
 
   final AuthBloc authBloc;
 
@@ -58,12 +62,14 @@ class _LoginViewState extends State<LoginView> {
         if (state is AuthFailure) {
           AppSnackbar.snackbarFailure('Login Gagal', state.message);
         }
-        if (state is AuthSuccess) {
-          AppSnackbar.snackbarSuccess('Login ', state.data.message);
-        }
 
         if (state is AuthSuccess) {
-          Get.offAllNamed<void>(NavigationPage.route);
+          AppSnackbar.snackbarSuccess('Login', state.data.message);
+          if (state.data.updated != null && !state.data.updated!) {
+            Get.offAllNamed<void>(EditProfilePage.route, arguments: true);
+          } else {
+            Get.offAllNamed<void>(NavigationPage.route);
+          }
         }
 
         if (state is GetAdminContactSuccess) {

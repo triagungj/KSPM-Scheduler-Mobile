@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
-class TextFormWithLabel extends StatelessWidget {
-  const TextFormWithLabel({
+class DropdownWithLabel extends StatelessWidget {
+  const DropdownWithLabel({
     Key? key,
     required this.label,
-    this.controller,
-    this.isEnabled = true,
-    this.obsecureText = false,
-    this.action,
+    required this.list,
+    required this.onChange,
+    this.value,
   }) : super(key: key);
 
   final String label;
-  final TextEditingController? controller;
-  final bool isEnabled;
-  final bool obsecureText;
-  final TextInputAction? action;
+  final List<DropdownMenuItem<String>> list;
+  final void Function(String? value) onChange;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +26,7 @@ class TextFormWithLabel extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 5),
-        TextFormField(
-          controller: controller,
-          enabled: isEnabled,
-          obscureText: obsecureText,
-          textInputAction: action,
+        DropdownButtonFormField(
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -54,6 +48,11 @@ class TextFormWithLabel extends StatelessWidget {
             ),
             fillColor: Theme.of(context).colorScheme.surface,
           ),
+          menuMaxHeight: 270,
+          hint: Text(label),
+          items: list,
+          value: value,
+          onChanged: onChange,
         ),
       ],
     );

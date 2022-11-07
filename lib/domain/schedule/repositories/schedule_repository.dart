@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:kspm_scheduler_mobile/core/entities/default_entity.dart';
 import 'package:kspm_scheduler_mobile/core/error/failures.dart';
 import 'package:kspm_scheduler_mobile/core/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/data/schedule/models/requests/detail_schedule_session_body.dart';
@@ -20,8 +19,5 @@ abstract class ScheduleRepository {
   );
   Future<Either<Failure, DetailScheduleSessionEntity>> getDetailScheduleSession(
     DetailScheduleSessionBody body,
-  );
-  Future<Either<Failure, DefaultEntity>> generateSchedule(
-    NoParams noParams,
   );
 }

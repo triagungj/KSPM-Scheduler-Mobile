@@ -71,7 +71,7 @@ class PartisipantCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () => _launchInBrowser(
+                onPressed: () => _contactDirect(
                   phoneNumber,
                 ),
                 icon: Icon(
@@ -87,7 +87,7 @@ class PartisipantCard extends StatelessWidget {
     );
   }
 
-  Future<void> _launchInBrowser(String phoneNumber) async {
+  Future<void> _contactDirect(String phoneNumber) async {
     try {
       await launchUrl(
         Uri(

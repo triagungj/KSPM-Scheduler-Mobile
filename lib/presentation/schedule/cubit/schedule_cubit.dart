@@ -6,7 +6,6 @@ import 'package:kspm_scheduler_mobile/domain/schedule/entities/detail_schedule_s
 import 'package:kspm_scheduler_mobile/domain/schedule/entities/list_detail_schedule_entitiy.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/entities/list_my_schedule_entity.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/entities/list_schedule_entity.dart';
-import 'package:kspm_scheduler_mobile/domain/schedule/usecases/generate_schedule_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_detail_schedule_session_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_list_detail_schedule_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_list_my_schedule_usecase.dart';
@@ -20,7 +19,6 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     this.getListScheduleUsecase,
     this.getListDetailScheduleUsecase,
     this.getDetailScheduleSessionUsecase,
-    this.generateScheduleUsecase,
   ) : super(InitialScheduleState());
 
   Future<void> getListMySchedule() async {
@@ -69,20 +67,8 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     );
   }
 
-  Future<void> generateSchedule() async {
-    emit(LoadingGenerateScheduleState());
-
-    final failureOrSuccess = await generateScheduleUsecase.call(NoParams());
-
-    failureOrSuccess.fold(
-      (l) => emit(FailureGenerateScheduleState(l.message)),
-      (r) => emit(SuccessGenerateScheduleState(r.message)),
-    );
-  }
-
   final GetListMyScheduleUsecase getListMyScheduleUsecase;
   final GetListScheduleUsecase getListScheduleUsecase;
   final GetListDetailScheduleUsecase getListDetailScheduleUsecase;
   final GetDetailScheduleSessionUsecase getDetailScheduleSessionUsecase;
-  final GenerateScheduleUsecase generateScheduleUsecase;
 }

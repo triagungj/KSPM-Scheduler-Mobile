@@ -26,9 +26,9 @@ import 'package:kspm_scheduler_mobile/domain/info/usecases/get_info_detail_useca
 import 'package:kspm_scheduler_mobile/domain/info/usecases/get_info_list_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/repositories/profile_repository.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/usecases/edit_profile_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/profile/usecases/get_list_jabatan_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/usecases/get_profile_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/repositories/schedule_repository.dart';
-import 'package:kspm_scheduler_mobile/domain/schedule/usecases/generate_schedule_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_detail_schedule_session_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_list_detail_schedule_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/schedule/usecases/get_list_my_schedule_usecase.dart';
@@ -69,10 +69,10 @@ Future<void> init() async {
   //! Features - Auth
   // Bloc
   sl.registerFactory(() => AuthBloc(sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => ProfileCubit(sl(), sl()));
+  sl.registerFactory(() => ProfileCubit(sl(), sl(), sl()));
   sl.registerFactory(() => ScheduleRequestCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ValidationCubit(sl(), sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => ScheduleCubit(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ScheduleCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => InfoCubit(sl(), sl()));
 
   // Use cases
@@ -83,6 +83,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => GetProfileUsecase(sl()));
   sl.registerLazySingleton(() => EditProfileUsecase(sl()));
+  sl.registerLazySingleton(() => GetListJabatanUsecase(sl()));
 
   sl.registerLazySingleton(() => GetListSessionUsecase(sl()));
   sl.registerLazySingleton(() => GetListMySessionUsecase(sl()));
@@ -100,7 +101,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetListScheduleUsecase(sl()));
   sl.registerLazySingleton(() => GetListDetailScheduleUsecase(sl()));
   sl.registerLazySingleton(() => GetDetailScheduleSessionUsecase(sl()));
-  sl.registerLazySingleton(() => GenerateScheduleUsecase(sl()));
 
   sl.registerLazySingleton(() => GetInfoListUsecase(sl()));
   sl.registerLazySingleton(() => GetInfoDetailUsecase(sl()));

@@ -23,12 +23,14 @@ class ProfileDataModel extends ProfileDataEntity {
     required String name,
     required String phoneNumber,
     String? jabatan,
+    String? jabatanId,
     String? memberId,
     String? avatarUrl,
   }) : super(
           name: name,
           phoneNumber: phoneNumber,
           jabatan: jabatan,
+          jabatanId: jabatanId,
           memberId: memberId,
           avatarUrl: avatarUrl,
         );

@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kspm_scheduler_mobile/core/constants/api_path.dart';
-import 'package:kspm_scheduler_mobile/core/entities/default_entity.dart';
 import 'package:kspm_scheduler_mobile/core/error/exceptions.dart';
-import 'package:kspm_scheduler_mobile/core/models/default_model.dart';
 import 'package:kspm_scheduler_mobile/core/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/data/schedule/models/requests/detail_schedule_session_body.dart';
 import 'package:kspm_scheduler_mobile/data/schedule/models/responses/detail_schedule_session_model.dart';
@@ -21,7 +19,6 @@ abstract class ScheduleRemoteDataSource {
   Future<DetailScheduleSessionEntity> getDetailScheduleSession(
     DetailScheduleSessionBody body,
   );
-  Future<DefaultEntity> generateSchedule(NoParams noParams);
 }
 
 class ScheduleRemoteDataSourceImpl implements ScheduleRemoteDataSource {
@@ -99,25 +96,6 @@ class ScheduleRemoteDataSourceImpl implements ScheduleRemoteDataSource {
       );
 
       return ListMyScheduleModel.fromJson(remoteDataSource.data!);
-    } on DioError catch (e) {
-      throw DioError(
-        requestOptions: e.requestOptions,
-        error: e.error,
-        response: e.response,
-      );
-    } catch (e) {
-      throw ServerException();
-    }
-  }
-
-  @override
-  Future<DefaultEntity> generateSchedule(NoParams noParams) async {
-    try {
-      final remoteDataSource = await _client.get<Map<String, dynamic>>(
-        ApiPath.scheduleGenerate,
-      );
-
-      return DefaultModel.fromJson(remoteDataSource.data!);
     } on DioError catch (e) {
       throw DioError(
         requestOptions: e.requestOptions,

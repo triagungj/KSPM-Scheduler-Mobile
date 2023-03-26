@@ -1,4 +1,3 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
 class TextFormWithLabel extends StatelessWidget {
@@ -7,7 +6,6 @@ class TextFormWithLabel extends StatelessWidget {
     required this.label,
     this.controller,
     this.isEnabled = true,
-    this.dropdown = false,
     this.obsecureText = false,
     this.action,
   }) : super(key: key);
@@ -15,7 +13,6 @@ class TextFormWithLabel extends StatelessWidget {
   final String label;
   final TextEditingController? controller;
   final bool isEnabled;
-  final bool dropdown;
   final bool obsecureText;
   final TextInputAction? action;
 
@@ -56,9 +53,6 @@ class TextFormWithLabel extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             fillColor: Theme.of(context).colorScheme.surface,
-            suffixIcon: dropdown == true
-                ? const Icon(FluentIcons.chevron_down_16_filled)
-                : null,
           ),
         ),
       ],

@@ -7,6 +7,7 @@ import 'package:kspm_scheduler_mobile/core/error/failures.dart';
 import 'package:kspm_scheduler_mobile/core/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/data/profile/data_sources/profile_remote_data_source.dart';
 import 'package:kspm_scheduler_mobile/data/profile/models/request/edit_profile_body.dart';
+import 'package:kspm_scheduler_mobile/domain/profile/entities/jabatan_entitiy.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/entities/profile_entity.dart';
 import 'package:kspm_scheduler_mobile/domain/profile/repositories/profile_repository.dart';
 
@@ -59,6 +60,29 @@ class ProfileRepositoryImpl implements ProfileRepository {
       } else {
         // Something happened in setting up or sending the request
         //that triggered an Error
+        log(e.message);
+        return const Left(ServerFailure(errorMsg));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, JabatanEntity>> getListJabatan(
+    NoParams params,
+  ) async {
+    try {
+      final remoteGetListJabatan =
+          await remoteDataSource.getListJabatan(params);
+
+      return Right(remoteGetListJabatan);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        log('${e.response!.data}');
+        log('${e.response!.headers}');
+        return Left(ServerFailure(e.response!.data['message'].toString()));
+      } else {
         log(e.message);
         return const Left(ServerFailure(errorMsg));
       }

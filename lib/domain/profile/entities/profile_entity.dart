@@ -18,6 +18,7 @@ class ProfileDataEntity extends Equatable {
     required this.name,
     required this.phoneNumber,
     this.memberId,
+    this.jabatanId,
     this.jabatan,
     this.avatarUrl,
   });
@@ -26,6 +27,7 @@ class ProfileDataEntity extends Equatable {
   final String? memberId;
   final String phoneNumber;
   final String? jabatan;
+  final String? jabatanId;
   final String? avatarUrl;
 
   @override

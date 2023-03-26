@@ -17,7 +17,7 @@ class ScheduleStatusLabel extends StatelessWidget {
       children: [
         if (type == ScheduleStatusType.requested)
           Text(
-            'Jadwal Sedia kamu sedang diajukan',
+            'Jadwal Sedia kamu berhasil diajukan',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),

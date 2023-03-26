@@ -31,17 +31,16 @@ class DetailValidationDataModel extends DetailValidationDataEntity {
     String? bukti,
     required List<int> listSessionId,
   }) : super(
-    id: id,
-    partisipan: partisipan,
-    petugasName: petugasName,
-    status: status,
-    validateAt: validateAt,
-    partisipanNotes: partisipanNotes,
-    bukti: bukti,
-    listSessionId: listSessionId,
-    petugasNotes: petugasNotes,
-
-  );
+          id: id,
+          partisipan: partisipan,
+          petugasName: petugasName,
+          status: status,
+          validateAt: validateAt,
+          partisipanNotes: partisipanNotes,
+          bukti: bukti,
+          listSessionId: listSessionId,
+          petugasNotes: petugasNotes,
+        );
 
   factory DetailValidationDataModel.fromJson(Map<String, dynamic> json) =>
       _$DetailValidationDataModelFromJson(json);
@@ -55,13 +54,13 @@ class PartisipanValidationModel extends PartisipanValidationEntity {
     required String memberId,
     required String phone,
     String? avatarUrl,
-  }): super(
-    name: name,
-    jabatan: jabatan,
-    memberId: memberId,
-    phone: phone,
-    avatarUrl: avatarUrl,
-  );
+  }) : super(
+          name: name,
+          jabatan: jabatan,
+          memberId: memberId,
+          phone: phone,
+          avatarUrl: avatarUrl,
+        );
 
   factory PartisipanValidationModel.fromJson(Map<String, dynamic> json) =>
       _$PartisipanValidationModelFromJson(json);

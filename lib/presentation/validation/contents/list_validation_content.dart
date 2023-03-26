@@ -25,6 +25,15 @@ class ListValidationContent extends StatefulWidget {
 }
 
 class _ListValidationContentState extends State<ListValidationContent> {
+  Future<void> refresh() async {
+    await widget.validationCubit.getListValidation(
+      ValidationTypeBody(
+        partisipanType: widget.validationTypeEntity.partisipanType,
+        validationType: widget.validationTypeEntity.validationType,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final validationType = widget.validationTypeEntity.validationType;
@@ -41,12 +50,7 @@ class _ListValidationContentState extends State<ListValidationContent> {
         }
 
         return RefreshIndicator(
-          onRefresh: () async => widget.validationCubit.getListValidation(
-            ValidationTypeBody(
-              partisipanType: widget.validationTypeEntity.partisipanType,
-              validationType: widget.validationTypeEntity.validationType,
-            ),
-          ),
+          onRefresh: refresh,
           child: ListView(
             children: [
               if (state is FailureValidationState)
@@ -86,7 +90,9 @@ class _ListValidationContentState extends State<ListValidationContent> {
                               onTap: () => Get.toNamed<void>(
                                 DetailValidationPage.route,
                                 arguments: state.data.listRequest[index].id,
-                              ),
+                              )?.then((value) {
+                                refresh();
+                              }),
                             ),
                           ),
                         )

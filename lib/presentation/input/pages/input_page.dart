@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/server_exception_widget.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
+import 'package:kspm_scheduler_mobile/presentation/auth/blocs/auth_bloc.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/contents/input_content.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_request_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/pages/request_schedule_page.dart';
@@ -17,6 +18,7 @@ class InputSchedulePage extends StatefulWidget {
 
 class _InputSchedulePageState extends State<InputSchedulePage> {
   final scheduleRequestCubit = sl<ScheduleRequestCubit>();
+  final authBloc = sl<AuthBloc>();
 
   Future<void> getListMyScheduleRequest() async {
     await scheduleRequestCubit.getListMySession();
@@ -30,8 +32,15 @@ class _InputSchedulePageState extends State<InputSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ScheduleRequestCubit>(
-      create: (context) => scheduleRequestCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ScheduleRequestCubit>(
+          create: (context) => scheduleRequestCubit,
+        ),
+        BlocProvider<AuthBloc>(
+          create: (context) => authBloc,
+        ),
+      ],
       child: BlocBuilder<ScheduleRequestCubit, ScheduleRequestState>(
           bloc: scheduleRequestCubit,
           builder: (context, state) {

@@ -16,6 +16,7 @@ ProfileDataModel _$ProfileDataModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       phoneNumber: json['phone_number'] as String,
       jabatan: json['jabatan'] as String?,
+      jabatanId: json['jabatan_id'] as String?,
       memberId: json['member_id'] as String?,
       avatarUrl: json['avatar_url'] as String?,
     );

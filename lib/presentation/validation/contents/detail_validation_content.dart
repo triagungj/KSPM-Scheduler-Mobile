@@ -3,6 +3,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/buttom_button_confirmation.dart';
@@ -16,7 +17,9 @@ import 'package:kspm_scheduler_mobile/domain/validation/entities/detail_validati
 import 'package:kspm_scheduler_mobile/presentation/input/cubit/schedule_request_cubit.dart';
 import 'package:kspm_scheduler_mobile/presentation/input/widgets/session_expansion_widget.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/cubit/validation_cubit.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/pages/list_validation_page.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/widgets/schedule_status_icon.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:varx_design_system/varx_design_system.dart';
 
 class DetailValidationContent extends StatefulWidget {
@@ -50,6 +53,22 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
       setState(() {
         isError = true;
       });
+    }
+  }
+
+  Future<void> _contactDirect(String phoneNumber) async {
+    try {
+      await launchUrl(
+        Uri(
+          scheme: 'https',
+          host: 'api.whatsapp.com',
+          path: 'send',
+          query: 'phone=$phoneNumber',
+        ),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -130,6 +149,14 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
           : null,
     );
 
+    var dateTime = '';
+    if (widget.data.validateAt != null) {
+      final validateTime =
+          DateTime.parse('${widget.data.validateAt!}Z').toLocal();
+      final dateFormat = DateFormat('EEEE, dd MMM yyyy, HH:mm');
+      dateTime = dateFormat.format(validateTime);
+    }
+
     final validatorHeader = Column(
       children: [
         Padding(
@@ -152,7 +179,7 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '''Tanggal Validasi: ${widget.data.validateAt}''',
+                          'Tanggal Validasi: $dateTime',
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
@@ -190,43 +217,47 @@ class _DetailValidationContentState extends State<DetailValidationContent> {
         const Divider(height: 5, thickness: 5),
       ],
     );
-    
+
     final partisipanEmptySeciton = Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          SizedBox(height: Get.height * 0.15),
-                          StateInfo(
-                            title:
-                                '''${widget.data.partisipan.name} belum mengajukan jadwal''',
-                            type: StateInfoType.calendarEmpty,
-                          ),
-                          VarxButton(
-                            label: '''Hubungi ${widget.data.partisipan.name}''',
-                            prefixIconData: FluentIcons.chat_24_regular,
-                            onTap: () {},
-                          ),
-                          SizedBox(height: Get.height * 0.25),
-                        ],
-                      ),
-                    );
-    
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          SizedBox(height: Get.height * 0.15),
+          StateInfo(
+            title: '''${widget.data.partisipan.name} belum mengajukan jadwal''',
+            type: StateInfoType.calendarEmpty,
+          ),
+          VarxButton(
+            label: '''Hubungi ${widget.data.partisipan.name}''',
+            prefixIconData: FluentIcons.chat_24_regular,
+            onTap: () => _contactDirect(widget.data.partisipan.phone),
+          ),
+          SizedBox(height: Get.height * 0.25),
+        ],
+      ),
+    );
+
     return BlocConsumer<ValidationCubit, ValidationState>(
       bloc: validationCubit,
       listener: (context, state) {
         if (state is SuccessRejectValidationState) {
+          Get.until(
+            (route) => route.settings.name == ListValidationPage.route,
+          );
+
           AppSnackbar.snackbarSuccess(
             'Berhasil!',
             'Ajuan jadwal partisipan ditolak',
           );
-          widget.parentCubit.getDetailValidation(widget.data.id);
         }
         if (state is SuccessAcceptValidationState) {
+          Get.until(
+            (route) => route.settings.name == ListValidationPage.route,
+          );
           AppSnackbar.snackbarSuccess(
             'Berhasil!',
             'Ajuan jadwal partisipan diterima',
           );
-          widget.parentCubit.getDetailValidation(widget.data.id);
         }
         if (state is FailureValidationState) {
           AppSnackbar.snackbarFailure(

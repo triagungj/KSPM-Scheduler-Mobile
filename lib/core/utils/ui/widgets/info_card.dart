@@ -1,8 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:kspm_scheduler_mobile/presentation/home/pages/info_detail_page.dart';
-import 'package:kspm_scheduler_mobile/presentation/home/pages/info_page.dart';
+import 'package:intl/intl.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -10,26 +8,27 @@ class InfoCard extends StatelessWidget {
     required this.title,
     required this.date,
     required this.description,
+    required this.id,
+    this.onTap,
   }) : super(key: key);
 
+  final String id;
   final String title;
   final String date;
   final String description;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final validateTime = DateTime.parse(date).toLocal();
+    final dateFormat = DateFormat('EEEE, dd MMM yyyy, HH:mm');
+    final dateParsed = dateFormat.format(validateTime);
+
     return Card(
       color: Theme.of(context).colorScheme.onInverseSurface,
       margin: const EdgeInsets.only(bottom: 15),
       child: InkWell(
-        onTap: () => Get.toNamed<void>(
-          InfoDetailPage.route,
-          arguments: Info(
-            title: title,
-            description: description,
-            date: date,
-          ),
-        ),
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
@@ -64,7 +63,7 @@ class InfoCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      date,
+                      dateParsed,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: Theme.of(context).colorScheme.inverseSurface),
                     ),

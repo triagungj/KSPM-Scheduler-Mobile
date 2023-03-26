@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/vertical_label.dart';
+import 'package:kspm_scheduler_mobile/domain/schedule/entities/detail_schedule_session_entity.dart';
 
 class SessionHeader extends StatelessWidget {
-  const SessionHeader({Key? key}) : super(key: key);
+  const SessionHeader({
+    Key? key,
+    required this.details,
+  }) : super(key: key);
+
+  final SessionDetailsEntity details;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +25,13 @@ class SessionHeader extends StatelessWidget {
               children: [
                 VerticalLabel(
                   textAbove: 'Pertemuan',
-                  textBelow: 'Pertemuan Materi 1',
+                  textBelow: details.pertemuan,
                   textColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 const SizedBox(height: 10),
                 VerticalLabel(
                   textAbove: 'Hari',
-                  textBelow: 'Hari Senin',
+                  textBelow: 'Hari ${details.hari.name.capitalizeFirst}',
                   textColor: Theme.of(context).colorScheme.onPrimary,
                 ),
               ],
@@ -36,13 +43,13 @@ class SessionHeader extends StatelessWidget {
               children: [
                 VerticalLabel(
                   textAbove: 'Sesi',
-                  textBelow: 'Sesi 1',
+                  textBelow: details.name,
                   textColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 const SizedBox(height: 10),
                 VerticalLabel(
                   textAbove: 'Waktu',
-                  textBelow: '09:00 - 10:30',
+                  textBelow: details.waktu,
                   textColor: Theme.of(context).colorScheme.onPrimary,
                 ),
               ],

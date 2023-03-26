@@ -17,6 +17,12 @@ class FailureProfileState extends ProfileState {
   final String message;
 }
 
+class FailureGetListJabatanState extends ProfileState {
+  const FailureGetListJabatanState(this.message);
+
+  final String message;
+}
+
 class SuccessGetProfileState extends ProfileState {
   const SuccessGetProfileState(this.data);
 
@@ -28,3 +34,11 @@ class SuccessEditProfileState extends ProfileState {
 
   final DefaultEntity data;
 }
+
+class SuccessGetListJabatanState extends ProfileState {
+  const SuccessGetListJabatanState(this.data);
+
+  final List<JabatanDataEntity> data;
+}
+
+

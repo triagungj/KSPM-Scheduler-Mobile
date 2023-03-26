@@ -11,4 +11,5 @@ abstract class AuthRepository {
   Future<Either<Failure, DefaultEntity>> changePassword(
     ChangePasswordBody body,
   );
+  Future<Either<Failure, DefaultEntity>> getAdminContact(NoParams noParams);
 }

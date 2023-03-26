@@ -5,6 +5,7 @@ import 'package:kspm_scheduler_mobile/core/usecases/usecase.dart';
 import 'package:kspm_scheduler_mobile/data/auth/models/models.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/entities/entities.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/change_password_usecase.dart';
+import 'package:kspm_scheduler_mobile/domain/auth/usecases/get_admin_contact_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/logout_usecase.dart';
 import 'package:kspm_scheduler_mobile/domain/auth/usecases/usecase.dart';
 
@@ -16,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this.loginUsecase,
     this.logoutUsecase,
     this.changePasswordUsecase,
+    this.getAdminContactUsecase,
   ) : super(AuthInitial()) {
     on<LoginEvent>((event, emit) async {
       emit(AuthLoading());
@@ -46,9 +48,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (r) => emit(ChangePasswordSuccess(r)),
       );
     });
+    on<GetAdminContactEvent>((event, emit) async {
+      emit(AuthLoading());
+
+      final failureOrSuccess = await getAdminContactUsecase.call(NoParams());
+      failureOrSuccess.fold(
+        (l) => emit(AuthFailure(message: l.message)),
+        (r) => emit(GetAdminContactSuccess(r.message)),
+      );
+    });
   }
 
   final LoginUsecase loginUsecase;
   final LogoutUsecase logoutUsecase;
   final ChangePasswordUsecase changePasswordUsecase;
+  final GetAdminContactUsecase getAdminContactUsecase;
 }

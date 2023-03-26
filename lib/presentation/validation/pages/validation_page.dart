@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:kspm_scheduler_mobile/core/di/injection.dart';
 import 'package:kspm_scheduler_mobile/core/entities/enum.dart';
-import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/schedule_menu_button.dart';
 import 'package:kspm_scheduler_mobile/core/utils/ui/widgets/state_info.dart';
 import 'package:kspm_scheduler_mobile/presentation/validation/cubit/validation_cubit.dart';
+import 'package:kspm_scheduler_mobile/presentation/validation/widgets/schedule_menu_button.dart';
 
 class ValidationPage extends StatefulWidget {
   const ValidationPage({Key? key}) : super(key: key);

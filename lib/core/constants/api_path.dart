@@ -3,12 +3,15 @@ class ApiPath {
   static const String login = '/auth/login';
   static const String logout = '/auth/logout';
   static const String changePassword = '/auth/change-password';
+  static const String contact = '/auth/contact';
 
   /// * PROFILE
   static const String profile = '/profile';
   static const String profileEdit = '/profile/edit';
+  static const String jabatans = '/jabatans';
 
-  /// * SESSION
+  /// * INFO
+  static const String info = '/news';
 
   // * REQUEST SCHEDULE
   static const String session = '/request/session';
@@ -23,4 +26,10 @@ class ApiPath {
   static const String getListValidation = '$validation/list';
   static const String rejectValidation = '$validation/reject';
   static const String acceptValidation = '$validation/accept';
+
+  // * SCHEDULE
+  static const String schedule = '/schedule';
+  static const String scheduleList = '$schedule/list';
+  static const String scheduleListDetail = '$schedule/session';
+  static const String scheduleDetail = '$schedule/detail';
 }
